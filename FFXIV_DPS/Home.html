@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Home</title>
+
+    <!-- scripts -->
+    <script src="Scripts/jquery-3.5.1.js"></script>
+    <script src="Scripts/angular.min.js"></script>
+    <script src="Scripts/dps.js"></script>
+    <script src="Scripts/main.js"></script>
+
+    <!-- content -->
+    <link href="/Content/Main.css" rel="stylesheet" type="text/css" />
+
+    <!-- bootstrap -->
+    <link href="/boostrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="boostrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div data-ng-app="dps_app" data-ng-controller="dps_controller" data-ng-init="dps_app_init()">
+        <table class="table table-bordered">
+            <tr>
+                <td>
+                    <span>Critical Hit</span><br />
+                    <input type="text" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.critical" value="" id="txtCriticalHit" />
+                </td>
+                <td>
+                    <span>Critical Hit Delta</span><br />
+                    <span>{{dps_stats.criticalDelta}}</span>
+                </td>
+                <td>
+                    <span>per .1% rate+dmg</span><br />
+                    <span>{{dps_base.criticalRatio}}</span>
+                </td>
+                <td>
+                    <span>Rate</span><br />
+                    <span>{{dps_base.criticalBaseRate}} + {{dps_stats.criticalRate}}</span>
+                </td>
+                <td>
+                    <span>Damage</span><br />
+                    <span>{{dps_base.criticalBaseDamage}} + {{dps_stats.criticalDamage}}</span>
+                </td>
+                <td>
+                    <span>Critical Hit DPS</span><br />
+                    <span>{{dps_stats.criticalDPS.toFixed(2)}}%</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Determination</span><br />
+                    <input type="text" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.determination" value="" id="txtDetermination" />
+                </td>
+                <td>
+                    <span>Determination Delta</span><br />
+                    <span>{{dps_stats.determinationDelta}}</span>
+                </td>
+                <td>
+                    <span>per .1% dps</span><br />
+                    <span>{{dps_base.determinationRatio}}</span>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <span>Determination DPS</span><br />
+                    <span>{{dps_stats.determinationDPS.toFixed(2)}}%</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Direct Hit</span><br />
+                    <input type="text" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.directhit" value="" id="txtDirectHit" />
+                </td>
+                <td>
+                    <span>Direct Hit Delta</span><br />
+                    <span>{{dps_stats.directhitDelta}}</span>
+                </td>
+                <td>
+                    <span>per .1% rate</span><br />
+                    <span>{{dps_base.directhitRate}}</span>
+                </td>
+                <td>
+                    <span>Rate</span><br />
+                    <span>{{dps_stats.directhitRate}}</span>
+                </td>
+                <td>
+                    <span>Damage</span><br />
+                    <span>{{dps_base.directhitBaseDamage}}</span>
+                </td>
+                <td>
+                    <span>Determination DPS</span><br />
+                    <span>{{dps_stats.determinationDPS.toFixed(2)}}%</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Skill Speed</span><br />
+                    <input type="text" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.skillspeed" value="" id="txtSkillSpeed" />
+                </td>
+                <td>
+                    <span>Skill Speed Delta</span><br />
+                    <span>{{dps_stats.skillspeedDelta}}</span>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <span>Base</span><br />
+                    <span>{{dps_base.skillspeedBase}}</span>
+                </td>
+                <td>
+                    <span>Delay</span><br />
+                    <span>{{dps_stats.skillspeedDelay}}</span>
+                </td>
+                <td>
+                    <span>Skill Speed DPS</span><br />
+                    <span>{{dps_stats.skillspeedDPSImprovement.toFixed(2)}}%</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Tenacity</span><br />
+                    <input type="text" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.tenacity" value="" id="txtTenacity" />
+                </td>
+                <td>
+                    <span>Tenacity Delta</span><br />
+                    <span>{{dps_stats.tenacityDelta}}</span>
+                </td>
+                <td>
+                    <span>per .1% dps</span><br />
+                    <span>{{dps_base.tenacityRatio}}</span>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <span>Tenacity DPS</span><br />
+                    <span>{{dps_stats.tenacityDPS.toFixed(2)}}%</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Base Stats</span><br />
+                    <span>{{dps_base.levelBase}}</span>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <span>Total DPS</span><br />
+                    <span>{{dps_stats.totaldps.toFixed(2)}}%</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
