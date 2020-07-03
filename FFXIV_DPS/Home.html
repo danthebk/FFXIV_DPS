@@ -30,17 +30,17 @@
                     <span>Critical Hit Delta</span><br />
                     <span>{{dps_stats.criticalDelta}}</span>
                 </td>
-                <td>
+                <td class="table-info">
                     <span>per .1% rate+dmg</span><br />
                     <span>{{dps_base.criticalRatio}}</span>
                 </td>
                 <td>
                     <span>Rate</span><br />
-                    <span>{{dps_base.criticalBaseRate}} + {{dps_stats.criticalRate}}</span>
+                    <span class="table-info">{{dps_base.criticalBaseRate}}</span> + <span>{{dps_stats.criticalRate}}</span>
                 </td>
                 <td>
                     <span>Damage</span><br />
-                    <span>{{dps_base.criticalBaseDamage}} + {{dps_stats.criticalDamage}}</span>
+                    <span class="table-info">{{dps_base.criticalBaseDamage}}</span> + <span>{{dps_stats.criticalDamage}}</span>
                 </td>
                 <td>
                     <span>Critical Hit DPS</span><br />
@@ -56,7 +56,7 @@
                     <span>Determination Delta</span><br />
                     <span>{{dps_stats.determinationDelta}}</span>
                 </td>
-                <td>
+                <td class="table-info">
                     <span>per .1% dps</span><br />
                     <span>{{dps_base.determinationRatio}}</span>
                 </td>
@@ -78,15 +78,15 @@
                     <span>Direct Hit Delta</span><br />
                     <span>{{dps_stats.directhitDelta}}</span>
                 </td>
-                <td>
+                <td class="table-info">
                     <span>per .1% rate</span><br />
-                    <span>{{dps_base.directhitRate}}</span>
+                    <span>{{dps_base.directhitRatio}}</span>
                 </td>
                 <td>
                     <span>Rate</span><br />
                     <span>{{dps_stats.directhitRate}}</span>
                 </td>
-                <td>
+                <td class="table-info">
                     <span>Damage</span><br />
                     <span>{{dps_base.directhitBaseDamage}}</span>
                 </td>
@@ -104,15 +104,16 @@
                     <span>Skill Speed Delta</span><br />
                     <span>{{dps_stats.skillspeedDelta}}</span>
                 </td>
-                <td>
-                </td>
-                <td>
-                    <span>Base</span><br />
+
+                <td class="table-info">
+                    <span>Base Delay</span><br />
                     <span>{{dps_base.skillspeedBase}}</span>
                 </td>
                 <td>
-                    <span>Delay</span><br />
+                    <span>Adjusted Delay</span><br />
                     <span>{{dps_stats.skillspeedDelay}}</span>
+                </td>
+                <td>
                 </td>
                 <td>
                     <span>Skill Speed DPS</span><br />
@@ -128,7 +129,7 @@
                     <span>Tenacity Delta</span><br />
                     <span>{{dps_stats.tenacityDelta}}</span>
                 </td>
-                <td>
+                <td class="table-info">
                     <span>per .1% dps</span><br />
                     <span>{{dps_base.tenacityRatio}}</span>
                 </td>
@@ -143,10 +144,10 @@
             </tr>
             <tr>
                 <td>
-                    <span>Base Stats</span><br />
-                    <span>{{dps_base.levelBase}}</span>
                 </td>
-                <td>
+                <td class="table-info">
+                    <span>Base Stats: {{dps_base.levelBase}}</span> <br/>
+                    <span>Determination: 340</span>
                 </td>
                 <td>
                 </td>
