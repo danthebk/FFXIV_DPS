@@ -8,15 +8,15 @@
     <!-- scripts -->
     <script src="Scripts/jquery-3.5.1.js"></script>
     <script src="Scripts/angular.min.js"></script>
-    <script src="Scripts/dps.js"></script>
-    <script src="Scripts/main.js"></script>
-
-    <!-- content -->
-    <link href="/Content/Main.css" rel="stylesheet" type="text/css" />
 
     <!-- bootstrap -->
     <link href="/boostrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="boostrap/js/bootstrap.min.js"></script>
+
+    <!-- content -->
+    <script src="Scripts/dps.js"></script>
+    <script src="Scripts/main.js"></script>
+    <link href="/Content/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div data-ng-app="dps_app" data-ng-controller="dps_controller" data-ng-init="dps_app_init()">
@@ -38,13 +38,13 @@
                             Background Colors
                             <ul>
                                 <li class="{{ui_color.info}}">
-                                    An information field. These are values that do not change with gear and are constants for level 80.
+                                    An information field. These are values that do not change with gear and are constants at level 80.
                                 </li>
                                 <li class="{{ui_color.better}}">
                                     A higher value.
                                 </li>
                                 <li class="{{ui_color.neutral}}">
-                                    An equal value.
+                                    An equal or neutral value.
                                 </li>
                                 <li class="{{ui_color.worse}}">
                                     A lower value.
@@ -52,10 +52,29 @@
                             </ul>
                         </li>
                         <li>
-                            Inputs
+                            Stats
+                            <ul>
+                                <li>
+                                    Delta - The difference between the gear stats and the character's base stats. At level 80, stats have a base value of 380 (340 for determination) which determines the default stats.
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             Materia
+                            <ul>
+                                <li>
+                                    <button id="btnAddMateriaHelp" class="btn btn-sm btn-primary btnMateria">
+                                        +
+                                    </button>
+                                    - adds the selected materia.
+                                </li>
+                                <li>
+                                    <button id="btnSubtractMateriaHelp" class="btn btn-sm btn-primary btnMateria">
+                                        -
+                                    </button>
+                                    - subtracts the selected materia.
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             Buttons
@@ -64,7 +83,7 @@
                                     Archive - Stores the current stats for comparison.
                                 </li>
                                 <li>
-                                    Revert - Takes the archived stats and sets them to the current stats.
+                                    Revert - Sets the current stats to the values stored in the archive.
                                 </li>
                             </ul>
                         </li>
@@ -81,31 +100,18 @@
             <tr>
                 <td>
                     <span>Critical Hit Materia</span><br />
-                    <table class="table table-sm">
-                        <tr>
-                            <td>
-                                <button id="btnCriticalAdd" class="btn btn-sm btn-primary" ng-click="materia_add(stats_indexes.critical)">
-                                    +
-                                </button>
-                            </td>
-                            <td>
-                                <select id="cmbCritical" class="form-control" ng-model="dps_materia_selected.critical">
-                                    <option ng-repeat="i in dps_materia" value="{{i.value}}">
-                                        {{i.tier}} - {{i.value}}
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <button id="btnCriticalSubtract" class="btn btn-sm btn-primary" ng-click="materia_subtract(stats_indexes.critical)">
-                                    -
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
+                    <button id="btnCriticalAdd" class="btn btn-sm btn-primary btnMateria" ng-click="materia_add(stats_indexes.critical)">
+                        +
+                    </button>
+                    <select id="cmbCriticalHit" class="form-control-sm" ng-model="dps_materia_selected.critical" ng-options="x.value as x.tier for x in dps_materia">
+                    </select>
+                    <button id="btnCriticalSubtract" class="btn btn-sm btn-primary btnMateria" ng-click="materia_subtract(stats_indexes.critical)">
+                        -
+                    </button>
                 </td>
                 <td class="{{ui.critical_main}}">
                     <span>Critical Hit</span><br />
-                    <input type="number" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.critical" value="" id="txtCriticalHit" />
+                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.critical" value="" id="txtCriticalHit" />
                 </td>
                 <td class="{{ui.critical_main}}">
                     <span>Critical Hit Delta</span><br />
@@ -131,31 +137,18 @@
             <tr>
                 <td>
                     <span>Determination Materia</span><br />
-                    <table class="table table-sm">
-                        <tr>
-                            <td>
-                                <button id="btnDeterminationAdd" class="btn btn-sm btn-primary" ng-click="materia_add(stats_indexes.determination)">
-                                    +
-                                </button>
-                            </td>
-                            <td>
-                                <select id="cmbDetermination" class="form-control" ng-model="dps_materia_selected.determination">
-                                    <option ng-repeat="i in dps_materia" value="{{i.value}}">
-                                        {{i.tier}} - {{i.value}}
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <button id="btnDeterminationSubtract" class="btn btn-sm btn-primary" ng-click="materia_subtract(stats_indexes.determination)">
-                                    -
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
+                    <button id="btnDeterminationAdd" class="btn btn-sm btn-primary btnMateria" ng-click="materia_add(stats_indexes.determination)">
+                        +
+                    </button>
+                    <select id="cmbDetermination" class="form-control-sm" ng-model="dps_materia_selected.determination" ng-options="x.value as x.tier for x in dps_materia">
+                    </select>
+                    <button id="btnDeterminationSubtract" class="btn btn-sm btn-primary btnMateria" ng-click="materia_subtract(stats_indexes.determination)">
+                        -
+                    </button>
                 </td>
                 <td class="{{ui.determination_main}}">
                     <span>Determination</span><br />
-                    <input type="number" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.determination" value="" id="txtDetermination" />
+                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.determination" value="" id="txtDetermination" />
                 </td>
                 <td class="{{ui.determination_main}}">
                     <span>Determination Delta</span><br />
@@ -177,31 +170,18 @@
             <tr>
                 <td>
                     <span>Direct Hit Materia</span><br />
-                    <table class="table table-sm">
-                        <tr>
-                            <td>
-                                <button id="btnDirectHitAdd" class="btn btn-sm btn-primary" ng-click="materia_add(stats_indexes.directhit)">
-                                    +
-                                </button>
-                            </td>
-                            <td>
-                                <select id="cmbDirectHit" class="form-control" ng-model="dps_materia_selected.directhit">
-                                    <option ng-repeat="i in dps_materia" value="{{i.value}}">
-                                        {{i.tier}} - {{i.value}}
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <button id="btnDirectHitSubtract" class="btn btn-sm btn-primary" ng-click="materia_subtract(stats_indexes.directhit)">
-                                    -
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
+                    <button id="btnDirectHitAdd" class="btn btn-sm btn-primary btnMateria" ng-click="materia_add(stats_indexes.directhit)">
+                        +
+                    </button>
+                    <select id="cmbDirectHit" class="form-control-sm" ng-model="dps_materia_selected.directhit" ng-options="x.value as x.tier for x in dps_materia">
+                    </select>
+                    <button id="btnDirectHitSubtract" class="btn btn-sm btn-primary btnMateria" ng-click="materia_subtract(stats_indexes.directhit)">
+                        -
+                    </button>
                 </td>
                 <td class="{{ui.directhit_main}}">
                     <span>Direct Hit</span><br />
-                    <input type="number" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.directhit" value="" id="txtDirectHit" />
+                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.directhit" value="" id="txtDirectHit" />
                 </td>
                 <td class="{{ui.directhit_main}}">
                     <span>Direct Hit Delta</span><br />
@@ -227,31 +207,18 @@
             <tr>
                 <td>
                     <span>Skill/Spell Speed Materia</span><br />
-                    <table class="table table-sm">
-                        <tr>
-                            <td>
-                                <button id="btnSkillSpeedAdd" class="btn btn-sm btn-primary" ng-click="materia_add(stats_indexes.skillspeed)">
-                                    +
-                                </button>
-                            </td>
-                            <td>
-                                <select id="cmbSkillSpeed" class="form-control" ng-model="dps_materia_selected.skillspeed">
-                                    <option ng-repeat="i in dps_materia" value="{{i.value}}">
-                                        {{i.tier}} - {{i.value}}
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <button id="btnSkillSpeedSubtract" class="btn btn-sm btn-primary" ng-click="materia_subtract(stats_indexes.skillspeed)">
-                                    -
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
+                    <button id="btnSkillSpeedAdd" class="btn btn-sm btn-primary btnMateria" ng-click="materia_add(stats_indexes.skillspeed)">
+                        +
+                    </button>
+                    <select id="cmbSkillSpeed" class="form-control-sm" ng-model="dps_materia_selected.skillspeed" ng-options="x.value as x.tier for x in dps_materia">
+                    </select>
+                    <button id="btnSkillSpeedSubtract" class="btn btn-sm btn-primary btnMateria" ng-click="materia_subtract(stats_indexes.skillspeed)">
+                        -
+                    </button>
                 </td>
                 <td class="{{ui.skillspeed_main}}">
                     <span>Skill/Spell Speed</span><br />
-                    <input type="number" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.skillspeed" value="" id="txtSkillSpeed" />
+                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.skillspeed" value="" id="txtSkillSpeed" />
                 </td>
                 <td class="{{ui.skillspeed_main}}">
                     <span>Skill/Spell Speed Delta</span><br />
@@ -275,31 +242,18 @@
             <tr>
                 <td>
                     <span>Tenacity Materia</span><br />
-                    <table class="table table-sm">
-                        <tr>
-                            <td>
-                                <button id="btnTenacityAdd" class="btn btn-sm btn-primary" ng-click="materia_add(stats_indexes.tenacity)">
-                                    +
-                                </button>
-                            </td>
-                            <td>
-                                <select id="cmbTenacity" class="form-control" ng-model="dps_materia_selected.tenacity">
-                                    <option ng-repeat="i in dps_materia" value="{{i.value}}">
-                                        {{i.tier}} - {{i.value}}
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <button id="btnTenacitySubtract" class="btn btn-sm btn-primary" ng-click="materia_subtract(stats_indexes.tenacity)">
-                                    -
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
+                    <button id="btnTenacityAdd" class="btn btn-sm btn-primary btnMateria" ng-click="materia_add(stats_indexes.tenacity)">
+                        +
+                    </button>
+                    <select id="cmbTenacity" class="form-control-sm" ng-model="dps_materia_selected.tenacity" ng-options="x.value as x.tier for x in dps_materia">
+                    </select>
+                    <button id="btnTenacitySubtract" class="btn btn-sm btn-primary btnMateria" ng-click="materia_subtract(stats_indexes.tenacity)">
+                        -
+                    </button>
                 </td>
                 <td class="{{ui.tenacity_main}}">
                     <span>Tenacity</span><br />
-                    <input type="number" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.tenacity" value="" id="txtTenacity" />
+                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.tenacity" value="" id="txtTenacity" />
                 </td>
                 <td class="{{ui.tenacity_main}}">
                     <span>Tenacity Delta</span><br />
@@ -338,30 +292,34 @@
                     <span>{{dps_stats.totaldps.toFixed(2)}}%</span>
                 </td>
             </tr>
-        </table>
-
-        <!-- --------------------------------------------------------------------- -->
-        <!-- buttons -->
-        <!-- --------------------------------------------------------------------- -->
-        <table class="table table-sm">
+            <!-- --------------------------------------------------------------------- -->
+            <!-- buttons -->
+            <!-- --------------------------------------------------------------------- -->
             <tr>
                 <td>
-                    <button class="btn btn-primary form-control" data-ng-click="archive_save()">
+                    <button class="btn btn-primary form-control btnArchive" data-ng-click="archive_save()">
                         Archive
                     </button>
                 </td>
                 <td>
-                    <button class="btn btn-primary form-control" data-ng-click="archive_revert()">
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <button class="btn btn-primary form-control btnArchive" data-ng-click="archive_revert()">
                         Revert
                     </button>
                 </td>
             </tr>
-        </table>
-
-        <!-- --------------------------------------------------------------------- -->
-        <!-- archive -->
-        <!-- --------------------------------------------------------------------- -->
-        <table class="table table-bordered table-sm">
+            <!-- --------------------------------------------------------------------- -->
+            <!-- archive -->
+            <!-- --------------------------------------------------------------------- -->
             <tr>
                 <td class="{{ui.critical_archive}}">
                     <span>Critical Hit Difference</span> <br />

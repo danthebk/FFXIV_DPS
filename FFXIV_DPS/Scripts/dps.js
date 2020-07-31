@@ -30,10 +30,10 @@ dps_app.controller("dps_controller", function ($scope, $http) {
 
         //define the materia
         $scope.dps_materia = [
-            { tier: "VIII", value: 60 },
-            { tier: "VII", value: 20 },
-            { tier: "VI", value: 40 },
-            { tier: "V", value: 12 }
+            { tier: "VIII - 60", value: 60 },
+            { tier: "VII - 20", value: 20 },
+            { tier: "VI - 40", value: 40 },
+            { tier: "V - 12", value: 12 }
         ]
 
         //selected materia object
