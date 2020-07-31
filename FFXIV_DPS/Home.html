@@ -106,15 +106,12 @@
                                             Determination and Tenacity have diminishing returns with higher values.
                                         </li>
                                         <li>
-                                            Direct hit has diminishing returns with higher values. Since direct hit only affects the rate, each additional percentage point has no effect on an ability that is already a direct hit. A Bard's Army's Paeon and Battle voice increases the party's direct hit rate by $ and 
+                                            Direct hit has diminishing returns with higher values. Since direct hit only affects the rate, each additional percentage point has no effect on an ability that is already a direct hit. A Bard's Army's Paeon and Battle voice increases the party's direct hit rate by $ and
                                         </li>
                                         <li>
                                             Skill speed has increasing returns with higher values. The closer a user's delay is equal to 0, attacks can happen exponentially more frequently. Abilities such as Ninja's Huton, Samurai's Shifu, and Monk's Greased Lightning would make skill speed more valuable.
                                         </li>
                                     </ul>
-                                </li>
-                                <li>
-                                    Future updates can also include a quick-food option. Allowing the user to select which food they're using from a list.
                                 </li>
                             </ul>
                         </li>
@@ -443,8 +440,31 @@
             </div>
             <div class="row">
                 <div class="col-2">
+                    <span class="font-weight-bold">
+                        Food:
+                    </span>
+                    <br />
+                    <select id="cmbFood" class="form-control-sm" ng-change="stats_change()" ng-model="dps_stats.food_selected" ng-options="x.name for x in food">
+                    </select>
                 </div>
                 <div class="col-2">
+                    <span class="font-weight-bold">
+                        {{dps_stats.food_selected.name}}
+                    </span>
+                    <br />
+                    <span>
+                        {{dps_stats.food_stat1}}
+                    </span>
+                    <span>
+                        {{dps_stats.food_value1}}
+                    </span>
+                    <br />
+                    <span>
+                        {{dps_stats.food_stat2}}
+                    </span>
+                    <span>
+                        {{dps_stats.food_value2}}
+                    </span>
                 </div>
                 <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
@@ -514,7 +534,7 @@
                     </span>
                     <br />
                     <span>
-                        {{dps_stats.critical - dps_stats_archive.critical}}
+                        {{dps_stats_archive.criticalDelta - dps_stats.criticalDelta}}
                     </span>
                 </div>
                 <div class="border col-2 {{ui.critical_archive}}">
@@ -587,7 +607,7 @@
                     </span>
                     <br />
                     <span>
-                        {{dps_stats.determination - dps_stats_archive.determination}}
+                        {{dps_stats_archive.determinationDelta - dps_stats.determinationDelta}}
                     </span>
                 </div>
                 <div class="border col-2 {{ui.determination_archive}}">
@@ -638,7 +658,7 @@
                     </span>
                     <br />
                     <span>
-                        {{dps_stats.directhit - dps_stats_archive.directhit}}
+                        {{dps_stats_archive.directhitDelta - dps_stats.directhitDelta}}
                     </span>
                 </div>
                 <div class="border col-2 {{ui.directhit_archive}}">
@@ -703,7 +723,7 @@
                     </span>
                     <br />
                     <span>
-                        {{dps_stats.skillspeed - dps_stats_archive.skillspeed}}
+                        {{dps_stats_archive.skillspeedDelta - dps_stats.skillspeedDelta}}
                     </span>
                 </div>
                 <div class="border col-2 {{ui.skillspeed_archive}}">
@@ -761,7 +781,7 @@
                     </span>
                     <br />
                     <span>
-                        {{dps_stats.tenacity - dps_stats_archive.tenacity}}
+                        {{dps_stats_archive.tenacityDelta - dps_stats.tenacityDelta}}
                     </span>
                 </div>
                 <div class="border col-2 {{ui.tenacity_archive}}">
@@ -811,9 +831,26 @@
                         Total DPS Difference
                     </span>
                     <br />
-                    <span>{{(dps_stats.totaldps - dps_stats_archive.totaldps).toFixed(2)}}%</span>
+                    <span>{{(dps_stats_archive.totaldps - dps_stats.totaldps).toFixed(2)}}%</span>
                 </div>
                 <div class="col-2">
+                    <span class="font-weight-bold">
+                        {{dps_stats_archive.food_selected.name}}
+                    </span>
+                    <br />
+                    <span>
+                        {{dps_stats_archive.food_stat1}}
+                    </span>
+                    <span>
+                        {{dps_stats_archive.food_value1}}
+                    </span>
+                    <br />
+                    <span>
+                        {{dps_stats_archive.food_stat2}}
+                    </span>
+                    <span>
+                        {{dps_stats_archive.food_value2}}
+                    </span>
                 </div>
                 <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
