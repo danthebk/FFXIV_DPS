@@ -20,43 +20,148 @@
 </head>
 <body>
     <div data-ng-app="dps_app" data-ng-controller="dps_controller" data-ng-init="dps_app_init()">
-        <table class="table table-bordered">
+        <!-- --------------------------------------------------------------------- -->
+        <!-- help -->
+        <!-- --------------------------------------------------------------------- -->
+        <div class="accordion" id="help_accordion">
+            <div class="card">
+                <div class="card-header" role="tab" id="help_heading">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-parent="#help_accordion" href="#help_collapse" aria-controls="collapse">
+                            Help
+                        </button>
+                    </h2>
+                </div>
+                <div id="help_collapse" class="collapse" role="tabpanel" aria-labelledby="help_heading">
+                    <ul>
+                        <li>
+                            Background Colors
+                            <ul>
+                                <li class="{{ui_color.info}}">
+                                    An information field. These are values that do not change with gear and are constants for level 80.
+                                </li>
+                                <li class="{{ui_color.better}}">
+                                    A higher value.
+                                </li>
+                                <li class="{{ui_color.neutral}}">
+                                    An equal value.
+                                </li>
+                                <li class="{{ui_color.worse}}">
+                                    A lower value.
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Inputs
+                        </li>
+                        <li>
+                            Materia
+                        </li>
+                        <li>
+                            Buttons
+                            <ul>
+                                <li>
+                                    Archive - Stores the current stats for comparison.
+                                </li>
+                                <li>
+                                    Revert - Takes the archived stats and sets them to the current stats.
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        <!-- --------------------------------------------------------------------- -->
+        <!-- main -->
+        <!-- --------------------------------------------------------------------- -->
+        <table class="table table-bordered table-sm">
             <tr>
                 <td>
-                    <span>Critical Hit</span><br />
-                    <input type="text" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.critical" value="" id="txtCriticalHit" />
+                    <span>Critical Hit Materia</span><br />
+                    <table class="table table-sm">
+                        <tr>
+                            <td>
+                                <button id="btnCriticalAdd" class="btn btn-sm btn-primary" ng-click="materia_add(stats_indexes.critical)">
+                                    +
+                                </button>
+                            </td>
+                            <td>
+                                <select id="cmbCritical" class="form-control" ng-model="dps_materia_selected.critical">
+                                    <option ng-repeat="i in dps_materia" value="{{i.value}}">
+                                        {{i.tier}} - {{i.value}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <button id="btnCriticalSubtract" class="btn btn-sm btn-primary" ng-click="materia_subtract(stats_indexes.critical)">
+                                    -
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
-                <td>
+                <td class="{{ui.critical_main}}">
+                    <span>Critical Hit</span><br />
+                    <input type="number" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.critical" value="" id="txtCriticalHit" />
+                </td>
+                <td class="{{ui.critical_main}}">
                     <span>Critical Hit Delta</span><br />
                     <span>{{dps_stats.criticalDelta}}</span>
                 </td>
-                <td class="table-info">
+                <td class="{{ui_color.info}}">
                     <span>per .1% rate+dmg</span><br />
                     <span>{{dps_base.criticalRatio}}</span>
                 </td>
                 <td>
                     <span>Rate</span><br />
-                    <span class="table-info">{{dps_base.criticalBaseRate}}</span> + <span>{{dps_stats.criticalRate}}</span>
+                    <span class="{{ui_color.info}}">{{dps_base.criticalBaseRate}}%</span> + <span class="{{ui.critical_main}}">{{dps_stats.criticalRate.toFixed(2)}}%</span>
                 </td>
                 <td>
                     <span>Damage</span><br />
-                    <span class="table-info">{{dps_base.criticalBaseDamage}}</span> + <span>{{dps_stats.criticalDamage}}</span>
+                    <span class="{{ui_color.info}}">{{dps_base.criticalBaseDamage}}</span> + <span class="{{ui.critical_main}}">{{dps_stats.criticalDamage.toFixed(2)}}</span>
                 </td>
-                <td>
+                <td class="{{ui.critical_main}}">
                     <span>Critical Hit DPS</span><br />
                     <span>{{dps_stats.criticalDPS.toFixed(2)}}%</span>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <span>Determination</span><br />
-                    <input type="text" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.determination" value="" id="txtDetermination" />
+                    <span>Determination Materia</span><br />
+                    <table class="table table-sm">
+                        <tr>
+                            <td>
+                                <button id="btnDeterminationAdd" class="btn btn-sm btn-primary" ng-click="materia_add(stats_indexes.determination)">
+                                    +
+                                </button>
+                            </td>
+                            <td>
+                                <select id="cmbDetermination" class="form-control" ng-model="dps_materia_selected.determination">
+                                    <option ng-repeat="i in dps_materia" value="{{i.value}}">
+                                        {{i.tier}} - {{i.value}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <button id="btnDeterminationSubtract" class="btn btn-sm btn-primary" ng-click="materia_subtract(stats_indexes.determination)">
+                                    -
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
-                <td>
+                <td class="{{ui.determination_main}}">
+                    <span>Determination</span><br />
+                    <input type="number" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.determination" value="" id="txtDetermination" />
+                </td>
+                <td class="{{ui.determination_main}}">
                     <span>Determination Delta</span><br />
                     <span>{{dps_stats.determinationDelta}}</span>
                 </td>
-                <td class="table-info">
+                <td class="{{ui_color.info}}">
                     <span>per .1% dps</span><br />
                     <span>{{dps_base.determinationRatio}}</span>
                 </td>
@@ -64,72 +169,143 @@
                 </td>
                 <td>
                 </td>
-                <td>
+                <td class="{{ui.determination_main}}">
                     <span>Determination DPS</span><br />
                     <span>{{dps_stats.determinationDPS.toFixed(2)}}%</span>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <span>Direct Hit</span><br />
-                    <input type="text" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.directhit" value="" id="txtDirectHit" />
+                    <span>Direct Hit Materia</span><br />
+                    <table class="table table-sm">
+                        <tr>
+                            <td>
+                                <button id="btnDirectHitAdd" class="btn btn-sm btn-primary" ng-click="materia_add(stats_indexes.directhit)">
+                                    +
+                                </button>
+                            </td>
+                            <td>
+                                <select id="cmbDirectHit" class="form-control" ng-model="dps_materia_selected.directhit">
+                                    <option ng-repeat="i in dps_materia" value="{{i.value}}">
+                                        {{i.tier}} - {{i.value}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <button id="btnDirectHitSubtract" class="btn btn-sm btn-primary" ng-click="materia_subtract(stats_indexes.directhit)">
+                                    -
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
-                <td>
+                <td class="{{ui.directhit_main}}">
+                    <span>Direct Hit</span><br />
+                    <input type="number" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.directhit" value="" id="txtDirectHit" />
+                </td>
+                <td class="{{ui.directhit_main}}">
                     <span>Direct Hit Delta</span><br />
                     <span>{{dps_stats.directhitDelta}}</span>
                 </td>
-                <td class="table-info">
+                <td class="{{ui_color.info}}">
                     <span>per .1% rate</span><br />
                     <span>{{dps_base.directhitRatio}}</span>
                 </td>
-                <td>
+                <td class="{{ui.directhit_main}}">
                     <span>Rate</span><br />
-                    <span>{{dps_stats.directhitRate}}</span>
+                    <span>{{dps_stats.directhitRate.toFixed(0)}}%</span>
                 </td>
-                <td class="table-info">
+                <td class="{{ui_color.info}}">
                     <span>Damage</span><br />
                     <span>{{dps_base.directhitBaseDamage}}</span>
                 </td>
-                <td>
-                    <span>Determination DPS</span><br />
-                    <span>{{dps_stats.determinationDPS.toFixed(2)}}%</span>
+                <td class="{{ui.directhit_main}}">
+                    <span>Direct Hit DPS</span><br />
+                    <span>{{dps_stats.directhitDPS.toFixed(2)}}%</span>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <span>Skill Speed</span><br />
-                    <input type="text" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.skillspeed" value="" id="txtSkillSpeed" />
+                    <span>Skill/Spell Speed Materia</span><br />
+                    <table class="table table-sm">
+                        <tr>
+                            <td>
+                                <button id="btnSkillSpeedAdd" class="btn btn-sm btn-primary" ng-click="materia_add(stats_indexes.skillspeed)">
+                                    +
+                                </button>
+                            </td>
+                            <td>
+                                <select id="cmbSkillSpeed" class="form-control" ng-model="dps_materia_selected.skillspeed">
+                                    <option ng-repeat="i in dps_materia" value="{{i.value}}">
+                                        {{i.tier}} - {{i.value}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <button id="btnSkillSpeedSubtract" class="btn btn-sm btn-primary" ng-click="materia_subtract(stats_indexes.skillspeed)">
+                                    -
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
-                <td>
-                    <span>Skill Speed Delta</span><br />
+                <td class="{{ui.skillspeed_main}}">
+                    <span>Skill/Spell Speed</span><br />
+                    <input type="number" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.skillspeed" value="" id="txtSkillSpeed" />
+                </td>
+                <td class="{{ui.skillspeed_main}}">
+                    <span>Skill/Spell Speed Delta</span><br />
                     <span>{{dps_stats.skillspeedDelta}}</span>
                 </td>
-
-                <td class="table-info">
+                <td class="{{ui_color.info}}">
                     <span>Base Delay</span><br />
                     <span>{{dps_base.skillspeedBase}}</span>
                 </td>
-                <td>
+                <td class="{{ui.skillspeed_main}}">
                     <span>Adjusted Delay</span><br />
                     <span>{{dps_stats.skillspeedDelay}}</span>
                 </td>
                 <td>
                 </td>
-                <td>
-                    <span>Skill Speed DPS</span><br />
+                <td class="{{ui.skillspeed_main}}">
+                    <span>Skill/Spell Speed DPS</span><br />
                     <span>{{dps_stats.skillspeedDPSImprovement.toFixed(2)}}%</span>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <span>Tenacity</span><br />
-                    <input type="text" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.tenacity" value="" id="txtTenacity" />
+                    <span>Tenacity Materia</span><br />
+                    <table class="table table-sm">
+                        <tr>
+                            <td>
+                                <button id="btnTenacityAdd" class="btn btn-sm btn-primary" ng-click="materia_add(stats_indexes.tenacity)">
+                                    +
+                                </button>
+                            </td>
+                            <td>
+                                <select id="cmbTenacity" class="form-control" ng-model="dps_materia_selected.tenacity">
+                                    <option ng-repeat="i in dps_materia" value="{{i.value}}">
+                                        {{i.tier}} - {{i.value}}
+                                    </option>
+                                </select>
+                            </td>
+                            <td>
+                                <button id="btnTenacitySubtract" class="btn btn-sm btn-primary" ng-click="materia_subtract(stats_indexes.tenacity)">
+                                    -
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
-                <td>
+                <td class="{{ui.tenacity_main}}">
+                    <span>Tenacity</span><br />
+                    <input type="number" class="form-control" data-ng-change="stats_change()" data-ng-model="dps_stats.tenacity" value="" id="txtTenacity" />
+                </td>
+                <td class="{{ui.tenacity_main}}">
                     <span>Tenacity Delta</span><br />
                     <span>{{dps_stats.tenacityDelta}}</span>
                 </td>
-                <td class="table-info">
+                <td class="{{ui_color.info}}">
                     <span>per .1% dps</span><br />
                     <span>{{dps_base.tenacityRatio}}</span>
                 </td>
@@ -137,7 +313,7 @@
                 </td>
                 <td>
                 </td>
-                <td>
+                <td class="{{ui.tenacity_main}}">
                     <span>Tenacity DPS</span><br />
                     <span>{{dps_stats.tenacityDPS.toFixed(2)}}%</span>
                 </td>
@@ -145,8 +321,10 @@
             <tr>
                 <td>
                 </td>
-                <td class="table-info">
-                    <span>Base Stats: {{dps_base.levelBase}}</span> <br/>
+                <td>
+                </td>
+                <td class="{{ui_color.info}}">
+                    <span>Base Stats: {{dps_base.levelBase}}</span> <br />
                     <span>Determination: 340</span>
                 </td>
                 <td>
@@ -155,9 +333,195 @@
                 </td>
                 <td>
                 </td>
-                <td>
+                <td class="{{ui.total_main}}">
                     <span>Total DPS</span><br />
                     <span>{{dps_stats.totaldps.toFixed(2)}}%</span>
+                </td>
+            </tr>
+        </table>
+
+        <!-- --------------------------------------------------------------------- -->
+        <!-- buttons -->
+        <!-- --------------------------------------------------------------------- -->
+        <table class="table table-sm">
+            <tr>
+                <td>
+                    <button class="btn btn-primary form-control" data-ng-click="archive_save()">
+                        Archive
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-primary form-control" data-ng-click="archive_revert()">
+                        Revert
+                    </button>
+                </td>
+            </tr>
+        </table>
+
+        <!-- --------------------------------------------------------------------- -->
+        <!-- archive -->
+        <!-- --------------------------------------------------------------------- -->
+        <table class="table table-bordered table-sm">
+            <tr>
+                <td class="{{ui.critical_archive}}">
+                    <span>Critical Hit Difference</span> <br />
+                    <span>{{dps_stats.critical - dps_stats_archive.critical}}</span>
+                </td>
+                <td class="{{ui.critical_archive}}">
+                    <span>Critical Hit</span><br />
+                    <span>{{dps_stats_archive.critical}}</span>
+                </td>
+                <td class="{{ui.critical_archive}}">
+                    <span>Critical Hit Delta</span><br />
+                    <span>{{dps_stats_archive.criticalDelta}}</span>
+                </td>
+                <td class="{{ui_color.info}}">
+                    <span>per .1% rate+dmg</span><br />
+                    <span>{{dps_base.criticalRatio}}</span>
+                </td>
+                <td>
+                    <span>Rate</span><br />
+                    <span class="{{ui_color.info}}">{{dps_base.criticalBaseRate}}%</span> + <span class="{{ui.critical_archive}}">{{dps_stats_archive.criticalRate.toFixed(2)}}%</span>
+                </td>
+                <td>
+                    <span>Damage</span><br />
+                    <span class="{{ui_color.info}}">{{dps_base.criticalBaseDamage}}</span> + <span class="{{ui.critical_archive}}">{{dps_stats_archive.criticalDamage.toFixed(2)}}</span>
+                </td>
+                <td class="{{ui.critical_archive}}">
+                    <span>Critical Hit DPS</span><br />
+                    <span>{{dps_stats_archive.criticalDPS.toFixed(2)}}%</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{ui.determination_archive}}">
+                    <span>Determination Difference</span> <br />
+                    <span>{{dps_stats.determination - dps_stats_archive.determination}}</span>
+                </td>
+                <td class="{{ui.determination_archive}}">
+                    <span>Determination</span><br />
+                    <span>{{dps_stats_archive.determination}}</span>
+                </td>
+                <td class="{{ui.determination_archive}}">
+                    <span>Determination Delta</span><br />
+                    <span>{{dps_stats_archive.determinationDelta}}</span>
+                </td>
+                <td class="{{ui_color.info}}">
+                    <span>per .1% dps</span><br />
+                    <span>{{dps_base.determinationRatio}}</span>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td class="{{ui.determination_archive}}">
+                    <span>Determination DPS</span><br />
+                    <span>{{dps_stats_archive.determinationDPS.toFixed(2)}}%</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{ui.directhit_archive}}">
+                    <span>Direct Hit Difference</span> <br />
+                    <span>{{dps_stats.directhit - dps_stats_archive.directhit}}</span>
+                </td>
+                <td class="{{ui.directhit_archive}}">
+                    <span>Direct Hit</span><br />
+                    <span>{{dps_stats_archive.directhit}}</span>
+                </td>
+                <td class="{{ui.directhit_archive}}">
+                    <span>Direct Hit Delta</span><br />
+                    <span>{{dps_stats_archive.directhitDelta}}</span>
+                </td>
+                <td class="{{ui_color.info}}">
+                    <span>per .1% rate</span><br />
+                    <span>{{dps_base.directhitRatio}}</span>
+                </td>
+                <td class="{{ui.directhit_archive}}">
+                    <span>Rate</span><br />
+                    <span>{{dps_stats_archive.directhitRate}}%</span>
+                </td>
+                <td class="{{ui_color.info}}">
+                    <span>Damage</span><br />
+                    <span>{{dps_base.directhitBaseDamage}}</span>
+                </td>
+                <td class="{{ui.directhit_archive}}">
+                    <span>Direct Hit DPS</span><br />
+                    <span>{{dps_stats_archive.determinationDPS.toFixed(2)}}%</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{ui.skillspeed_archive}}">
+                    <span>Skill/Spell Speed Difference</span> <br />
+                    <span>{{dps_stats.skillspeed - dps_stats_archive.skillspeed}}</span>
+                </td>
+                <td class="{{ui.skillspeed_archive}}">
+                    <span>Skill/Spell Speed</span><br />
+                    <span>{{dps_stats_archive.skillspeed}}</span>
+                </td>
+                <td class="{{ui.skillspeed_archive}}">
+                    <span>Skill/Spell Speed Delta</span><br />
+                    <span>{{dps_stats_archive.skillspeedDelta}}</span>
+                </td>
+                <td class="{{ui_color.info}}">
+                    <span>Base Delay</span><br />
+                    <span>{{dps_base.skillspeedBase}}</span>
+                </td>
+                <td class="{{ui.skillspeed_archive}}">
+                    <span>Adjusted Delay</span><br />
+                    <span>{{dps_stats_archive.skillspeedDelay}}</span>
+                </td>
+                <td>
+                </td>
+                <td class="{{ui.skillspeed_archive}}">
+                    <span>Skill/Spell Speed DPS</span><br />
+                    <span>{{dps_stats_archive.skillspeedDPSImprovement.toFixed(2)}}%</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{ui.tenacity_archive}}">
+                    <span>Tenacity Difference</span> <br />
+                    <span>{{dps_stats.tenacity - dps_stats_archive.tenacity}}</span>
+                </td>
+                <td class="{{ui.tenacity_archive}}">
+                    <span>Tenacity</span><br />
+                    <span>{{dps_stats_archive.tenacity}}</span>
+                </td>
+                <td class="{{ui.tenacity_archive}}">
+                    <span>Tenacity Delta</span><br />
+                    <span>{{dps_stats_archive.tenacityDelta}}</span>
+                </td>
+                <td class="{{ui_color.info}}">
+                    <span>per .1% dps</span><br />
+                    <span>{{dps_base.tenacityRatio}}</span>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td class="{{ui.tenacity_archive}}">
+                    <span>Tenacity DPS</span><br />
+                    <span>{{dps_stats_archive.tenacityDPS.toFixed(2)}}%</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="{{ui.total_archive}}">
+                    <span>Total Difference</span> <br />
+                    <span>{{(dps_stats.totaldps - dps_stats_archive.totaldps).toFixed(2)}}</span>
+                </td>
+                <td>
+                </td>
+                <td class="{{ui_color.info}}">
+                    <span>Base Stats: {{dps_base.levelBase}}</span> <br />
+                    <span>Determination: 340</span>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td class="{{ui.total_archive}}">
+                    <span>Total DPS</span><br />
+                    <span>{{dps_stats_archive.totaldps.toFixed(2)}}%</span>
                 </td>
             </tr>
         </table>
