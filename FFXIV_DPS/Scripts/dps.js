@@ -3,7 +3,11 @@ var jsmodel;
 var dps_app = angular.module("dps_app", []);
 dps_app.controller("dps_controller", function ($scope, $http) {
     $scope.dps_app_init = function () {
-        //initialize UI color constants
+        //-----------------------------------------------
+        //constants
+        //-----------------------------------------------
+
+        //initialize UI color
         $scope.ui_color = {
             better: "table-success",
             neutral: "table-default",
@@ -11,24 +15,7 @@ dps_app.controller("dps_controller", function ($scope, $http) {
             info: "table-info"
         }
 
-        //initialize UI colors
-        $scope.ui = {
-            critical_main: $scope.ui_color.neutral,
-            determination_main: $scope.ui_color.neutral,
-            directhit_main: $scope.ui_color.neutral,
-            skillspeed_main: $scope.ui_color.neutral,
-            tenacity_main: $scope.ui_color.neutral,
-            total_main: $scope.ui_color.neutral,
-
-            critical_archive: $scope.ui_color.neutral,
-            determination_archive: $scope.ui_color.neutral,
-            directhit_archive: $scope.ui_color.neutral,
-            skillspeed_archive: $scope.ui_color.neutral,
-            tenacity_archive: $scope.ui_color.neutral,
-            total_archive: $scope.ui_color.neutral
-        }
-
-        //define the materia
+        //initialize materia
         $scope.dps_materia = [
             { tier: "VIII - 60", value: 60 },
             { tier: "VII - 20", value: 20 },
@@ -36,16 +23,7 @@ dps_app.controller("dps_controller", function ($scope, $http) {
             { tier: "V - 12", value: 12 }
         ]
 
-        //selected materia object
-        $scope.dps_materia_selected = {
-            critical: 60,
-            determination: 60,
-            directhit: 60,
-            skillspeed: 60,
-            tenacity: 60
-        }
-
-        //stats index
+        //index values for each stat; used to simplify the quick-materia buttons
         $scope.stats_indexes = {
             critical: 0,
             determination: 1,
@@ -72,6 +50,40 @@ dps_app.controller("dps_controller", function ($scope, $http) {
 
             levelBase: 380
         }
+
+        //-----------------------------------------------
+        //helper models
+        //-----------------------------------------------
+
+        //default UI colors
+        $scope.ui = {
+            critical_main: $scope.ui_color.neutral,
+            determination_main: $scope.ui_color.neutral,
+            directhit_main: $scope.ui_color.neutral,
+            skillspeed_main: $scope.ui_color.neutral,
+            tenacity_main: $scope.ui_color.neutral,
+            total_main: $scope.ui_color.neutral,
+
+            critical_archive: $scope.ui_color.neutral,
+            determination_archive: $scope.ui_color.neutral,
+            directhit_archive: $scope.ui_color.neutral,
+            skillspeed_archive: $scope.ui_color.neutral,
+            tenacity_archive: $scope.ui_color.neutral,
+            total_archive: $scope.ui_color.neutral
+        }
+
+        //selected materia object
+        $scope.dps_materia_selected = {
+            critical: 60,
+            determination: 60,
+            directhit: 60,
+            skillspeed: 60,
+            tenacity: 60
+        }
+
+        //-----------------------------------------------
+        //primary models
+        //-----------------------------------------------
 
         //the player's stats
         //also the player's calculated stats
@@ -105,44 +117,17 @@ dps_app.controller("dps_controller", function ($scope, $http) {
             totaldps: 0
         }
 
-        //call the stats_change function to initialize the dps calculations
+        //call the stats_change function to initialize the dps calculations for the base stats
         //for the base stats
         $scope.stats_calculate();
 
-        //initialize the archive
-        //$scope.dps_stats_archive = {
-        //    determination: 340,
-        //    directhit: 380,
-        //    tenacity: 380,
-        //    critical: 380,
-        //    skillspeed: 380,
-
-        //    determinationDPS: 0,
-        //    determinationDelta: 0,
-
-        //    tenacityDPS: 0,
-        //    tenacityDelta: 0,
-
-        //    directhitDPS: 0,
-        //    directhitRate: 0,
-        //    directhitDelta: 0,
-
-        //    criticalDPS: 0,
-        //    criticalRate: 0,
-        //    criticalDamage: 0,
-        //    criticalDelta: 0,
-
-        //    skillspeedDPS: 0,
-        //    skillspeedDPSImprovement: 0,
-        //    skillspeedDelay: 0,
-        //    skillspeedDelta: 0,
-
-        //    totaldps: 0
-        //}
-
-        //initialize the archive
+        //initialize the archive model
         $scope.archive_save();
     }
+
+    //-----------------------------------------------
+    //primary functions; calulation and ui
+    //-----------------------------------------------
 
     //stat calculations
     $scope.stats_calculate = function () {
@@ -263,13 +248,17 @@ dps_app.controller("dps_controller", function ($scope, $http) {
         }
     }
 
-    //user adjusted their stats, recalculate
+    //user adjusted their stats, recalculate and update the ui
     $scope.stats_change = function () {
         $scope.stats_calculate();
         $scope.stats_ui();
     }
 
-    //save the archive
+    //-----------------------------------------------
+    //archive handling
+    //-----------------------------------------------
+
+    //save the main object to the archive
     $scope.archive_save = function () {
         $scope.dps_stats_archive = {
             determination: $scope.dps_stats.determination,
@@ -304,7 +293,7 @@ dps_app.controller("dps_controller", function ($scope, $http) {
         $scope.stats_change();
     }
 
-    //rever the archive
+    //load the main object with the archived data
     $scope.archive_revert = function () {
         $scope.dps_stats = {
             determination: $scope.dps_stats_archive.determination,
@@ -339,7 +328,10 @@ dps_app.controller("dps_controller", function ($scope, $http) {
         $scope.stats_change();
     }
 
+    //-----------------------------------------------
     //materia handling
+    //-----------------------------------------------
+    //add
     $scope.materia_add = function (stat) {
         if ($scope.stats_indexes.critical == stat) {
             $scope.dps_stats.critical = $scope.dps_stats.critical + $scope.dps_materia_selected.critical;
@@ -355,7 +347,7 @@ dps_app.controller("dps_controller", function ($scope, $http) {
 
         $scope.stats_change();
     }
-
+    //subtract
     $scope.materia_subtract = function (stat) {
         if ($scope.stats_indexes.critical == stat) {
             $scope.dps_stats.critical = $scope.dps_stats.critical - $scope.dps_materia_selected.critical;

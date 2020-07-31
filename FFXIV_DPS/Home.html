@@ -55,7 +55,7 @@
                             Stats
                             <ul>
                                 <li>
-                                    Delta - The difference between the gear stats and the character's base stats. At level 80, stats have a base value of 380 (340 for determination) which determines the default stats.
+                                    Delta - The difference between the gear stats and the character's base stats. At level 80, stats have a base value of 380 (340 for determination) which determines the dps floor. The base values do not have any affect on the calculations. A base 380 direct hit will result in a 0% direct hit rate and 380 skill/spell speed will result in a 2.5 second delay.
                                 </li>
                             </ul>
                         </li>
@@ -692,7 +692,7 @@
                     </span>
                     <br />
                     <span>
-                        {{dps_stats_archive.determinationDPS.toFixed(2)}}%
+                        {{dps_stats_archive.directhitDPS.toFixed(2)}}%
                     </span>
                 </div>
             </div>
