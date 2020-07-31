@@ -6,7 +6,7 @@ dps_app.controller("dps_controller", function ($scope, $http) {
         //initialize UI color constants
         $scope.ui_color = {
             better: "table-success",
-            neutral: "table-primary",
+            neutral: "table-default",
             worse: "table-danger",
             info: "table-info"
         }
