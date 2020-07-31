@@ -38,7 +38,7 @@
                             Background Colors
                             <ul>
                                 <li class="{{ui_color.info}}">
-                                    An information field. These are values that do not change with gear and are constants at level 80.
+                                    An information value. These are values that do not change with gear and are constants at level 80.
                                 </li>
                                 <li class="{{ui_color.better}}">
                                     A higher value.
@@ -66,13 +66,13 @@
                                     <button id="btnAddMateriaHelp" class="btn btn-sm btn-primary btnMateria">
                                         +
                                     </button>
-                                    - adds the selected materia.
+                                    - adds the value of the selected materia.
                                 </li>
                                 <li>
                                     <button id="btnSubtractMateriaHelp" class="btn btn-sm btn-primary btnMateria">
                                         -
                                     </button>
-                                    - subtracts the selected materia.
+                                    - subtracts the value of the selected materia.
                                 </li>
                             </ul>
                         </li>
@@ -84,6 +84,37 @@
                                 </li>
                                 <li>
                                     Revert - Sets the current stats to the values stored in the archive.
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Notes
+                            <ul>
+                                <li>
+                                    Calculations are based on a character at level 80. All base values (indicated by an information value) are different for lower levels.
+                                </li>
+                                <li>
+                                    This tool is only useful for comparing the secondary stats on equipment assuming they have the same item level. Generally, an item with a higher item level will almost always result in more DPS.
+                                </li>
+                                <li>
+                                    The current calculations do not account for character buffs. Certain stats have different levels of effectiveness when combined with abilities. This functionality can be added in a future update. Examples of how abilities affect calculations:
+                                    <ul>
+                                        <li>
+                                            Critical hit has increasing returns with higher values. It increases both the critical hit rate as well as critical hit damage. A Bard's Wanderer's Minuet or a Dragoon's Battle Litany increases the party's critical hit rate by 2% and 10% respectively. Critical hit is more valuable for the duration these buffs are active.
+                                        </li>
+                                        <li>
+                                            Determination and Tenacity have diminishing returns with higher values.
+                                        </li>
+                                        <li>
+                                            Direct hit has diminishing returns with higher values. Since direct hit only affects the rate, each additional percentage point has no effect on an ability that is already a direct hit. A Bard's Army's Paeon and Battle voice increases the party's direct hit rate by $ and 
+                                        </li>
+                                        <li>
+                                            Skill speed has increasing returns with higher values. The closer a user's delay is equal to 0, attacks can happen exponentially more frequently. Abilities such as Ninja's Huton, Samurai's Shifu, and Monk's Greased Lightning would make skill speed more valuable.
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    Future updates can also include a quick-food option. Allowing the user to select which food they're using from a list.
                                 </li>
                             </ul>
                         </li>
@@ -337,7 +368,7 @@
                 </div>
                 <div class="border col-1 {{ui.skillspeed_main}}">
                     <span class="font-weight-bold">
-                        Adjusted Delay
+                        Delay
                     </span>
                     <br />
                     <span>
@@ -704,7 +735,7 @@
                 </div>
                 <div class="border col-1 {{ui.skillspeed_archive}}">
                     <span class="font-weight-bold">
-                        Adjusted Delay
+                        Delay
                     </span>
                     <br />
                     <span>
