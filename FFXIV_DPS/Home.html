@@ -32,7 +32,7 @@
                         </button>
                     </h2>
                 </div>
-                <div id="help_collapse" class="collapse" role="tabpanel" aria-labelledby="help_heading">
+                <div id="help_collapse" class="border collapse" role="tabpanel" aria-labelledby="help_heading">
                     <ul>
                         <li>
                             Background Colors
@@ -98,7 +98,7 @@
         <!-- --------------------------------------------------------------------- -->
         <div class="table">
             <div class="row">
-                <div class="col-2">
+                <div class="border col-2">
                     <span class="font-weight-bold">
                         Critical Hit Materia
                     </span>
@@ -112,14 +112,14 @@
                         -
                     </button>
                 </div>
-                <div class="col-2 {{ui.critical_main}}">
+                <div class="border col-2 {{ui.critical_main}}">
                     <span class="font-weight-bold">
                         Critical Hit
                     </span>
                     <br />
                     <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.critical" value="" id="txtCriticalHit" />
                 </div>
-                <div class="col-2 {{ui.critical_main}}">
+                <div class="border col-2 {{ui.critical_main}}">
                     <span class="font-weight-bold">
                         Critical Hit Delta
                     </span>
@@ -128,7 +128,7 @@
                         {{dps_stats.criticalDelta}}
                     </span>
                 </div>
-                <div class="col-2 {{ui_color.info}}">
+                <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
                         per .1% rate+dmg
                     </span>
@@ -137,7 +137,7 @@
                         {{dps_base.criticalRatio}}
                     </span>
                 </div>
-                <div class="col-1">
+                <div class="border col-1">
                     <span class="font-weight-bold">
                         Rate
                     </span>
@@ -150,7 +150,7 @@
                         {{dps_stats.criticalRate.toFixed(2)}}%
                     </span>
                 </div>
-                <div class="col-1">
+                <div class="border col-1">
                     <span class="font-weight-bold">
                         Damage
                     </span>
@@ -163,7 +163,7 @@
                         {{dps_stats.criticalDamage.toFixed(2)}}
                     </span>
                 </div>
-                <div class="col-2 {{ui.critical_main}}">
+                <div class="border col-2 {{ui.critical_main}}">
                     <span class="font-weight-bold">
                         Critical Hit DPS
                     </span>
@@ -174,7 +174,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-2">
+                <div class="border col-2">
                     <span class="font-weight-bold">
                         Determination Materia
                     </span>
@@ -188,14 +188,14 @@
                         -
                     </button>
                 </div>
-                <div class="col-2 {{ui.determination_main}}">
+                <div class="border col-2 {{ui.determination_main}}">
                     <span class="font-weight-bold">
                         Determination
                     </span>
                     <br />
                     <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.determination" value="" id="txtDetermination" />
                 </div>
-                <div class="col-2 {{ui.determination_main}}">
+                <div class="border col-2 {{ui.determination_main}}">
                     <span class="font-weight-bold">
                         Determination Delta
                     </span>
@@ -204,7 +204,7 @@
                         {{dps_stats.determinationDelta}}
                     </span>
                 </div>
-                <div class="col-2 {{ui_color.info}}">
+                <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
                         per .1% dps
                     </span>
@@ -217,7 +217,7 @@
                 </div>
                 <div class="col-1">
                 </div>
-                <div class="col-2 {{ui.determination_main}}">
+                <div class="border col-2 {{ui.determination_main}}">
                     <span class="font-weight-bold">
                         Determination DPS
                     </span>
@@ -228,7 +228,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-2">
+                <div class="border col-2">
                     <span class="font-weight-bold">
                         Direct Hit Materia
                     </span>
@@ -242,14 +242,14 @@
                         -
                     </button>
                 </div>
-                <div class="col-2 {{ui.directhit_main}}">
+                <div class="border col-2 {{ui.directhit_main}}">
                     <span class="font-weight-bold">
                         Direct Hit
                     </span>
                     <br />
                     <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.directhit" value="" id="txtDirectHit" />
                 </div>
-                <div class="col-2 {{ui.directhit_main}}">
+                <div class="border col-2 {{ui.directhit_main}}">
                     <span class="font-weight-bold">
                         Direct Hit Delta
                     </span>
@@ -258,7 +258,7 @@
                         {{dps_stats.directhitDelta}}
                     </span>
                 </div>
-                <div class="col-2 {{ui_color.info}}">
+                <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
                         per .1% rate
                     </span>
@@ -267,7 +267,7 @@
                         {{dps_base.directhitRatio}}
                     </span>
                 </div>
-                <div class="col-1 {{ui.directhit_main}}">
+                <div class="border col-1 {{ui.directhit_main}}">
                     <span class="font-weight-bold">
                         Rate
                     </span>
@@ -276,7 +276,7 @@
                         {{dps_stats.directhitRate.toFixed(0)}}%
                     </span>
                 </div>
-                <div class="col-1 {{ui_color.info}}">
+                <div class="border col-1 {{ui_color.info}}">
                     <span class="font-weight-bold">
                         Damage
                     </span>
@@ -285,7 +285,7 @@
                         {{dps_base.directhitBaseDamage}}
                     </span>
                 </div>
-                <div class="col-2 {{ui.directhit_main}}">
+                <div class="border col-2 {{ui.directhit_main}}">
                     <span class="font-weight-bold">
                         Direct Hit DPS
                     </span>
@@ -296,7 +296,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-2">
+                <div class="border col-2">
                     <span class="font-weight-bold">
                         Skill/Spell Speed Materia
                     </span>
@@ -310,14 +310,14 @@
                         -
                     </button>
                 </div>
-                <div class="col-2 {{ui.skillspeed_main}}">
+                <div class="border col-2 {{ui.skillspeed_main}}">
                     <span class="font-weight-bold">
                         Skill/Spell Speed
                     </span>
                     <br />
                     <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.skillspeed" value="" id="txtSkillSpeed" />
                 </div>
-                <div class="col-2 {{ui.skillspeed_main}}">
+                <div class="border col-2 {{ui.skillspeed_main}}">
                     <span class="font-weight-bold">
                         Skill/Spell Speed Delta
                     </span>
@@ -326,7 +326,7 @@
                         {{dps_stats.skillspeedDelta}}
                     </span>
                 </div>
-                <div class="col-2 {{ui_color.info}}">
+                <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
                         Base Delay
                     </span>
@@ -335,7 +335,7 @@
                         {{dps_base.skillspeedBase}}
                     </span>
                 </div>
-                <div class="col-1 {{ui.skillspeed_main}}">
+                <div class="border col-1 {{ui.skillspeed_main}}">
                     <span class="font-weight-bold">
                         Adjusted Delay
                     </span>
@@ -346,7 +346,7 @@
                 </div>
                 <div class="col-1">
                 </div>
-                <div class="col-2 {{ui.skillspeed_main}}">
+                <div class="border col-2 {{ui.skillspeed_main}}">
                     <span class="font-weight-bold">
                         Skill/Spell Speed DPS
                     </span>
@@ -357,7 +357,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-2">
+                <div class="border col-2">
                     <span class="font-weight-bold">
                         Tenacity Materia
                     </span>
@@ -371,14 +371,14 @@
                         -
                     </button>
                 </div>
-                <div class="col-2 {{ui.tenacity_main}}">
+                <div class="border col-2 {{ui.tenacity_main}}">
                     <span class="font-weight-bold">
                         Tenacity
                     </span>
                     <br />
                     <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.tenacity" value="" id="txtTenacity" />
                 </div>
-                <div class="col-2 {{ui.tenacity_main}}">
+                <div class="border col-2 {{ui.tenacity_main}}">
                     <span class="font-weight-bold">
                         Tenacity Delta
                     </span>
@@ -387,7 +387,7 @@
                         {{dps_stats.tenacityDelta}}
                     </span>
                 </div>
-                <div class="col-2 {{ui_color.info}}">
+                <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
                         per .1% dps
                     </span>
@@ -400,7 +400,7 @@
                 </div>
                 <div class="col-1">
                 </div>
-                <div class="col-2 {{ui.tenacity_main}}">
+                <div class="border col-2 {{ui.tenacity_main}}">
                     <span class="font-weight-bold">
                         Tenacity DPS
                     </span>
@@ -415,7 +415,7 @@
                 </div>
                 <div class="col-2">
                 </div>
-                <div class="col-2 {{ui_color.info}}">
+                <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
                         Base Stats:
                     </span>
@@ -436,7 +436,7 @@
                 </div>
                 <div class="col-1">
                 </div>
-                <div class="col-2 {{ui.total_main}}">
+                <div class="border col-2 {{ui.total_main}}">
                     <span class="font-weight-bold">
                         Total DPS
                     </span>
@@ -477,7 +477,7 @@
             <!-- archive -->
             <!-- --------------------------------------------------------------------- -->
             <div class="row">
-                <div class="col-2 {{ui.critical_archive}}">
+                <div class="border col-2 {{ui.critical_archive}}">
                     <span class="font-weight-bold">
                         Critical Hit Difference
                     </span>
@@ -486,7 +486,7 @@
                         {{dps_stats.critical - dps_stats_archive.critical}}
                     </span>
                 </div>
-                <div class="col-2 {{ui.critical_archive}}">
+                <div class="border col-2 {{ui.critical_archive}}">
                     <span class="font-weight-bold">
                         Critical Hit
                     </span>
@@ -495,7 +495,7 @@
                         {{dps_stats_archive.critical}}
                     </span>
                 </div>
-                <div class="col-2 {{ui.critical_archive}}">
+                <div class="border col-2 {{ui.critical_archive}}">
                     <span class="font-weight-bold">
                         Critical Hit Delta
                     </span>
@@ -504,7 +504,7 @@
                         {{dps_stats_archive.criticalDelta}}
                     </span>
                 </div>
-                <div class="col-2 {{ui_color.info}}">
+                <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
                         per .1% rate+dmg
                     </span>
@@ -513,7 +513,7 @@
                         {{dps_base.criticalRatio}}
                     </span>
                 </div>
-                <div class="col-1">
+                <div class="border col-1">
                     <span class="font-weight-bold">
                         Rate
                     </span>
@@ -526,7 +526,7 @@
                         {{dps_stats_archive.criticalRate.toFixed(2)}}%
                     </span>
                 </div>
-                <div class="col-1">
+                <div class="border col-1">
                     <span class="font-weight-bold">
                         Damage
                     </span>
@@ -539,7 +539,7 @@
                         {{dps_stats_archive.criticalDamage.toFixed(2)}}
                     </span>
                 </div>
-                <div class="col-2 {{ui.critical_archive}}">
+                <div class="border col-2 {{ui.critical_archive}}">
                     <span class="font-weight-bold">
                         Critical Hit DPS
                     </span>
@@ -550,7 +550,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-2 {{ui.determination_archive}}">
+                <div class="border col-2 {{ui.determination_archive}}">
                     <span class="font-weight-bold">
                         Determination Difference
                     </span>
@@ -559,7 +559,7 @@
                         {{dps_stats.determination - dps_stats_archive.determination}}
                     </span>
                 </div>
-                <div class="col-2 {{ui.determination_archive}}">
+                <div class="border col-2 {{ui.determination_archive}}">
                     <span class="font-weight-bold">
                         Determination
                     </span>
@@ -568,7 +568,7 @@
                         {{dps_stats_archive.determination}}
                     </span>
                 </div>
-                <div class="col-2 {{ui.determination_archive}}">
+                <div class="border col-2 {{ui.determination_archive}}">
                     <span class="font-weight-bold">
                         Determination Delta
                     </span>
@@ -577,7 +577,7 @@
                         {{dps_stats_archive.determinationDelta}}
                     </span>
                 </div>
-                <div class="col-2 {{ui_color.info}}">
+                <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
                         per .1% dps
                     </span>
@@ -590,7 +590,7 @@
                 </div>
                 <div class="col-1">
                 </div>
-                <div class="col-2 {{ui.determination_archive}}">
+                <div class="border col-2 {{ui.determination_archive}}">
                     <span class="font-weight-bold">
                         Determination DPS
                     </span>
@@ -601,7 +601,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-2 {{ui.directhit_archive}}">
+                <div class="border col-2 {{ui.directhit_archive}}">
                     <span class="font-weight-bold">
                         Direct Hit Difference
                     </span>
@@ -610,7 +610,7 @@
                         {{dps_stats.directhit - dps_stats_archive.directhit}}
                     </span>
                 </div>
-                <div class="col-2 {{ui.directhit_archive}}">
+                <div class="border col-2 {{ui.directhit_archive}}">
                     <span class="font-weight-bold">
                         Direct Hit
                     </span>
@@ -619,7 +619,7 @@
                         {{dps_stats_archive.directhit}}
                     </span>
                 </div>
-                <div class="col-2 {{ui.directhit_archive}}">
+                <div class="border col-2 {{ui.directhit_archive}}">
                     <span class="font-weight-bold">
                         Direct Hit Delta
                     </span>
@@ -628,7 +628,7 @@
                         {{dps_stats_archive.directhitDelta}}
                     </span>
                 </div>
-                <div class="col-2 {{ui_color.info}}">
+                <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
                         per .1% rate
                     </span>
@@ -637,7 +637,7 @@
                         {{dps_base.directhitRatio}}
                     </span>
                 </div>
-                <div class="col-1 {{ui.directhit_archive}}">
+                <div class="border col-1 {{ui.directhit_archive}}">
                     <span class="font-weight-bold">
                         Rate
                     </span>
@@ -646,7 +646,7 @@
                         {{dps_stats_archive.directhitRate}}%
                     </span>
                 </div>
-                <div class="col-1 {{ui_color.info}}">
+                <div class="border col-1 {{ui_color.info}}">
                     <span class="font-weight-bold">
                         Damage
                     </span>
@@ -655,7 +655,7 @@
                         {{dps_base.directhitBaseDamage}}
                     </span>
                 </div>
-                <div class="col-2 {{ui.directhit_archive}}">
+                <div class="border col-2 {{ui.directhit_archive}}">
                     <span class="font-weight-bold">
                         Direct Hit DPS
                     </span>
@@ -666,7 +666,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-2 {{ui.skillspeed_archive}}">
+                <div class="border col-2 {{ui.skillspeed_archive}}">
                     <span class="font-weight-bold">
                         Skill/Spell Speed Difference
                     </span>
@@ -675,7 +675,7 @@
                         {{dps_stats.skillspeed - dps_stats_archive.skillspeed}}
                     </span>
                 </div>
-                <div class="col-2 {{ui.skillspeed_archive}}">
+                <div class="border col-2 {{ui.skillspeed_archive}}">
                     <span class="font-weight-bold">
                         Skill/Spell Speed
                     </span>
@@ -684,7 +684,7 @@
                         {{dps_stats_archive.skillspeed}}
                     </span>
                 </div>
-                <div class="col-2 {{ui.skillspeed_archive}}">
+                <div class="border col-2 {{ui.skillspeed_archive}}">
                     <span class="font-weight-bold">
                         Skill/Spell Speed Delta
                     </span>
@@ -693,7 +693,7 @@
                         {{dps_stats_archive.skillspeedDelta}}
                     </span>
                 </div>
-                <div class="col-2 {{ui_color.info}}">
+                <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
                         Base Delay
                     </span>
@@ -702,7 +702,7 @@
                         {{dps_base.skillspeedBase}}
                     </span>
                 </div>
-                <div class="col-1 {{ui.skillspeed_archive}}">
+                <div class="border col-1 {{ui.skillspeed_archive}}">
                     <span class="font-weight-bold">
                         Adjusted Delay
                     </span>
@@ -713,7 +713,7 @@
                 </div>
                 <div class="col-1">
                 </div>
-                <div class="col-2 {{ui.skillspeed_archive}}">
+                <div class="border col-2 {{ui.skillspeed_archive}}">
                     <span class="font-weight-bold">
                         Skill/Spell Speed DPS
                     </span>
@@ -724,7 +724,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-2 {{ui.tenacity_archive}}">
+                <div class="border col-2 {{ui.tenacity_archive}}">
                     <span class="font-weight-bold">
                         Tenacity Difference
                     </span>
@@ -733,7 +733,7 @@
                         {{dps_stats.tenacity - dps_stats_archive.tenacity}}
                     </span>
                 </div>
-                <div class="col-2 {{ui.tenacity_archive}}">
+                <div class="border col-2 {{ui.tenacity_archive}}">
                     <span class="font-weight-bold">
                         Tenacity
                     </span>
@@ -742,7 +742,7 @@
                         {{dps_stats_archive.tenacity}}
                     </span>
                 </div>
-                <div class="col-2 {{ui.tenacity_archive}}">
+                <div class="border col-2 {{ui.tenacity_archive}}">
                     <span class="font-weight-bold">
                         Tenacity Delta
                     </span>
@@ -751,7 +751,7 @@
                         {{dps_stats_archive.tenacityDelta}}
                     </span>
                 </div>
-                <div class="col-2 {{ui_color.info}}">
+                <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
                         per .1% dps
                     </span>
@@ -764,7 +764,7 @@
                 </div>
                 <div class="col-1">
                 </div>
-                <div class="col-2 {{ui.tenacity_archive}}">
+                <div class="border col-2 {{ui.tenacity_archive}}">
                     <span class="font-weight-bold">
                         Tenacity DPS
                     </span>
@@ -775,7 +775,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-2 {{ui.total_archive}}">
+                <div class="border col-2 {{ui.total_archive}}">
                     <span class="font-weight-bold">
                         Total DPS Difference
                     </span>
@@ -784,7 +784,7 @@
                 </div>
                 <div class="col-2">
                 </div>
-                <div class="col-2 {{ui_color.info}}">
+                <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
                         Base Stats:
                     </span>
@@ -805,7 +805,7 @@
                 </div>
                 <div class="col-1">
                 </div>
-                <div class="col-2 {{ui.total_archive}}">
+                <div class="border col-2 {{ui.total_archive}}">
                     <span class="font-weight-bold">
                         Total DPS
                     </span>
