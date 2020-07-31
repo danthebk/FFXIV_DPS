@@ -122,6 +122,83 @@
         <br />
 
         <!-- --------------------------------------------------------------------- -->
+        <!-- buffs -->
+        <!-- --------------------------------------------------------------------- -->
+        <div class="accordion" id="buffs_accordion">
+            <div class="card">
+                <div class="card-header" role="tab" id="buffs_heading">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-parent="#buffs_accordion" href="#buffs_collapse" aria-controls="collapse">
+                            Buffs
+                        </button>
+                    </h2>
+                </div>
+                <div id="buffs_collapse" class="border collapse" role="tabpanel" aria-labelledby="buffs_heading">
+                    <ul>
+                        <li>
+                            Buffs are still experimental and a work in progress. The numbers may not be completely accurate.
+                        </li>
+                        <li>
+                            Individual Buffs
+                            <ul>
+                                <li>
+                                    Warrior
+                                    <ul>
+                                        <li>
+                                            <input id="chkStormsEye" type="checkbox" ng-model="dps_stats.stormseye" ng-change="stats_change()" /> Storm's Eye <br />
+                                            10% DPS <br />
+                                            Uptime: 100%.
+                                        </li>
+                                        <li>
+                                            <input id="chkInnerRelease" type="checkbox" ng-model="dps_stats.innerrelease" ng-change="stats_change()" /> Inner Release <br />
+                                            100% Critical Hit Rate, 100% Direct Hit Rate <br />
+                                            Duration: 10 seconds; Recast: 90 seconds.
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            Raid Buffs
+                            <ul>
+                                <li>
+                                    Bard
+                                    <ul>
+                                        <li>
+                                            <input id="chkMagesBallad" type="checkbox" ng-model="dps_stats.magesballad" ng-change="stats_change()" /> Mage's Ballad <br />
+                                            <input id="chkMagesBalladShort" type="checkbox" ng-model="dps_stats.magesballadShort" ng-change="stats_change()" /> 20 Second Duration <br/>
+                                            1% DPS <br />
+                                            Duration: 30 seconds; Recast: 80 seconds.
+                                        </li>
+                                        <li>
+                                            <input id="chkArmysPaeon" type="checkbox" ng-model="dps_stats.armyspaeon" ng-change="stats_change()" /> Army's Paeon <br />
+                                            <input id="chkArmysPaeonShort" type="checkbox" ng-model="dps_stats.armyspaeonShort" ng-change="stats_change()" /> 20 Second Duration <br />
+                                            3% Direct Hit Rate <br />
+                                            Duration: 30 seconds; Recast: 80 seconds.
+                                        </li>
+                                        <li>
+                                            <input id="chkWanderersMinuet" type="checkbox" ng-model="dps_stats.wanderersminuet" ng-change="stats_change()" /> Wanderer's Minuet<br />
+                                            <input id="chkWanderersMinuetShort" type="checkbox" ng-model="dps_stats.wanderersminuetShort" ng-change="stats_change()" /> 20 Second Duration <br />
+                                            2% Critical Hit Rate <br />
+                                            Duration: 30 seconds; Recast: 80 seconds.
+                                        </li>
+                                        <li>
+                                            <input id="chkBattleVoice" type="checkbox" ng-model="dps_stats.battlevoice" ng-change="stats_change()" /> Battle Voice <br />
+                                            20% Direct Hit Rate <br />
+                                            Duration: 20 seconds; Recast: 180 seconds.
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <br />
+
+
+        <!-- --------------------------------------------------------------------- -->
         <!-- main -->
         <!-- --------------------------------------------------------------------- -->
         <div class="table">
@@ -176,6 +253,10 @@
                     +
                     <span class="{{ui.critical_main}}">
                         {{dps_stats.criticalRate.toFixed(2)}}%
+                    </span>
+                    +
+                    <span class="{{ui.critical_main}}">
+                        {{dps_stats.criticalhitRateBuff.toFixed(2)}}%
                     </span>
                 </div>
                 <div class="border col-1">
@@ -302,6 +383,10 @@
                     <br />
                     <span>
                         {{dps_stats.directhitRate.toFixed(0)}}%
+                    </span>
+                    +
+                    <span class="{{ui.directhit_main}}">
+                        {{dps_stats.directhitRateBuff.toFixed(2)}}%
                     </span>
                 </div>
                 <div class="border col-1 {{ui_color.info}}">
