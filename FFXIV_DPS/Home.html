@@ -14,12 +14,15 @@
     <script src="boostrap/js/bootstrap.min.js"></script>
 
     <!-- content -->
-    <script src="Scripts/dps.js"></script>
+    <script src="Scripts/dps_main.js"></script>
+    <script src="Scripts/dps_controller.js"></script>
+    <script src="Scripts/dps_model.js"></script>
+
     <script src="Scripts/main.js"></script>
     <link href="Content/main.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <div data-ng-app="dps_app" data-ng-controller="dps_controller" data-ng-init="dps_app_init()">
+    <div data-ng-app="dps_app" data-ng-controller="dps_controller">
         <!-- --------------------------------------------------------------------- -->
         <!-- help -->
         <!-- --------------------------------------------------------------------- -->
@@ -197,7 +200,6 @@
         </div>
         <br />
 
-
         <!-- --------------------------------------------------------------------- -->
         <!-- main -->
         <!-- --------------------------------------------------------------------- -->
@@ -265,11 +267,11 @@
                     </span>
                     <br />
                     <span class="{{ui_color.info}}">
-                        {{dps_base.criticalBaseDamage}}
+                        {{dps_base.criticalBaseDamage}}%
                     </span>
                     +
                     <span class="{{ui.critical_main}}">
-                        {{dps_stats.criticalDamage.toFixed(2)}}
+                        {{dps_stats.criticalDamage.toFixed(2)}}%
                     </span>
                 </div>
                 <div class="border col-2 {{ui.critical_main}}">
@@ -668,11 +670,11 @@
                     </span>
                     <br />
                     <span class="{{ui_color.info}}">
-                        {{dps_base.criticalBaseDamage}}
+                        {{dps_base.criticalBaseDamage}}%
                     </span>
                     +
                     <span class="{{ui.critical_archive}}">
-                        {{dps_stats_archive.criticalDamage.toFixed(2)}}
+                        {{dps_stats_archive.criticalDamage.toFixed(2)}}%
                     </span>
                 </div>
                 <div class="border col-2 {{ui.critical_archive}}">

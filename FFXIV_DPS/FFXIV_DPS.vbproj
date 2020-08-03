@@ -98,7 +98,9 @@
     <Content Include="boostrap\js\bootstrap.min.js" />
     <Content Include="Content\main.css" />
     <Content Include="Home.html" />
-    <Content Include="Scripts\dps.js" />
+    <Content Include="Scripts\dps_main.js" />
+    <Content Include="Scripts\dps_controller.js" />
+    <Content Include="Scripts\dps_model.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Web.config" />
