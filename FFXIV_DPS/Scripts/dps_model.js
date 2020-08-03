@@ -399,7 +399,7 @@ dps_app.dps_model = function ($scope) {
         armyspaeonPriority: 2,
         wanderersminuet: false,
         wanderersminuetShort: false,
-        wanderersminuetPriotity: 0,
+        wanderersminuetPriority: 0,
         battlevoice: false,
 
         //input stats
@@ -408,11 +408,6 @@ dps_app.dps_model = function ($scope) {
         tenacity: 380,
         critical: 380,
         skillspeed: 380,
-
-        //buffed stats
-        directhitRateBuff: 0,
-        criticalhitRateBuff: 0,
-        dpsBuff: 0,
 
         //calculated stats
         determinationDPS: 0,
@@ -434,7 +429,9 @@ dps_app.dps_model = function ($scope) {
         skillspeedDPSImprovement: 0,
         skillspeedDelay: 0,
         skillspeedDelta: 0,
+        skillspeedHits: 0,
 
+        buffDPS:0,
         totaldps: 0
     }
 

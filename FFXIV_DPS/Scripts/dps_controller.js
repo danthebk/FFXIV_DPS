@@ -120,93 +120,76 @@ dps_app.dps_controller = function ($scope) {
         }
     }
 
-    //TODO: remove magic numbers
-    //buff calculations
-    $scope.buffs_calculate = function () {
-        //re-initialize the variables
-        $scope.dps_stats.criticalhitRateBuff = 0;
-        $scope.dps_stats.directhitRateBuff = 0;
-        $scope.dps_stats.dpsBuff = 0;
-
-        //warrior
-        //storms eye
-        if ($scope.dps_stats.stormseye) {
-            //10% damage times uptime over 100%; defaulting to 100% uptime, but can be changed into an input
-            $scope.dps_stats.dpsBuff = $scope.dps_stats.dpsBuff + (10 * (100 / 100));
-        }
-
-        //inner release
-        if ($scope.dps_stats.innerrelease) {
-            //100 = flat percentage; 10 = duration, 90 = recast; 1/9 uptime.
-            $scope.dps_stats.criticalhitRateBuff = $scope.dps_stats.criticalhitRateBuff + (100 * (10 / 90));
-            $scope.dps_stats.directhitRateBuff = $scope.dps_stats.directhitRateBuff + (100 * (10 / 90));
-        }
-
-        //bard
-        //mage's ballad
-        if ($scope.dps_stats.magesballad) {
-            var duration = 30;
-            if ($scope.dps_stats.magesballadShort) {
-                duration = 20;
-            }
-            $scope.dps_stats.dpsBuff = $scope.dps_stats.dpsBuff + (1 * (duration / 80));
-        }
-        //army's paeon
-        if ($scope.dps_stats.armyspaeon) {
-            var duration = 30;
-            if ($scope.dps_stats.armyspaeonShort) {
-                duration = 20;
-            }
-            $scope.dps_stats.directhitRateBuff = $scope.dps_stats.directhitRateBuff + (2 * (duration / 80));
-        }
-        //wanderer's minuet
-        if ($scope.dps_stats.wanderersminuet) {
-            var duration = 30;
-            if ($scope.dps_stats.wanderersminuetShort) {
-                duration = 20;
-            }
-            $scope.dps_stats.criticalhitRateBuff = $scope.dps_stats.criticalhitRateBuff + (3 * (duration / 80));
-        }
-        //battle voice
-        if ($scope.dps_stats.battlevoice) {
-            $scope.dps_stats.directhitRateBuff = $scope.dps_stats.directhitRateBuff + (20 * (20 / 180));
-        }
-    }
-
-    //buff UI
-    $scope.buffs_ui = function () {
-
-    }
-
-    //stat calculations
     $scope.stats_calculate = function () {
-        //critical hit
+        //deltas
         $scope.dps_stats.criticalDelta = $scope.dps_stats.critical - $scope.dps_base.levelBase + $scope.dps_stats.food_selected.criticalhitValue;
-        $scope.dps_stats.criticalRate = (($scope.dps_stats.criticalDelta / $scope.dps_base.criticalRatio) * .1) + $scope.dps_stats.criticalhitRateBuff;
-        $scope.dps_stats.criticalDamage = ($scope.dps_stats.criticalDelta / $scope.dps_base.criticalRatio) * .1;
-        $scope.dps_stats.criticalDPS = (($scope.dps_base.criticalBaseRate + $scope.dps_stats.criticalRate) / 100) * ($scope.dps_base.criticalBaseDamage + $scope.dps_stats.criticalDamage);
-
-        //determination and tenacity
         $scope.dps_stats.determinationDelta = $scope.dps_stats.determination - ($scope.dps_base.levelBase - 40) + $scope.dps_stats.food_selected.determinationValue; //determination inexplicably has 40 less base value
-        $scope.dps_stats.determinationDPS = ($scope.dps_stats.determinationDelta / $scope.dps_base.determinationRatio) * .1;
-        $scope.dps_stats.tenacityDelta = $scope.dps_stats.tenacity - $scope.dps_base.levelBase + $scope.dps_stats.food_selected.tenacityValue;
-        $scope.dps_stats.tenacityDPS = ($scope.dps_stats.tenacityDelta / $scope.dps_base.tenacityRatio) * .1;
-
-        //direct hit
         $scope.dps_stats.directhitDelta = $scope.dps_stats.directhit - $scope.dps_base.levelBase + $scope.dps_stats.food_selected.directhitValue;
-        $scope.dps_stats.directhitRate = (($scope.dps_stats.directhitDelta / $scope.dps_base.directhitRatio) * .1) + $scope.dps_stats.directhitRateBuff;
-        $scope.dps_stats.directhitDPS = $scope.dps_stats.directhitRate * ($scope.dps_base.directhitBaseDamage / 100);
+        $scope.dps_stats.skillspeedDelta = $scope.dps_stats.skillspeed - $scope.dps_base.levelBase + $scope.dps_stats.food_selected.skillspeedValue;
+        $scope.dps_stats.tenacityDelta = $scope.dps_stats.tenacity - $scope.dps_base.levelBase + $scope.dps_stats.food_selected.tenacityValue;
+
+        //rates
+        $scope.dps_stats.criticalRate = (($scope.dps_stats.criticalDelta / $scope.dps_base.criticalRatio) * .1)
+        $scope.dps_stats.directhitRate = (($scope.dps_stats.directhitDelta / $scope.dps_base.directhitRatio) * .1)
+
+        //damage multiplier
+        $scope.dps_stats.criticalDamage = ($scope.dps_stats.criticalDelta / $scope.dps_base.criticalRatio) * .1;
 
         //skill speed
-        $scope.dps_stats.skillspeedDelta = $scope.dps_stats.skillspeed - $scope.dps_base.levelBase + $scope.dps_stats.food_selected.skillspeedValue;
         $scope.dps_stats.skillspeedDelay = Math.floor(130 * $scope.dps_stats.skillspeedDelta / $scope.dps_base.skillspeedLevelMod);
         $scope.dps_stats.skillspeedDelay = 1000 - $scope.dps_stats.skillspeedDelay;
         $scope.dps_stats.skillspeedDelay = Math.floor($scope.dps_stats.skillspeedDelay * ($scope.dps_base.skillspeedBase * 1000) / 1000);
         $scope.dps_stats.skillspeedDelay = Math.floor(100 * 100 * $scope.dps_stats.skillspeedDelay / 1000);
         $scope.dps_stats.skillspeedDelay = Math.floor($scope.dps_stats.skillspeedDelay / 100)
         $scope.dps_stats.skillspeedDelay = $scope.dps_stats.skillspeedDelay / 100;
+
+        //skillspeed cap
+        if ($scope.dps_stats.skillspeedDelay <= 0) {
+            $scope.dps_stats.skillspeedDelay = .1;
+        }
+
+        $scope.dps_stats.skillspeedHits = $scope.dps_stats.fightduration / $scope.dps_stats.skillspeedDelay;
+        $scope.dps_stats.skillspeedHits = Math.floor($scope.dps_stats.skillspeedHits);
         $scope.dps_stats.skillspeedDPS = $scope.dps_base.skillspeedBase / $scope.dps_stats.skillspeedDelay;
         $scope.dps_stats.skillspeedDPSImprovement = ($scope.dps_stats.skillspeedDPS - 1) * 100;
+
+        //individual hit dps
+        var i;
+        for (i = 0; i < $scope.dps_stats.fightduration; i += $scope.dps_stats.skillspeedDelay) {
+            buffs = determineBuffs(i);
+
+            //critical hit rate cap
+            var criticalhitrate = $scope.dps_base.criticalBaseRate + $scope.dps_stats.criticalRate + buffs.criticalhitrateBuff;
+            if (criticalhitrate > 100) {
+                criticalhitrate = 100;
+            }
+
+            //direct hit rate cap
+            var directhitrate = $scope.dps_stats.directhitRate + buffs.directhitrateBuff;
+            if (directhitrate > 100) {
+                direchitrate = 100
+            }
+
+            //calculate individual hit dps
+            $scope.dps_stats.criticalDPS += (criticalhitrate / 100) * ($scope.dps_base.criticalBaseDamage + $scope.dps_stats.criticalDamage);
+            $scope.dps_stats.determinationDPS += ($scope.dps_stats.determinationDelta / $scope.dps_base.determinationRatio) * .1;
+            $scope.dps_stats.directhitDPS += directhitrate * ($scope.dps_base.directhitBaseDamage / 100);
+            $scope.dps_stats.tenacityDPS += ($scope.dps_stats.tenacityDelta / $scope.dps_base.tenacityRatio) * .1;
+            $scope.dps_stats.buffDPS += $scope.dps_stats.buffDPS * (buffs.dpsBuff / 100);
+        }
+
+        //adjust for iterations
+        $scope.dps_stats.criticalDPS = $scope.dps_stats.criticalDPS / $scope.dps_stats.skillspeedHits;
+        $scope.dps_stats.determinationDPS = $scope.dps_stats.determinationDPS / $scope.dps_stats.skillspeedHits;
+        $scope.dps_stats.tenacityDPS = $scope.dps_stats.tenacityDPS / $scope.dps_stats.skillspeedHits;
+        $scope.dps_stats.directhitDPS = $scope.dps_stats.directhitDPS / $scope.dps_stats.skillspeedHits;
+        $scope.dps_stats.buffDPS = $scope.dps_stats.buffDPS / $scope.dps_stats.skillspeedHits;
+
+        //floor calculations
+        $scope.dps_stats.criticalDPS = Math.floor($scope.dps_stats.criticalDPS);
+        $scope.dps_stats.determinationDPS = Math.floor($scope.dps_stats.determinationDPS);
+        $scope.dps_stats.tenacityDPS = Math.floor($scope.dps_stats.tenacityDPS);
+        $scope.dps_stats.directhitDPS = Math.floor($scope.dps_stats.directhitDPS);
 
         //total
         $scope.dps_stats.totaldps = 100;
@@ -215,7 +198,17 @@ dps_app.dps_controller = function ($scope) {
         $scope.dps_stats.totaldps = $scope.dps_stats.totaldps * (1 + ($scope.dps_stats.criticalDPS / 100));
         $scope.dps_stats.totaldps = $scope.dps_stats.totaldps * (1 + ($scope.dps_stats.directhitDPS / 100));
         $scope.dps_stats.totaldps = $scope.dps_stats.totaldps * $scope.dps_stats.skillspeedDPS;
-        $scope.dps_stats.totaldps = $scope.dps_stats.totaldps * (1 + ($scope.dps_stats.dpsBuff / 100));
+        $scope.dps_stats.totaldps = $scope.dps_stats.totaldps * (1 + ($scope.dps_stats.buffDPS / 100));
+    }
+
+    function determineBuffs(i) {
+        var buffs = {
+            criticalhitrateBuff: 0,
+            directhitrateBuff: 0,
+            dpsBuff: 0
+        }
+
+        return buffs;
     }
 
     //ui style adjustments
@@ -299,24 +292,14 @@ dps_app.dps_controller = function ($scope) {
         }
     }
 
-    //user adjusted their buffs, recalculate and update the ui
-    $scope.buffs_change = function () {
+    //user adjusted their stats, recalculate and update the ui
+    $scope.stats_change = function () {
         //charts
         dps_app.dps_charts($scope);
 
-        //recalculate
-        $scope.stats_change();
-    }
-
-    //user adjusted their stats, recalculate and update the ui
-    $scope.stats_change = function () {
         //calculate food first since they affect base stats
         $scope.food_calculate();
         $scope.food_ui();
-
-        //calculate buffs second since they affect final DPS calculations
-        $scope.buffs_calculate();
-        $scope.buffs_ui();
 
         //calculate dps last
         $scope.stats_calculate();
@@ -346,7 +329,7 @@ dps_app.dps_controller = function ($scope) {
             magesballadPriority: $scope.dps_stats.magesballadPriority,
             armyspaeon: $scope.dps_stats.armyspaeon,
             armyspaeonShort: $scope.dps_stats.armyspaeonShort,
-            armyspaeonPriority: $scope.dps_stats.armyspaeonPriority;
+            armyspaeonPriority: $scope.dps_stats.armyspaeonPriority,
             wanderersminuet: $scope.dps_stats.wanderersminuet,
             wanderersminuetShort: $scope.dps_stats.wanderersminuetShort,
             wanderersminuetPriority: $scope.dps_stats.wanderersminuetPriority,
@@ -357,10 +340,6 @@ dps_app.dps_controller = function ($scope) {
             tenacity: $scope.dps_stats.tenacity,
             critical: $scope.dps_stats.critical,
             skillspeed: $scope.dps_stats.skillspeed,
-
-            directhitRateBuff: $scope.dps_stats.directhitRateBuff,
-            criticalhitRateBuff: $scope.dps_stats.criticalhitRateBuff,
-            dpsBuff: $scope.dps_stats.dpsBuff,
 
             determinationDPS: $scope.dps_stats.determinationDPS,
             determinationDelta: $scope.dps_stats.determinationDelta,
@@ -381,12 +360,14 @@ dps_app.dps_controller = function ($scope) {
             skillspeedDPSImprovement: $scope.dps_stats.skillspeedDPSImprovement,
             skillspeedDelay: $scope.dps_stats.skillspeedDelay,
             skillspeedDelta: $scope.dps_stats.skillspeedDelta,
+            skillspeedHits: $scope.dps_stats.skillspeedHits,
 
+            buffDPS: $scope.dps_stats.buffDPS,
             totaldps: $scope.dps_stats.totaldps
         }
 
         //update charts and calculations
-        $scope.buffs_change();
+        $scope.stats_change();
     }
 
     //load the main object with the archived data
@@ -420,10 +401,6 @@ dps_app.dps_controller = function ($scope) {
             critical: $scope.dps_stats_archive.critical,
             skillspeed: $scope.dps_stats_archive.skillspeed,
 
-            directhitRateBuff: $scope.dps_stats_archive.directhitRateBuff,
-            criticalhitRateBuff: $scope.dps_stats_archive.criticalhitrateBuff,
-            dpsBuff: $scope.dps_stats_archive.dpsBuff,
-
             determinationDPS: $scope.dps_stats_archive.determinationDPS,
             determinationDelta: $scope.dps_stats_archive.determinationDelta,
 
@@ -443,12 +420,14 @@ dps_app.dps_controller = function ($scope) {
             skillspeedDPSImprovement: $scope.dps_stats_archive.skillspeedDPSImprovement,
             skillspeedDelay: $scope.dps_stats_archive.skillspeedDelay,
             skillspeedDelta: $scope.dps_stats_archive.skillspeedDelta,
+            skillspeedHits: $scope.dps_stats_archive.skillspeedHits,
 
+            buffDPS: $scope.dps_stats_archive.buffDPS,
             totaldps: $scope.dps_stats_archive.totaldps
         }
 
         //update charts and calculations
-        $scope.buffs_change();
+        $scope.stats_change();
     }
 
     //-----------------------------------------------

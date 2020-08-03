@@ -28,9 +28,10 @@
 
         //add the fight duration
         dataTable.addRows([
-            ['All', 'Fight Duration', new getDateObject(0), new getDateObject(stats.fightduration)]
+            ['All', 'Fight Duration', getDateObject(0), getDateObject(stats.fightduration)]
         ])
 
+        dataTable = skillspeed(dataTable, stats);
         dataTable = warriorBuffs(dataTable, stats, buffs);
         dataTable = bardBuffs(dataTable, stats, buffs);
 
@@ -41,17 +42,24 @@
         chart.draw(dataTable, options);
     }
 
+    function skillspeed(dataTable, stats) {
+        for (var i = 0; i < stats.fightduration; i += stats.skillspeedDelay) {
+            dataTable.addRows([
+                ['All', 'GCD', getDateObject(i), getDateObject(i)]
+            ])
+        }
+
+        return dataTable;
+    }
+
     function warriorBuffs(dataTable, stats, buffs) {
         //inner release
         if (stats.innerrelease) {
             for (var i = 0; i < stats.fightduration; i += buffs.innerrelease.recast) {
-                var end = i + buffs.innerrelease.duration;
-                if (end > stats.fightduration) {
-                    end = stats.fightduration;
-                }
+                var end = maxDuration(i + buffs.innerrelease.duration, stats.fightduration);
 
                 dataTable.addRows([
-                    [buffs.innerrelease.job, buffs.innerrelease.name, new getDateObject(i), new getDateObject(end)]
+                    [buffs.innerrelease.job, buffs.innerrelease.name, getDateObject(i), getDateObject(end)]
                 ]);
             }
         }
@@ -60,73 +68,55 @@
     }
 
     function bardBuffs(dataTable, stats, buffs) {
-        //battle voice
-        if (stats.battlevoice) {
-            for (var i = 0; i < stats.fightduration; i += buffs.battlevoice.recast) {
-                var end = i + buffs.battlevoice.duration;
-                if (end > stats.fightduration) {
-                    end = stats.fightduration;
-                }
-
-                dataTable.addRows([
-                    [buffs.battlevoice.job, buffs.battlevoice.name, new getDateObject(i), new getDateObject(end)]
-                ]);
-            }
-        }
-
         //mage's ballad
         if (stats.magesballad) {
-            var duration = buffs.magesballad.duration;
-            if (stats.magesballadShort) {
-                duration -= 10;
-            }
+            var start = bardSongStart(stats.magesballadPriority, stats, buffs);
+            var duration = bardSongDuration(buffs.magesballad.duration, stats.magesballadShort);
 
-            for (var i = 0; i < stats.fightduration; i += buffs.magesballad.recast) {
-                var end = i + duration;
-                if (end > stats.fightduration) {
-                    end = stats.fightduration;
-                }
+            for (var i = start; i < stats.fightduration; i += buffs.magesballad.recast) {
+                var end = maxDuration(i + duration, stats.fightduration);
 
                 dataTable.addRows([
-                    [buffs.magesballad.job, buffs.magesballad.name, new getDateObject(i), new getDateObject(end)]
+                    [buffs.magesballad.job, buffs.magesballad.name, getDateObject(i), getDateObject(end)]
                 ]);
             }
         }
 
         //army's paeon
         if (stats.armyspaeon) {
-            var duration = buffs.armyspaeon.duration;
-            if (stats.armyspaeonShort) {
-                duration -= 10;
-            }
+            var start = bardSongStart(stats.armyspaeonPriority, stats, buffs);
+            var duration = bardSongDuration(buffs.armyspaeon.duration, stats.armyspaeonShort);
 
-            for (var i = 0; i < stats.fightduration; i += buffs.armyspaeon.recast) {
-                var end = i + duration;
-                if (end > stats.fightduration) {
-                    end = stats.fightduration;
-                }
+            for (var i = start; i < stats.fightduration; i += buffs.armyspaeon.recast) {
+                var end = maxDuration(i + duration, stats.fightduration);
 
                 dataTable.addRows([
-                    [buffs.armyspaeon.job, buffs.armyspaeon.name, new getDateObject(i), new getDateObject(end)]
+                    [buffs.armyspaeon.job, buffs.armyspaeon.name, getDateObject(i), getDateObject(end)]
                 ]);
             }
         }
 
         //wanderer's minuet
         if (stats.wanderersminuet) {
-            var duration = buffs.wanderersminuet.duration;
-            if (stats.wanderersminuetShort) {
-                duration -= 10;
-            }
+            var start = bardSongStart(stats.wanderersminuetPriority, stats, buffs);
+            var duration = bardSongDuration(buffs.wanderersminuet.duration, stats.wanderersminuetShort);
 
-            for (var i = 0; i < stats.fightduration; i += buffs.wanderersminuet.recast) {
-                var end = i + duration;
-                if (end > stats.fightduration) {
-                    end = stats.fightduration;
-                }
+            for (var i = start; i < stats.fightduration; i += buffs.wanderersminuet.recast) {
+                var end = maxDuration(i + duration, stats.fightduration);
 
                 dataTable.addRows([
-                    [buffs.wanderersminuet.job, buffs.wanderersminuet.name, new getDateObject(i), new getDateObject(end)]
+                    [buffs.wanderersminuet.job, buffs.wanderersminuet.name, getDateObject(i), getDateObject(end)]
+                ]);
+            }
+        }
+
+        //battle voice
+        if (stats.battlevoice) {
+            for (var i = 0; i < stats.fightduration; i += buffs.battlevoice.recast) {
+                var end = maxDuration(i + buffs.battlevoice.duration, stats.fightduration);
+
+                dataTable.addRows([
+                    [buffs.battlevoice.job, buffs.battlevoice.name, getDateObject(i), getDateObject(end)]
                 ]);
             }
         }
@@ -134,11 +124,62 @@
         return dataTable;
     }
 
+    //bard songs are staggered
+    function bardSongStart(priority, stats, buffs) {
+        var start = 0;
+
+        if (stats.magesballadPriority < priority) {
+            if (stats.magesballadShort) {
+                start = start + (buffs.magesballad.duration - 10);
+            } else {
+                start = start + buffs.magesballad.duration;
+            }
+        }
+        if (stats.armyspaeonPriority < priority) {
+            if (stats.armyspaeonShort) {
+                start = start + (buffs.armyspaeon.duration - 10);
+            } else {
+                start = start + buffs.armyspaeon.duration;
+            }
+        }
+        if (stats.wanderersminuetPriority < priority) {
+            if (stats.wanderersminuetShort) {
+                start = start + (buffs.wanderersminuet.duration - 10);
+            } else {
+                start = start + buffs.wanderersminuet.duration;
+            }
+        }
+
+        return start;
+    }
+
+    //one of the bard buffs should be cut off at 20 seconds
+    function bardSongDuration(duration, shortBool) {
+        var d = duration;
+
+        if (shortBool) {
+            d = d - 10;
+        }
+
+        return d;
+    }
+
+    function maxDuration(duration, fightduration) {
+        var end = duration;
+
+        if (end > fightduration) {
+            end = fightduration;
+        }
+
+        return end;
+    }
+
     //easier to handle it in just seconds, so i'll create a function to convert it
     function getDateObject(seconds) {
-        var minutes = Math.floor(seconds / 60);
-        var seconds = seconds % 60;
+        var milliseconds = (seconds % 1) * 1000;
+        var minutes = Math.floor(Math.floor(seconds) / 60);
+        var seconds = Math.floor(seconds) % 60;
 
-        return new Date(0, 0, 0, 0, minutes, seconds, 0);
+        return new Date(0, 0, 0, 0, minutes, seconds, milliseconds);
     }
 }

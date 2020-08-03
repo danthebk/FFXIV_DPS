@@ -150,12 +150,12 @@
                                     Warrior
                                     <ul>
                                         <!--<li>
-                                            <input id="chkStormsEye" type="checkbox" ng-model="dps_stats.stormseye" ng-change="buffs_change()" /> Storm's Eye <br />
+                                            <input id="chkStormsEye" type="checkbox" ng-model="dps_stats.stormseye" ng-change="stats_change()" /> Storm's Eye <br />
                                             10% DPS <br />
                                             Uptime: 100%.
                                         </li>-->
                                         <li>
-                                            <input id="chkInnerRelease" type="checkbox" ng-model="dps_stats.innerrelease" ng-change="buffs_change()" /> Inner Release <br />
+                                            <input id="chkInnerRelease" type="checkbox" ng-model="dps_stats.innerrelease" ng-change="stats_change()" /> Inner Release <br />
                                             100% Critical Hit Rate, 100% Direct Hit Rate <br />
                                             Duration: 10 seconds; Recast: 90 seconds.
                                         </li>
@@ -170,25 +170,28 @@
                                     Bard
                                     <ul>
                                         <li>
-                                            <input id="chkMagesBallad" type="checkbox" ng-model="dps_stats.magesballad" ng-change="buffs_change()" /> Mage's Ballad <br />
-                                            <input id="chkMagesBalladShort" type="checkbox" ng-model="dps_stats.magesballadShort" ng-change="buffs_change()" /> 20 Second Duration <br />
-                                            1% DPS <br />
-                                            Duration: 30 seconds; Recast: 80 seconds.
-                                        </li>
-                                        <li>
-                                            <input id="chkArmysPaeon" type="checkbox" ng-model="dps_stats.armyspaeon" ng-change="buffs_change()" /> Army's Paeon <br />
-                                            <input id="chkArmysPaeonShort" type="checkbox" ng-model="dps_stats.armyspaeonShort" ng-change="buffs_change()" /> 20 Second Duration <br />
-                                            3% Direct Hit Rate <br />
-                                            Duration: 30 seconds; Recast: 80 seconds.
-                                        </li>
-                                        <li>
-                                            <input id="chkWanderersMinuet" type="checkbox" ng-model="dps_stats.wanderersminuet" ng-change="buffs_change()" /> Wanderer's Minuet<br />
-                                            <input id="chkWanderersMinuetShort" type="checkbox" ng-model="dps_stats.wanderersminuetShort" ng-change="buffs_change()" /> 20 Second Duration <br />
+                                            <input id="chkWanderersMinuet" type="checkbox" ng-model="dps_stats.wanderersminuet" ng-change="stats_change()" /> Wanderer's Minuet<br />
+                                            <input id="chkWanderersMinuetShort" type="checkbox" ng-model="dps_stats.wanderersminuetShort" ng-change="stats_change()" /> 20 Second Duration <br />
+                                            Priority <input id="chkWanderersMinuetnPriority" class="form-control-sm" type="number" ng-model="dps_stats.wanderersminuetPriority" ng-change="stats_change()" /> <br />
                                             2% Critical Hit Rate <br />
                                             Duration: 30 seconds; Recast: 80 seconds.
                                         </li>
                                         <li>
-                                            <input id="chkBattleVoice" type="checkbox" ng-model="dps_stats.battlevoice" ng-change="buffs_change()" /> Battle Voice <br />
+                                            <input id="chkMagesBallad" type="checkbox" ng-model="dps_stats.magesballad" ng-change="stats_change()" /> Mage's Ballad <br />
+                                            <input id="chkMagesBalladShort" type="checkbox" ng-model="dps_stats.magesballadShort" ng-change="stats_change()" /> 20 Second Duration <br />
+                                            Priority <input id="chkMagesBalladPriority" class="form-control-sm" type="number" ng-model="dps_stats.magesballadPriority" ng-change="stats_change()" /> <br />
+                                            1% DPS <br />
+                                            Duration: 30 seconds; Recast: 80 seconds.
+                                        </li>
+                                        <li>
+                                            <input id="chkArmysPaeon" type="checkbox" ng-model="dps_stats.armyspaeon" ng-change="stats_change()" /> Army's Paeon <br />
+                                            <input id="chkArmysPaeonShort" type="checkbox" ng-model="dps_stats.armyspaeonShort" ng-change="stats_change()" /> 20 Second Duration <br />
+                                            Priority <input id="chkArmysPaeonPriority" class="form-control-sm" type="number" ng-model="dps_stats.armyspaeonPriority" ng-change="stats_change()" /> <br />
+                                            3% Direct Hit Rate <br />
+                                            Duration: 30 seconds; Recast: 80 seconds.
+                                        </li>
+                                        <li>
+                                            <input id="chkBattleVoice" type="checkbox" ng-model="dps_stats.battlevoice" ng-change="stats_change()" /> Battle Voice <br />
                                             20% Direct Hit Rate <br />
                                             Duration: 20 seconds; Recast: 180 seconds.
                                         </li>
@@ -212,7 +215,7 @@
                         Fight Duration
                     </span>
                     <br />
-                    <input type="number" class="form-control-sm" data-ng-change="buffs_change()" data-ng-model="dps_stats.fightduration" id="fightduration" />
+                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.fightduration" id="fightduration" />
                     <span class="font-weight-bold">
                         Seconds
                     </span>
@@ -272,10 +275,6 @@
                     +
                     <span class="{{ui.critical_main}}">
                         {{dps_stats.criticalRate.toFixed(2)}}%
-                    </span>
-                    +
-                    <span class="{{ui.critical_main}}">
-                        {{dps_stats.criticalhitRateBuff.toFixed(2)}}%
                     </span>
                 </div>
                 <div class="border col-1">
@@ -403,10 +402,6 @@
                     <span>
                         {{dps_stats.directhitRate.toFixed(2)}}%
                     </span>
-                    +
-                    <span class="{{ui.directhit_main}}">
-                        {{dps_stats.directhitRateBuff.toFixed(2)}}%
-                    </span>
                 </div>
                 <div class="border col-1 {{ui_color.info}}">
                     <span class="font-weight-bold">
@@ -476,7 +471,14 @@
                         {{dps_stats.skillspeedDelay}}
                     </span>
                 </div>
-                <div class="col-1">
+                <div class="border col-1">
+                    <span class="font-weight-bold">
+                        Hits
+                    </span>
+                    <br />
+                    <span>
+                        {{dps_stats.skillspeedHits}}
+                    </span>
                 </div>
                 <div class="border col-2 {{ui.skillspeed_main}}">
                     <span class="font-weight-bold">
@@ -643,7 +645,7 @@
                     <span>
                         {{dps_stats_archive.fightduration}}
                     </span>
-                    <span class="font-weight-bold">
+                    <span>
                         Seconds
                     </span>
                     <br />
@@ -886,7 +888,14 @@
                         {{dps_stats_archive.skillspeedDelay}}
                     </span>
                 </div>
-                <div class="col-1">
+                <div class="border col-1">
+                    <span class="font-weight-bold">
+                        Hits
+                    </span>
+                    <br />
+                    <span>
+                        {{dps_stats_archive.skillspeedHits}}
+                    </span>
                 </div>
                 <div class="border col-2 {{ui.skillspeed_archive}}">
                     <span class="font-weight-bold">
