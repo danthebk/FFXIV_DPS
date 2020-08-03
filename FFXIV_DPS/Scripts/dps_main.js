@@ -7,4 +7,7 @@ dps_app.controller("dps_controller", function ($scope, $http) {
 
     //initialize models
     dps_app.dps_model($scope);
+
+    //initialize buffs
+    dps_app.dps_charts($scope);
 })

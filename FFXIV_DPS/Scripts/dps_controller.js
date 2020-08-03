@@ -299,6 +299,15 @@ dps_app.dps_controller = function ($scope) {
         }
     }
 
+    //user adjusted their buffs, recalculate and update the ui
+    $scope.buffs_change = function () {
+        //charts
+        dps_app.dps_charts($scope);
+
+        //recalculate
+        $scope.stats_change();
+    }
+
     //user adjusted their stats, recalculate and update the ui
     $scope.stats_change = function () {
         //calculate food first since they affect base stats
@@ -321,6 +330,8 @@ dps_app.dps_controller = function ($scope) {
     //save the main object to the archive
     $scope.archive_save = function () {
         $scope.dps_stats_archive = {
+            fightduration: $scope.dps_stats.fightduration,
+
             food_selected: $scope.dps_stats.food_selected,
             food_stat1: $scope.dps_stats.food_stat1,
             food_value1: $scope.dps_stats.food_value1,
@@ -332,10 +343,13 @@ dps_app.dps_controller = function ($scope) {
 
             magesballad: $scope.dps_stats.magesballad,
             magesballadShort: $scope.dps_stats.magesballadShort,
+            magesballadPriority: $scope.dps_stats.magesballadPriority,
             armyspaeon: $scope.dps_stats.armyspaeon,
             armyspaeonShort: $scope.dps_stats.armyspaeonShort,
+            armyspaeonPriority: $scope.dps_stats.armyspaeonPriority;
             wanderersminuet: $scope.dps_stats.wanderersminuet,
             wanderersminuetShort: $scope.dps_stats.wanderersminuetShort,
+            wanderersminuetPriority: $scope.dps_stats.wanderersminuetPriority,
             battlevoice: $scope.dps_stats.battlevoice,
 
             determination: $scope.dps_stats.determination,
@@ -371,12 +385,15 @@ dps_app.dps_controller = function ($scope) {
             totaldps: $scope.dps_stats.totaldps
         }
 
-        $scope.stats_change();
+        //update charts and calculations
+        $scope.buffs_change();
     }
 
     //load the main object with the archived data
     $scope.archive_revert = function () {
         $scope.dps_stats = {
+            fightduration: $scope.dps_stats_archive.fightduration,
+
             food_selected: $scope.dps_stats_archive.food_selected,
             ood_stat1: $scope.dps_stats_archive.food_stat1,
             food_value1: $scope.dps_stats_archive.food_value1,
@@ -388,10 +405,13 @@ dps_app.dps_controller = function ($scope) {
 
             magesballad: $scope.dps_stats_archive.magesballad,
             magesballadShort: $scope.dps_stats_archive.magesballadShort,
+            magesballadPriority: $scope.dps_stats_archive.magesballadPriority,
             armyspaeon: $scope.dps_stats_archive.armyspaeon,
             armyspaeonShort: $scope.dps_stats_archive.armyspaeonShort,
+            armyspaeonPriority: $scope.dps_stats_archive.armyspaeonPriority,
             wanderersminuet: $scope.dps_stats_archive.wanderersminuet,
             wanderersminuetShort: $scope.dps_stats_archive.wanderersminuetShort,
+            wanderersminuetPriority: $scope.dps_stats_archive.wanderersminuetPriority,
             battlevoice: $scope.dps_stats_archive.battlevoice,
 
             determination: $scope.dps_stats_archive.determination,
@@ -427,7 +447,8 @@ dps_app.dps_controller = function ($scope) {
             totaldps: $scope.dps_stats_archive.totaldps
         }
 
-        $scope.stats_change();
+        //update charts and calculations
+        $scope.buffs_change();
     }
 
     //-----------------------------------------------
@@ -447,6 +468,7 @@ dps_app.dps_controller = function ($scope) {
             $scope.dps_stats.tenacity = $scope.dps_stats.tenacity + $scope.dps_materia_selected.tenacity;
         }
 
+        //recalculate dps
         $scope.stats_change();
     }
     //subtract
@@ -463,6 +485,7 @@ dps_app.dps_controller = function ($scope) {
             $scope.dps_stats.tenacity = $scope.dps_stats.tenacity - $scope.dps_materia_selected.tenacity;
         }
 
+        //recalculate dps
         $scope.stats_change();
     }
 }

@@ -20,6 +20,71 @@ dps_app.dps_model = function ($scope) {
         { tier: "V - 12", value: 12 }
     ]
 
+    //index values for each stat; used to simplify the quick-materia buttons
+    $scope.stats_indexes = {
+        critical: 0,
+        determination: 1,
+        directhit: 2,
+        skillspeed: 3,
+        tenacity: 4,
+        dps: 5,
+        none: 6
+    }
+
+    //initialize buffs
+    $scope.dps_buffs = {
+        innerrelease: {
+            job: "Warrior",
+            name: "Inner Release",
+            duration: 10,
+            recast: 90,
+            stat1: $scope.stats_indexes.critical,
+            buff1: 100,
+            stat2: $scope.stats_indexes.directhit,
+            buff2: 100
+        },
+        battlevoice: {
+            job: "Bard",
+            name: "Battle Voice",
+            duration: 20,
+            recast: 180,
+            stat1: $scope.stats_indexes.directhit,
+            buff1: 20,
+            stat2: $scope.stats_indexes.none,
+            buff2: 0
+        },
+        magesballad: {
+            job: "Bard",
+            name: "Mage's Ballad",
+            duration: 30,
+            recast: 80,
+            stat1: $scope.stats_indexes.dps,
+            buff1: 1,
+            stat2: $scope.stats_indexes.none,
+            buff2: 0
+        },
+        armyspaeon: {
+            job: "Bard",
+            name: "Army's Paeon",
+            duration: 30,
+            recast: 80,
+            stat1: $scope.stats_indexes.directhit,
+            buff1: 3,
+            stat2: $scope.stats_indexes.none,
+            buff2: 0
+        },
+        wanderersminuet: {
+            job: "Bard",
+            name: "Wanderer's Minuet",
+            duration: 30,
+            recast: 80,
+            stat1: $scope.stats_indexes.critical,
+            buff1: 2,
+            stat2: $scope.stats_indexes.none,
+            buff2: 0
+        }
+    }
+
     //initialize food
     $scope.food = [
         {
@@ -255,15 +320,6 @@ dps_app.dps_model = function ($scope) {
         }
     ]
 
-    //index values for each stat; used to simplify the quick-materia buttons
-    $scope.stats_indexes = {
-        critical: 0,
-        determination: 1,
-        directhit: 2,
-        skillspeed: 3,
-        tenacity: 4
-    }
-
     //these base stats/ratios are based on level 80
     //need to restructure to handle additional level ranges
     $scope.dps_base = {
@@ -320,6 +376,8 @@ dps_app.dps_model = function ($scope) {
     //the player's stats
     //also the player's calculated stats
     $scope.dps_stats = {
+        //buffs
+        fightduration: 360,
 
         //food
         food_selected: $scope.food[0],
@@ -335,10 +393,13 @@ dps_app.dps_model = function ($scope) {
         //raid buffs
         magesballad: false,
         magesballadShort: false,
+        magesballadPriority: 1,
         armyspaeon: false,
         armyspaeonShort: false,
+        armyspaeonPriority: 2,
         wanderersminuet: false,
         wanderersminuetShort: false,
+        wanderersminuetPriotity: 0,
         battlevoice: false,
 
         //input stats

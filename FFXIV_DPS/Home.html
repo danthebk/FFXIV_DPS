@@ -8,6 +8,7 @@
     <!-- scripts -->
     <script src="Scripts/jquery-3.5.1.js"></script>
     <script src="Scripts/angular.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
     <!-- bootstrap -->
     <link href="boostrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -17,6 +18,7 @@
     <script src="Scripts/dps_main.js"></script>
     <script src="Scripts/dps_controller.js"></script>
     <script src="Scripts/dps_model.js"></script>
+    <script src="Scripts/dps_charts.js"></script>
 
     <script src="Scripts/main.js"></script>
     <link href="Content/main.css" rel="stylesheet" type="text/css" />
@@ -147,13 +149,13 @@
                                 <li>
                                     Warrior
                                     <ul>
-                                        <li>
-                                            <input id="chkStormsEye" type="checkbox" ng-model="dps_stats.stormseye" ng-change="stats_change()" /> Storm's Eye <br />
+                                        <!--<li>
+                                            <input id="chkStormsEye" type="checkbox" ng-model="dps_stats.stormseye" ng-change="buffs_change()" /> Storm's Eye <br />
                                             10% DPS <br />
                                             Uptime: 100%.
-                                        </li>
+                                        </li>-->
                                         <li>
-                                            <input id="chkInnerRelease" type="checkbox" ng-model="dps_stats.innerrelease" ng-change="stats_change()" /> Inner Release <br />
+                                            <input id="chkInnerRelease" type="checkbox" ng-model="dps_stats.innerrelease" ng-change="buffs_change()" /> Inner Release <br />
                                             100% Critical Hit Rate, 100% Direct Hit Rate <br />
                                             Duration: 10 seconds; Recast: 90 seconds.
                                         </li>
@@ -168,25 +170,25 @@
                                     Bard
                                     <ul>
                                         <li>
-                                            <input id="chkMagesBallad" type="checkbox" ng-model="dps_stats.magesballad" ng-change="stats_change()" /> Mage's Ballad <br />
-                                            <input id="chkMagesBalladShort" type="checkbox" ng-model="dps_stats.magesballadShort" ng-change="stats_change()" /> 20 Second Duration <br/>
+                                            <input id="chkMagesBallad" type="checkbox" ng-model="dps_stats.magesballad" ng-change="buffs_change()" /> Mage's Ballad <br />
+                                            <input id="chkMagesBalladShort" type="checkbox" ng-model="dps_stats.magesballadShort" ng-change="buffs_change()" /> 20 Second Duration <br />
                                             1% DPS <br />
                                             Duration: 30 seconds; Recast: 80 seconds.
                                         </li>
                                         <li>
-                                            <input id="chkArmysPaeon" type="checkbox" ng-model="dps_stats.armyspaeon" ng-change="stats_change()" /> Army's Paeon <br />
-                                            <input id="chkArmysPaeonShort" type="checkbox" ng-model="dps_stats.armyspaeonShort" ng-change="stats_change()" /> 20 Second Duration <br />
+                                            <input id="chkArmysPaeon" type="checkbox" ng-model="dps_stats.armyspaeon" ng-change="buffs_change()" /> Army's Paeon <br />
+                                            <input id="chkArmysPaeonShort" type="checkbox" ng-model="dps_stats.armyspaeonShort" ng-change="buffs_change()" /> 20 Second Duration <br />
                                             3% Direct Hit Rate <br />
                                             Duration: 30 seconds; Recast: 80 seconds.
                                         </li>
                                         <li>
-                                            <input id="chkWanderersMinuet" type="checkbox" ng-model="dps_stats.wanderersminuet" ng-change="stats_change()" /> Wanderer's Minuet<br />
-                                            <input id="chkWanderersMinuetShort" type="checkbox" ng-model="dps_stats.wanderersminuetShort" ng-change="stats_change()" /> 20 Second Duration <br />
+                                            <input id="chkWanderersMinuet" type="checkbox" ng-model="dps_stats.wanderersminuet" ng-change="buffs_change()" /> Wanderer's Minuet<br />
+                                            <input id="chkWanderersMinuetShort" type="checkbox" ng-model="dps_stats.wanderersminuetShort" ng-change="buffs_change()" /> 20 Second Duration <br />
                                             2% Critical Hit Rate <br />
                                             Duration: 30 seconds; Recast: 80 seconds.
                                         </li>
                                         <li>
-                                            <input id="chkBattleVoice" type="checkbox" ng-model="dps_stats.battlevoice" ng-change="stats_change()" /> Battle Voice <br />
+                                            <input id="chkBattleVoice" type="checkbox" ng-model="dps_stats.battlevoice" ng-change="buffs_change()" /> Battle Voice <br />
                                             20% Direct Hit Rate <br />
                                             Duration: 20 seconds; Recast: 180 seconds.
                                         </li>
@@ -204,6 +206,21 @@
         <!-- main -->
         <!-- --------------------------------------------------------------------- -->
         <div class="table">
+            <div class="row">
+                <div class="border col-12">
+                    <span class="font-weight-bold">
+                        Fight Duration
+                    </span>
+                    <br />
+                    <input type="number" class="form-control-sm" data-ng-change="buffs_change()" data-ng-model="dps_stats.fightduration" id="fightduration" />
+                    <span class="font-weight-bold">
+                        Seconds
+                    </span>
+                    <br />
+                    <br />
+                </div>
+                <div class="border col-12" id="chart_mainBuffTimeline"></div>
+            </div>
             <div class="row">
                 <div class="border col-2">
                     <span class="font-weight-bold">
@@ -224,7 +241,7 @@
                         Critical Hit
                     </span>
                     <br />
-                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.critical" value="" id="txtCriticalHit" />
+                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.critical" id="txtCriticalHit" />
                 </div>
                 <div class="border col-2 {{ui.critical_main}}">
                     <span class="font-weight-bold">
@@ -304,7 +321,7 @@
                         Determination
                     </span>
                     <br />
-                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.determination" value="" id="txtDetermination" />
+                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.determination" id="txtDetermination" />
                 </div>
                 <div class="border col-2 {{ui.determination_main}}">
                     <span class="font-weight-bold">
@@ -358,7 +375,7 @@
                         Direct Hit
                     </span>
                     <br />
-                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.directhit" value="" id="txtDirectHit" />
+                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.directhit" id="txtDirectHit" />
                 </div>
                 <div class="border col-2 {{ui.directhit_main}}">
                     <span class="font-weight-bold">
@@ -430,7 +447,7 @@
                         Skill/Spell Speed
                     </span>
                     <br />
-                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.skillspeed" value="" id="txtSkillSpeed" />
+                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.skillspeed" id="txtSkillSpeed" />
                 </div>
                 <div class="border col-2 {{ui.skillspeed_main}}">
                     <span class="font-weight-bold">
@@ -491,7 +508,7 @@
                         Tenacity
                     </span>
                     <br />
-                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.tenacity" value="" id="txtTenacity" />
+                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.tenacity" id="txtTenacity" />
                 </div>
                 <div class="border col-2 {{ui.tenacity_main}}">
                     <span class="font-weight-bold">
@@ -528,7 +545,7 @@
             <div class="row">
                 <div class="col-2">
                     <span class="font-weight-bold">
-                        Food:
+                        Food
                     </span>
                     <br />
                     <select id="cmbFood" class="form-control-sm" ng-change="stats_change()" ng-model="dps_stats.food_selected" ng-options="x.name for x in food">
@@ -611,9 +628,29 @@
                 </div>
             </div>
             <br />
+            <div class="row bg-dark">
+                <hr />
+            </div>
+            <br />
             <!-- --------------------------------------------------------------------- -->
             <!-- archive -->
             <!-- --------------------------------------------------------------------- -->
+            <div class="row">
+                <div class="border col-12">
+                    <span class="font-weight-bold">
+                        Fight Duration:
+                    </span>
+                    <span>
+                        {{dps_stats_archive.fightduration}}
+                    </span>
+                    <span class="font-weight-bold">
+                        Seconds
+                    </span>
+                    <br />
+                    <br />
+                </div>
+                <div class="border col-12" id="chart_archiveBuffTimeline"></div>
+            </div>
             <div class="row">
                 <div class="border col-2 {{ui.critical_archive}}">
                     <span class="font-weight-bold">
