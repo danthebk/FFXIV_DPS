@@ -98,8 +98,6 @@
     <Content Include="boostrap\js\bootstrap.min.js" />
     <Content Include="Content\main.css" />
     <Content Include="Home.html" />
-    <Content Include="Scripts\angular-route.min.js" />
-    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\dps.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\main.js" />
@@ -155,8 +153,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <Content Include="Scripts\angular-route.min.js.map" />
-    <Content Include="Scripts\angular.min.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

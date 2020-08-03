@@ -382,7 +382,7 @@
                     </span>
                     <br />
                     <span>
-                        {{dps_stats.directhitRate.toFixed(0)}}%
+                        {{dps_stats.directhitRate.toFixed(2)}}%
                     </span>
                     +
                     <span class="{{ui.directhit_main}}">
@@ -395,7 +395,7 @@
                     </span>
                     <br />
                     <span>
-                        {{dps_base.directhitBaseDamage}}
+                        {{dps_base.directhitBaseDamage}}%
                     </span>
                 </div>
                 <div class="border col-2 {{ui.directhit_main}}">
@@ -779,7 +779,7 @@
                     </span>
                     <br />
                     <span>
-                        {{dps_stats_archive.directhitRate}}%
+                        {{dps_stats_archive.directhitRate.toFixed(2)}}%
                     </span>
                 </div>
                 <div class="border col-1 {{ui_color.info}}">
@@ -788,7 +788,7 @@
                     </span>
                     <br />
                     <span>
-                        {{dps_base.directhitBaseDamage}}
+                        {{dps_base.directhitBaseDamage}}%
                     </span>
                 </div>
                 <div class="border col-2 {{ui.directhit_archive}}">
