@@ -15,6 +15,7 @@
     <script src="boostrap/js/bootstrap.min.js"></script>
 
     <!-- content -->
+    <script src="Scripts/dps_helpers.js"></script>
     <script src="Scripts/dps_main.js"></script>
     <script src="Scripts/dps_controller.js"></script>
     <script src="Scripts/dps_model.js"></script>
@@ -209,6 +210,10 @@
         <!-- main -->
         <!-- --------------------------------------------------------------------- -->
         <div class="table">
+            <div class="row bg-dark">
+                <hr />
+            </div>
+            <br />
             <div class="row">
                 <div class="border col-12">
                     <span class="font-weight-bold">
@@ -217,7 +222,7 @@
                     <br />
                     <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="dps_stats.fightduration" id="fightduration" />
                     <span class="font-weight-bold">
-                        Seconds
+                        seconds
                     </span>
                     <br />
                     <br />
@@ -646,7 +651,7 @@
                         {{dps_stats_archive.fightduration}}
                     </span>
                     <span>
-                        Seconds
+                        seconds
                     </span>
                     <br />
                     <br />

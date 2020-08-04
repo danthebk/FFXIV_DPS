@@ -82,7 +82,7 @@ dps_app.dps_controller = function ($scope) {
             }
         }
 
-        //mostly unimplemented since it doesn't affect dps, just going to display the cap
+        //mostly unimplemented since it doesn't affect dps, just going to display the food cap
         //piety
         if ($scope.dps_stats.food_selected.pietyCap > 0) {
             if (second) {
@@ -208,7 +208,45 @@ dps_app.dps_controller = function ($scope) {
             dpsBuff: 0
         }
 
+        //inner release
+        for (var w = 0; w < $scope.dps_buff_windows.length - 1; ++w) {
+            if ($scope.dps_buff_windows[w].id == $scope.dps_buffs.innerrelease.id) {
+                if (i >= $scope.dps_buff_windows[w].start && i <= $scope.dps_buff_windows[w].end) {
+                    buffs.criticalhitrateBuff += $scope.dps_buffs.innerrelease.buff1;
+                    buffs.directhitrateBuff += $scope.dps_buffs.innerrelease.buff2;
+                }
+            }
+        }
+
         return buffs;
+    }
+
+    //-------------------------------------------------------------------------------------------------
+    //job specific buffs
+    //-------------------------------------------------------------------------------------------------
+
+    function initBuffs() {
+        //reinitialize
+        $scope.dps_buff_windows = [];
+
+        //job specific buffs
+        warriorBuffs();
+    }
+
+    //warrior job buffs
+    function warriorBuffs() {
+        //inner release
+        if ($scope.dps_stats.innerrelease) {
+            for (var i = 0; i < $scope.dps_stats.fightduration; i += $scope.dps_buffs.innerrelease.recast) {
+                var end = maxDuration(i + $scope.dps_buffs.innerrelease.duration, $scope.dps_stats.fightduration);
+
+                $scope.dps_buff_windows.push({
+                    id: $scope.dps_buffs.innerrelease.id,
+                    start: i,
+                    end: end
+                })
+            }
+        }
     }
 
     //ui style adjustments
@@ -294,6 +332,9 @@ dps_app.dps_controller = function ($scope) {
 
     //user adjusted their stats, recalculate and update the ui
     $scope.stats_change = function () {
+        //buffs
+        initBuffs();
+
         //charts
         dps_app.dps_charts($scope);
 

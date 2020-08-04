@@ -3,20 +3,24 @@
     google.charts.load("current", { packages: ["timeline"] });
     google.charts.setOnLoadCallback(mainDraw);
 
+    //-------------------------------------------------------------------------------------------------
+    //initialization/controller functions
+    //-------------------------------------------------------------------------------------------------
+
     function mainDraw() {
         drawMainTimeline();
         drawArchiveTimeline();
     }
 
     function drawMainTimeline() {
-        drawBuffTimeline("chart_mainBuffTimeline", $scope.dps_stats, $scope.dps_buffs);
+        drawBuffTimeline("chart_mainBuffTimeline", $scope);
     }
 
     function drawArchiveTimeline() {
-        drawBuffTimeline("chart_archiveBuffTimeline", $scope.dps_stats_archive, $scope.dps_buffs)
+        drawBuffTimeline("chart_archiveBuffTimeline", $scope);
     }
 
-    function drawBuffTimeline(chart, stats, buffs) {
+    function drawBuffTimeline(chart, $scope) {
         var container = document.getElementById(chart);
         var chart = new google.visualization.Timeline(container);
         var dataTable = new google.visualization.DataTable();
@@ -28,20 +32,23 @@
 
         //add the fight duration
         dataTable.addRows([
-            ['All', 'Fight Duration', getDateObject(0), getDateObject(stats.fightduration)]
+            ['All', 'Fight Duration', getDateObject(0), getDateObject($scope.dps_stats.fightduration)]
         ])
 
-        dataTable = skillspeed(dataTable, stats);
-        dataTable = warriorBuffs(dataTable, stats, buffs);
-        dataTable = bardBuffs(dataTable, stats, buffs);
+        dataTable = skillspeed(dataTable, $scope.dps_stats, $scope.dps_buffs);
+        dataTable = warriorBuffs(dataTable, $scope.dps_stats, $scope.dps_buffs);
+        dataTable = bardBuffs(dataTable, $scope.dps_stats, $scope.dps_buffs);
 
         var options = {
             //colors: ['#cbb69d', '#603913', '#c69c6e'],
         };
-
+        
         chart.draw(dataTable, options);
     }
 
+    //-------------------------------------------------------------------------------------------------
+    //global chart functions
+    //-------------------------------------------------------------------------------------------------
     function skillspeed(dataTable, stats) {
         for (var i = 0; i < stats.fightduration; i += stats.skillspeedDelay) {
             dataTable.addRows([
@@ -52,6 +59,11 @@
         return dataTable;
     }
 
+    //-------------------------------------------------------------------------------------------------
+    //job specific buffs
+    //-------------------------------------------------------------------------------------------------
+
+    //warrior job buffs
     function warriorBuffs(dataTable, stats, buffs) {
         //inner release
         if (stats.innerrelease) {
@@ -67,6 +79,7 @@
         return dataTable;
     }
 
+    //bard job buffs
     function bardBuffs(dataTable, stats, buffs) {
         //mage's ballad
         if (stats.magesballad) {
@@ -124,7 +137,11 @@
         return dataTable;
     }
 
-    //bard songs are staggered
+    //-------------------------------------------------------------------------------------------------
+    //bard specific helper functions
+    //-------------------------------------------------------------------------------------------------
+
+    //bard songs are staggered, determine the order of execution
     function bardSongStart(priority, stats, buffs) {
         var start = 0;
 
@@ -162,24 +179,5 @@
         }
 
         return d;
-    }
-
-    function maxDuration(duration, fightduration) {
-        var end = duration;
-
-        if (end > fightduration) {
-            end = fightduration;
-        }
-
-        return end;
-    }
-
-    //easier to handle it in just seconds, so i'll create a function to convert it
-    function getDateObject(seconds) {
-        var milliseconds = (seconds % 1) * 1000;
-        var minutes = Math.floor(Math.floor(seconds) / 60);
-        var seconds = Math.floor(seconds) % 60;
-
-        return new Date(0, 0, 0, 0, minutes, seconds, milliseconds);
     }
 }

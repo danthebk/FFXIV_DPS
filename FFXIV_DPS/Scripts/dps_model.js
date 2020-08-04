@@ -34,6 +34,7 @@ dps_app.dps_model = function ($scope) {
     //initialize buffs
     $scope.dps_buffs = {
         innerrelease: {
+            id: 0,
             job: "Warrior",
             name: "Inner Release",
             duration: 10,
@@ -44,6 +45,7 @@ dps_app.dps_model = function ($scope) {
             buff2: 100
         },
         battlevoice: {
+            id: 1,
             job: "Bard",
             name: "Battle Voice",
             duration: 20,
@@ -54,6 +56,7 @@ dps_app.dps_model = function ($scope) {
             buff2: 0
         },
         magesballad: {
+            id: 2,
             job: "Bard",
             name: "Mage's Ballad",
             duration: 30,
@@ -64,6 +67,7 @@ dps_app.dps_model = function ($scope) {
             buff2: 0
         },
         armyspaeon: {
+            id: 3,
             job: "Bard",
             name: "Army's Paeon",
             duration: 30,
@@ -74,6 +78,7 @@ dps_app.dps_model = function ($scope) {
             buff2: 0
         },
         wanderersminuet: {
+            id: 4,
             job: "Bard",
             name: "Wanderer's Minuet",
             duration: 30,
@@ -84,6 +89,11 @@ dps_app.dps_model = function ($scope) {
             buff2: 0
         }
     }
+
+    //initialize buff windows
+    $scope.dps_buff_windows = [
+
+    ]
 
     //initialize food
     $scope.food = [

@@ -99,6 +99,7 @@
     <Content Include="Content\main.css" />
     <Content Include="Home.html" />
     <Content Include="Scripts\dps_charts.js" />
+    <Content Include="Scripts\dps_helpers.js" />
     <Content Include="Scripts\dps_main.js" />
     <Content Include="Scripts\dps_controller.js" />
     <Content Include="Scripts\dps_model.js" />
