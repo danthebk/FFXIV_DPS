@@ -260,6 +260,8 @@ dps_app.dps_controller = function ($scope) {
         dragoonBuffs(stats, $scope.buffs);
         samuraiBuffs(stats, $scope.buffs);
         ninjaBuffs(stats, $scope.buffs);
+        whitemageBuffs(stats, $scope.buffs);
+        redmageBuffs(stats, $scope.buffs);
         scholarBuffs(stats, $scope.buffs);
     }
 
@@ -309,9 +311,21 @@ dps_app.dps_controller = function ($scope) {
         }
     }
 
+    function redmageBuffs(stats, buffs) {
+        if (stats.embolden) {
+            addBuffWindow(stats, buffs.embolden);
+        }
+    }
+
     function scholarBuffs(stats, buffs) {
         if (stats.chainstratagem) {
             addBuffWindow(stats, buffs.chainstratagem);
+        }
+    }
+
+    function whitemageBuffs(stats, buffs) {
+        if (stats.presenceofmind) {
+            addBuffWindow(stats, buffs.presenceofmind);
         }
     }
 
@@ -523,6 +537,8 @@ dps_app.dps_controller = function ($scope) {
             battlelittany: $scope.stats_main.battlelittany,
             dragonsight: $scope.stats_main.dragonsight,
 
+            embolden: $scope.stats_main.embolden,
+            presenceofmind: $scope.stats_main.presenceofmind,
             chainstratagem: $scope.stats_main.chainstratagem,
 
             determination: $scope.stats_main.determination,
@@ -602,6 +618,8 @@ dps_app.dps_controller = function ($scope) {
             battlelittany: $scope.stats_archive.battlelittany,
             dragonsight: $scope.stats_archive.dragonsight,
 
+            embolden: $scope.stats_archive.embolden,
+            presenceofmind: $scope.stats_archive.presenceofmind,
             chainstratagem: $scope.stats_archive.chainstratagem,
 
             determination: $scope.stats_archive.determination,

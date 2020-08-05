@@ -143,6 +143,26 @@ dps_app.dps_model = function ($scope) {
             dpsbuff: 0,
             delayreduction: 0
         },
+        presenceofmind: {
+            job: "White Mage",
+            name: "Presence of Mind",
+            duration: 15,
+            recast: 150,
+            criticalhitratebuff: 0,
+            directhitratebuff: 0,
+            dpsbuff: 0,
+            delayreduction: 20
+        },
+        embolden: {
+            job: "Red Mage",
+            name: "Embolden",
+            duration: 20,
+            recast: 120,
+            criticalhitratebuff: 0,
+            directhitratebuff: 0,
+            dpsbuff: 10,
+            delayreduction: 0
+        },
         huton: {
             job: "Ninja",
             name: "Huton",
@@ -514,6 +534,8 @@ dps_app.dps_model = function ($scope) {
         battlelittany: false,
         dragonsight: false,
 
+        embolden: false,
+        presenceofmind: false,
         chainstratagem: false,
 
         //input stats
