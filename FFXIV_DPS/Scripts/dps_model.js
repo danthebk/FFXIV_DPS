@@ -13,7 +13,7 @@ dps_app.dps_model = function ($scope) {
     }
 
     //initialize materia
-    $scope.dps_materia = [
+    $scope.materia = [
         { tier: "VIII - 60", value: 60 },
         { tier: "VII - 20", value: 20 },
         { tier: "VI - 40", value: 40 },
@@ -32,7 +32,7 @@ dps_app.dps_model = function ($scope) {
     }
 
     //initialize buffs
-    $scope.dps_buffs = {
+    $scope.buffs = {
         innerrelease: {
             id: 0,
             job: "Warrior",
@@ -327,7 +327,7 @@ dps_app.dps_model = function ($scope) {
 
     //these base stats/ratios are based on level 80
     //need to restructure to handle additional level ranges
-    $scope.dps_base = {
+    $scope.base_stats = {
         determinationRatio: 25,
         tenacityRatio: 33,
 
@@ -366,7 +366,7 @@ dps_app.dps_model = function ($scope) {
     }
 
     //selected materia object
-    $scope.dps_materia_selected = {
+    $scope.materia_selected = {
         critical: 60,
         determination: 60,
         directhit: 60,
@@ -380,7 +380,7 @@ dps_app.dps_model = function ($scope) {
 
     //the player's stats
     //also the player's calculated stats
-    $scope.dps_stats = {
+    $scope.stats_main = {
         //buffs
         fightduration: 360,
         buff_windows: [],
@@ -449,5 +449,5 @@ dps_app.dps_model = function ($scope) {
     $scope.archive_save();
 
     //charts
-    dps_app.dps_charts("chart_mainBuffTimeline", $scope.dps_stats);
+    dps_app.dps_charts("chart_mainBuffTimeline", $scope.stats_main);
 }
