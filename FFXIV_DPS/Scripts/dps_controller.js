@@ -156,22 +156,15 @@ dps_app.dps_controller = function ($scope) {
         if ($scope.stats_main.skillspeedDelay <= 0) {
             $scope.stats_main.skillspeedDelay = .1;
         }
-
-        //skill speed hit count over the course of the fight duration
-        var skillspeedbaseHits = Math.floor($scope.stats_main.fightduration / $scope.base_stats.skillspeedBase);
-        $scope.stats_main.skillspeedHits = $scope.stats_main.fightduration / $scope.stats_main.skillspeedDelay;
-        $scope.stats_main.skillspeedHits = Math.floor($scope.stats_main.skillspeedHits);
-
-        //skill speed DPS
-        //$scope.stats_main.skillspeedDPS = $scope.base_stats.skillspeedBase / $scope.stats_main.skillspeedDelay;
-        //adjusting the calculation to account for the number of hits across the fight rather than based on the delay difference
-        $scope.stats_main.skillspeedDPS = $scope.stats_main.skillspeedHits / skillspeedbaseHits;
-        $scope.stats_main.skillspeedDPSImprovement = ($scope.stats_main.skillspeedDPS - 1) * 100;
-
+        
+        //individual hit delay
+        var j = $scope.stats_main.skillspeedDelay;
         //individual hit dps
-        //for (var i = 0; i <= $scope.stats_main.fightduration; i += $scope.stats_main.skillspeedDelay) {
-        for (var i = 0; i < $scope.stats_main.skillspeedHits; ++i) {
-            buffs = determineActiveBuffs($scope.stats_main, i * $scope.stats_main.skillspeedDelay);
+        $scope.stats_main.skillspeedHits = 0
+        for (var i = 0; i < $scope.stats_main.fightduration; i += j) {
+            //for (var i = 0; i < $scope.stats_main.skillspeedHits; ++i) {
+            buffs = determineActiveBuffs($scope.stats_main, i);
+            //buffs = determineActiveBuffs($scope.stats_main, i * $scope.stats_main.skillspeedDelay);
 
             //critical hit rate cap
             var criticalhitrate = $scope.base_stats.criticalBaseRate + $scope.stats_main.criticalRate + buffs.criticalhitrateBuff;
@@ -185,13 +178,32 @@ dps_app.dps_controller = function ($scope) {
                 direchitrate = 100
             }
 
+            //account for delay buffs
+            j = $scope.stats_main.skillspeedDelay * ((100 - buffs.delayReduction) / 100);
+
             //calculate individual hit dps
             $scope.stats_main.criticalDPS += (criticalhitrate / 100) * ($scope.base_stats.criticalBaseDamage + $scope.stats_main.criticalDamage);
             $scope.stats_main.determinationDPS += ($scope.stats_main.determinationDelta / $scope.base_stats.determinationRatio) * .1;
             $scope.stats_main.directhitDPS += directhitrate * ($scope.base_stats.directhitBaseDamage / 100);
             $scope.stats_main.tenacityDPS += ($scope.stats_main.tenacityDelta / $scope.base_stats.tenacityRatio) * .1;
+
+            //account for dps buffs
             $scope.stats_main.buffDPS += buffs.dpsBuff;
+
+            //increment actual hits
+            $scope.stats_main.skillspeedHits += 1;
         }
+
+        //skill speed hit count over the course of the fight duration
+        var skillspeedbaseHits = Math.floor($scope.stats_main.fightduration / $scope.base_stats.skillspeedBase);
+        //$scope.stats_main.skillspeedHits = $scope.stats_main.fightduration / $scope.stats_main.skillspeedDelay;
+        //$scope.stats_main.skillspeedHits = Math.floor($scope.stats_main.skillspeedHits);
+
+        //skill speed DPS
+        //$scope.stats_main.skillspeedDPS = $scope.base_stats.skillspeedBase / $scope.stats_main.skillspeedDelay;
+        //adjusting the calculation to account for the number of hits across the fight rather than based on the delay difference
+        $scope.stats_main.skillspeedDPS = $scope.stats_main.skillspeedHits / skillspeedbaseHits;
+        $scope.stats_main.skillspeedDPSImprovement = ($scope.stats_main.skillspeedDPS - 1) * 100;
 
         //adjust for iterations
         $scope.stats_main.criticalDPS = $scope.stats_main.criticalDPS / $scope.stats_main.skillspeedHits;
@@ -217,16 +229,18 @@ dps_app.dps_controller = function ($scope) {
         var buffs = {
             criticalhitrateBuff: 0,
             directhitrateBuff: 0,
-            dpsBuff: 0
+            dpsBuff: 0,
+            delayReduction: 0
         }
 
         //inner release
         for (var w = 0; w < stats.buff_windows.length; ++w) {
-                if (i >= stats.buff_windows[w].start && i <= stats.buff_windows[w].end) {
-                    buffs.criticalhitrateBuff += stats.buff_windows[w].buff.criticalhitratebuff;
-                    buffs.directhitrateBuff += stats.buff_windows[w].buff.directhitratebuff;
-                    buffs.dpsBuff += stats.buff_windows[w].buff.dpsbuff;
-                }
+            if (i >= stats.buff_windows[w].start && i <= stats.buff_windows[w].end) {
+                buffs.criticalhitrateBuff += stats.buff_windows[w].buff.criticalhitratebuff;
+                buffs.directhitrateBuff += stats.buff_windows[w].buff.directhitratebuff;
+                buffs.dpsBuff += stats.buff_windows[w].buff.dpsbuff;
+                buffs.delayReduction += stats.buff_windows[w].buff.delayreduction;
+            }
         }
 
         return buffs;
@@ -243,13 +257,46 @@ dps_app.dps_controller = function ($scope) {
         //job specific buffs
         warriorBuffs(stats, $scope.buffs);
         bardBuffs(stats, $scope.buffs);
+        dragoonBuffs(stats, $scope.buffs);
+        samuraiBuffs(stats, $scope.buffs);
+        ninjaBuffs(stats, $scope.buffs);
+        scholarBuffs(stats, $scope.buffs);
     }
 
     //warrior job buffs
     function warriorBuffs(stats, buffs) {
+        //storm's eye
+        if (stats.stormseye) {
+            addBuffWindow(stats, buffs.stormseye);
+        }
+
         //inner release
         if (stats.innerrelease) {
             addBuffWindow(stats, buffs.innerrelease);
+        }
+    }
+
+    function dragoonBuffs(stats, buffs) {
+        if (stats.battlelittany) {
+            addBuffWindow(stats, buffs.battlelittany);
+        }
+    }
+
+    function ninjaBuffs(stats, buffs) {
+        if (stats.huton) {
+            addBuffWindow(stats, buffs.huton);
+        }
+    }
+
+    function samuraiBuffs(stats, buffs) {
+        if (stats.shifu) {
+            addBuffWindow(stats, buffs.shifu);
+        }
+    }
+
+    function scholarBuffs(stats, buffs) {
+        if (stats.chainstratagem) {
+            addBuffWindow(stats, buffs.chainstratagem);
         }
     }
 
@@ -439,6 +486,9 @@ dps_app.dps_controller = function ($scope) {
             innerrelease: $scope.stats_main.innerrelease,
             stormseye: $scope.stats_main.stormseye,
 
+            huton: $scope.stats_main.huton,
+            shifu: $scope.stats_main.shifu,
+
             magesballad: $scope.stats_main.magesballad,
             magesballadShort: $scope.stats_main.magesballadShort,
             magesballadPriority: $scope.stats_main.magesballadPriority,
@@ -449,6 +499,9 @@ dps_app.dps_controller = function ($scope) {
             wanderersminuetShort: $scope.stats_main.wanderersminuetShort,
             wanderersminuetPriority: $scope.stats_main.wanderersminuetPriority,
             battlevoice: $scope.stats_main.battlevoice,
+
+            battlelittany: $scope.stats_main.battlelittany,
+            chainstratagem: $scope.stats_main.chainstratagem,
 
             determination: $scope.stats_main.determination,
             directhit: $scope.stats_main.directhit,
@@ -505,6 +558,9 @@ dps_app.dps_controller = function ($scope) {
             innerrelease: $scope.stats_archive.innerrelease,
             stormseye: $scope.stats_archive.stormseye,
 
+            huton: $scope.stats_archive.huton,
+            shifu: $scope.stats_archive.shifu,
+
             magesballad: $scope.stats_archive.magesballad,
             magesballadShort: $scope.stats_archive.magesballadShort,
             magesballadPriority: $scope.stats_archive.magesballadPriority,
@@ -515,6 +571,9 @@ dps_app.dps_controller = function ($scope) {
             wanderersminuetShort: $scope.stats_archive.wanderersminuetShort,
             wanderersminuetPriority: $scope.stats_archive.wanderersminuetPriority,
             battlevoice: $scope.stats_archive.battlevoice,
+
+            battlelittany: $scope.stats_archive.battlelittany,
+            chainstratagem: $scope.stats_archive.chainstratagem,
 
             determination: $scope.stats_archive.determination,
             directhit: $scope.stats_archive.directhit,

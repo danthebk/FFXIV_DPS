@@ -34,55 +34,105 @@ dps_app.dps_model = function ($scope) {
     //initialize buffs
     $scope.buffs = {
         innerrelease: {
-            id: 0,
             job: "Warrior",
             name: "Inner Release",
             duration: 10,
             recast: 90,
             criticalhitratebuff: 100,
             directhitratebuff: 100,
-            dpsbuff: 0
+            dpsbuff: 0,
+            delayreduction: 0
+        },
+        stormseye: {
+            job: "Warrior",
+            name: "Storm's Eye",
+            duration: 30,
+            recast: 30,
+            criticalhitratebuff: 0,
+            directhitratebuff: 0,
+            dpsbuff: 10,
+            delayreduction: 0
         },
         battlevoice: {
-            id: 1,
             job: "Bard",
             name: "Battle Voice",
             duration: 20,
             recast: 180,
             criticalhitratebuff: 0,
             directhitratebuff: 20,
-            dpsbuff: 0
+            dpsbuff: 0,
+            delayreduction: 0
         },
         magesballad: {
-            id: 2,
             job: "Bard",
             name: "Mage's Ballad",
             duration: 30,
             recast: 80,
             criticalhitratebuff: 0,
             directhitratebuff: 0,
-            dpsbuff: 1
+            dpsbuff: 1,
+            delayreduction: 0
         },
         armyspaeon: {
-            id: 3,
             job: "Bard",
             name: "Army's Paeon",
             duration: 30,
             recast: 80,
             criticalhitratebuff: 0,
             directhitratebuff: 3,
-            dpsbuff: 0
+            dpsbuff: 0,
+            delayreduction: 0
         },
         wanderersminuet: {
-            id: 4,
             job: "Bard",
             name: "Wanderer's Minuet",
             duration: 30,
             recast: 80,
             criticalhitratebuff: 2,
             directhitratebuff: 0,
-            dpsbuff: 0
-        }
+            dpsbuff: 0,
+            delayreduction: 0
+        },
+        battlelittany: {
+            job: "Dragoon",
+            name: "Battle Littany",
+            duration: 20,
+            recast: 180,
+            criticalhitratebuff: 10,
+            directhitratebuff: 0,
+            dpsbuff: 0,
+            delayreduction: 0
+        },
+        chainstratagem: {
+            job: "Scholar",
+            name: "Chain Stratagem",
+            duration: 15,
+            recast: 120,
+            criticalhitratebuff: 10,
+            directhitratebuff: 0,
+            dpsbuff: 0,
+            delayreduction: 0
+        },
+        huton: {
+            job: "Ninja",
+            name: "Huton",
+            duration: 70,
+            recast: 70,
+            criticalhitratebuff: 0,
+            directhitratebuff: 0,
+            dpsbuff: 0,
+            delayreduction: 15
+        },
+        shifu: {
+            job: "Samurai",
+            name: "Shifu",
+            duration: 40,
+            recast: 40,
+            criticalhitratebuff: 0,
+            directhitratebuff: 0,
+            dpsbuff: 0,
+            delayreduction: 13
+        } 
     }
 
     //initialize food
@@ -391,6 +441,9 @@ dps_app.dps_model = function ($scope) {
         stormseye: false,
         innerrelease: false,
 
+        huton: false,
+        shifu: false,
+
         //raid buffs
         magesballad: false,
         magesballadShort: false,
@@ -402,6 +455,9 @@ dps_app.dps_model = function ($scope) {
         wanderersminuetShort: false,
         wanderersminuetPriority: 0,
         battlevoice: false,
+
+        battlelittany: false,
+        chainstratagem: false,
 
         //input stats
         determination: 340,
