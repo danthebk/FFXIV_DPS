@@ -401,7 +401,7 @@ dps_app.dps_model = function ($scope) {
         magesballadShort: false,
         magesballadPriority: 1,
         armyspaeon: false,
-        armyspaeonShort: false,
+        armyspaeonShort: true,
         armyspaeonPriority: 2,
         wanderersminuet: false,
         wanderersminuetShort: false,

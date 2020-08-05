@@ -169,9 +169,9 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.skillspeedDPSImprovement = ($scope.stats_main.skillspeedDPS - 1) * 100;
 
         //individual hit dps
-        var i;
-        for (i = 0; i < $scope.stats_main.fightduration; i += $scope.stats_main.skillspeedDelay) {
-            buffs = determineActiveBuffs($scope.stats_main, i);
+        //for (var i = 0; i <= $scope.stats_main.fightduration; i += $scope.stats_main.skillspeedDelay) {
+        for (var i = 0; i < $scope.stats_main.skillspeedHits; ++i) {
+            buffs = determineActiveBuffs($scope.stats_main, i * $scope.stats_main.skillspeedDelay);
 
             //critical hit rate cap
             var criticalhitrate = $scope.base_stats.criticalBaseRate + $scope.stats_main.criticalRate + buffs.criticalhitrateBuff;
@@ -221,7 +221,7 @@ dps_app.dps_controller = function ($scope) {
         }
 
         //inner release
-        for (var w = 0; w < stats.buff_windows.length - 1; ++w) {
+        for (var w = 0; w < stats.buff_windows.length; ++w) {
             if (stats.buff_windows[w].id == $scope.buffs.innerrelease.id) {
                 if (i >= stats.buff_windows[w].start && i <= stats.buff_windows[w].end) {
                     buffs.criticalhitrateBuff += $scope.buffs.innerrelease.buff1;
@@ -249,7 +249,9 @@ dps_app.dps_controller = function ($scope) {
     //warrior job buffs
     function warriorBuffs(stats, buffs) {
         //inner release
-        addBuffWindow(stats, buffs.innerrelease);
+        if (stats.innerrelease) {
+            addBuffWindow(stats, buffs.innerrelease);
+        }
     }
 
     //bard job buffs
@@ -315,7 +317,7 @@ dps_app.dps_controller = function ($scope) {
     }
 
     //should work for everything except for the staggered bard buffs
-    function addBuffWindow (stats, buff) {
+    function addBuffWindow(stats, buff) {
         for (var i = 0; i < stats.fightduration; i += buff.recast) {
             var end = maxDuration(i + buff.duration, stats.fightduration);
 
