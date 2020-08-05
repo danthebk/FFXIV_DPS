@@ -156,7 +156,7 @@ dps_app.dps_controller = function ($scope) {
         //individual hit dps
         var i;
         for (i = 0; i < $scope.dps_stats.fightduration; i += $scope.dps_stats.skillspeedDelay) {
-            buffs = determineBuffs(i);
+            buffs = determineActiveBuffs($scope.dps_stats, i);
 
             //critical hit rate cap
             var criticalhitrate = $scope.dps_base.criticalBaseRate + $scope.dps_stats.criticalRate + buffs.criticalhitrateBuff;
@@ -201,7 +201,10 @@ dps_app.dps_controller = function ($scope) {
         $scope.dps_stats.totaldps = $scope.dps_stats.totaldps * (1 + ($scope.dps_stats.buffDPS / 100));
     }
 
-    function determineBuffs(i) {
+    //init buffs creates a table for windows when buffs are active
+    //this function returns the stats increments of the active buffs for a given GCD
+    //i is the current time (in seconds) of the fight
+    function determineActiveBuffs(stats, i) {
         var buffs = {
             criticalhitrateBuff: 0,
             directhitrateBuff: 0,
@@ -209,9 +212,9 @@ dps_app.dps_controller = function ($scope) {
         }
 
         //inner release
-        for (var w = 0; w < $scope.dps_buff_windows.length - 1; ++w) {
-            if ($scope.dps_buff_windows[w].id == $scope.dps_buffs.innerrelease.id) {
-                if (i >= $scope.dps_buff_windows[w].start && i <= $scope.dps_buff_windows[w].end) {
+        for (var w = 0; w < stats.buff_windows.length - 1; ++w) {
+            if (stats.buff_windows[w].id == $scope.dps_buffs.innerrelease.id) {
+                if (i >= stats.buff_windows[w].start && i <= stats.buff_windows[w].end) {
                     buffs.criticalhitrateBuff += $scope.dps_buffs.innerrelease.buff1;
                     buffs.directhitrateBuff += $scope.dps_buffs.innerrelease.buff2;
                 }
@@ -225,26 +228,101 @@ dps_app.dps_controller = function ($scope) {
     //job specific buffs
     //-------------------------------------------------------------------------------------------------
 
-    function initBuffs() {
+    function initBuffs(stats) {
         //reinitialize
-        $scope.dps_buff_windows = [];
+        stats.buff_windows = [];
 
         //job specific buffs
-        warriorBuffs();
+        warriorBuffs(stats, $scope.dps_buffs);
+        bardBuffs(stats, $scope.dps_buffs);
     }
 
     //warrior job buffs
-    function warriorBuffs() {
+    function warriorBuffs(stats, buffs) {
         //inner release
-        if ($scope.dps_stats.innerrelease) {
-            for (var i = 0; i < $scope.dps_stats.fightduration; i += $scope.dps_buffs.innerrelease.recast) {
-                var end = maxDuration(i + $scope.dps_buffs.innerrelease.duration, $scope.dps_stats.fightduration);
+        if (stats.innerrelease) {
+            for (var i = 0; i < stats.fightduration; i += buffs.innerrelease.recast) {
+                var end = maxDuration(i + buffs.innerrelease.duration, stats.fightduration);
 
-                $scope.dps_buff_windows.push({
-                    id: $scope.dps_buffs.innerrelease.id,
+                stats.buff_windows.push({
+                    id: buffs.innerrelease.id,
+                    job: buffs.innerrelease.job,
+                    name: buffs.innerrelease.name,
                     start: i,
                     end: end
-                })
+                });
+            }
+        }
+    }
+
+    //bard job buffs
+    function bardBuffs(stats, buffs) {
+        //mage's ballad
+        if (stats.magesballad) {
+            var start = bardSongStart(stats.magesballadPriority, stats, buffs);
+            var duration = bardSongDuration(buffs.magesballad.duration, stats.magesballadShort);
+
+            for (var i = start; i < stats.fightduration; i += buffs.magesballad.recast) {
+                var end = maxDuration(i + duration, stats.fightduration);
+
+                stats.buff_windows.push({
+                    id: buffs.magesballad.id,
+                    job: buffs.magesballad.job,
+                    name: buffs.magesballad.name,
+                    start: i,
+                    end: end
+                });
+            }
+        }
+
+        //army's paeon
+        if (stats.armyspaeon) {
+            var start = bardSongStart(stats.armyspaeonPriority, stats, buffs);
+            var duration = bardSongDuration(buffs.armyspaeon.duration, stats.armyspaeonShort);
+
+            for (var i = start; i < stats.fightduration; i += buffs.armyspaeon.recast) {
+                var end = maxDuration(i + duration, stats.fightduration);
+
+                stats.buff_windows.push({
+                    id: buffs.armyspaeon.id,
+                    job: buffs.armyspaeon.job,
+                    name: buffs.armyspaeon.name,
+                    start: i,
+                    end: end
+                });
+            }
+        }
+
+        //wanderer's minuet
+        if (stats.wanderersminuet) {
+            var start = bardSongStart(stats.wanderersminuetPriority, stats, buffs);
+            var duration = bardSongDuration(buffs.wanderersminuet.duration, stats.wanderersminuetShort);
+
+            for (var i = start; i < stats.fightduration; i += buffs.wanderersminuet.recast) {
+                var end = maxDuration(i + duration, stats.fightduration);
+
+                stats.buff_windows.push({
+                    id: buffs.wanderersminuet.id,
+                    job: buffs.wanderersminuet.job,
+                    name: buffs.wanderersminuet.name,
+                    start: i,
+                    end: end
+                });
+            }
+        }
+
+        //battle voice
+        if (stats.battlevoice) {
+            for (var i = 0; i < stats.fightduration; i += buffs.battlevoice.recast) {
+                var end = maxDuration(i + buffs.battlevoice.duration, stats.fightduration);
+
+                stats.buff_windows.push({
+                    id: buffs.battlevoice.id,
+                    job: buffs.battlevoice.job,
+                    name: buffs.battlevoice.name,
+                    start: i,
+                    end: end
+                });
             }
         }
     }
@@ -333,10 +411,7 @@ dps_app.dps_controller = function ($scope) {
     //user adjusted their stats, recalculate and update the ui
     $scope.stats_change = function () {
         //buffs
-        initBuffs();
-
-        //charts
-        dps_app.dps_charts($scope);
+        initBuffs($scope.dps_stats);
 
         //calculate food first since they affect base stats
         $scope.food_calculate();
@@ -345,6 +420,9 @@ dps_app.dps_controller = function ($scope) {
         //calculate dps last
         $scope.stats_calculate();
         $scope.stats_ui();
+
+        //charts
+        dps_app.dps_charts("chart_mainBuffTimeline", $scope.dps_stats);
     }
 
     //-----------------------------------------------
@@ -355,6 +433,7 @@ dps_app.dps_controller = function ($scope) {
     $scope.archive_save = function () {
         $scope.dps_stats_archive = {
             fightduration: $scope.dps_stats.fightduration,
+            buff_windows: $scope.dps_stats.buff_windows,
 
             food_selected: $scope.dps_stats.food_selected,
             food_stat1: $scope.dps_stats.food_stat1,
@@ -407,14 +486,19 @@ dps_app.dps_controller = function ($scope) {
             totaldps: $scope.dps_stats.totaldps
         }
 
+        //update the archive chart
+        dps_app.dps_charts("chart_archiveBuffTimeline", $scope.dps_stats_archive);
+
+        //this doesn't seem necessary anymore
         //update charts and calculations
-        $scope.stats_change();
+        //$scope.stats_change();
     }
 
     //load the main object with the archived data
     $scope.archive_revert = function () {
         $scope.dps_stats = {
             fightduration: $scope.dps_stats_archive.fightduration,
+            buff_windows: $scope.dps_stats_archive.buff_windows,
 
             food_selected: $scope.dps_stats_archive.food_selected,
             ood_stat1: $scope.dps_stats_archive.food_stat1,
@@ -491,6 +575,7 @@ dps_app.dps_controller = function ($scope) {
         //recalculate dps
         $scope.stats_change();
     }
+
     //subtract
     $scope.materia_subtract = function (stat) {
         if ($scope.stats_indexes.critical == stat) {

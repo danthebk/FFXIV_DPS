@@ -9,5 +9,5 @@ dps_app.controller("dps_controller", function ($scope, $http) {
     dps_app.dps_model($scope);
 
     //initialize buffs
-    dps_app.dps_charts($scope);
+    //dps_app.dps_charts($scope);
 })

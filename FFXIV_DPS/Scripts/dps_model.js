@@ -90,11 +90,6 @@ dps_app.dps_model = function ($scope) {
         }
     }
 
-    //initialize buff windows
-    $scope.dps_buff_windows = [
-
-    ]
-
     //initialize food
     $scope.food = [
         {
@@ -388,6 +383,7 @@ dps_app.dps_model = function ($scope) {
     $scope.dps_stats = {
         //buffs
         fightduration: 360,
+        buff_windows: [],
 
         //food
         food_selected: $scope.food[0],
@@ -451,4 +447,7 @@ dps_app.dps_model = function ($scope) {
 
     //initialize the archive model
     $scope.archive_save();
+
+    //charts
+    dps_app.dps_charts("chart_mainBuffTimeline", $scope.dps_stats);
 }
