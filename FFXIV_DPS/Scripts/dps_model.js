@@ -93,6 +93,26 @@ dps_app.dps_model = function ($scope) {
             dpsbuff: 0,
             delayreduction: 0
         },
+        disembowel: {
+            job: "Dragoon",
+            name: "Disembowel",
+            duration: 30,
+            recast: 30,
+            criticalhitratebuff: 0,
+            directhitratebuff: 0,
+            dpsbuff: 10,
+            delayreduction: 0
+        },
+        lancecharge: {
+            job: "Dragoon",
+            name: "Lance Charge",
+            duration: 20,
+            recast: 90,
+            criticalhitratebuff: 0,
+            directhitratebuff: 0,
+            dpsbuff: 15,
+            delayreduction: 0
+        },
         battlelittany: {
             job: "Dragoon",
             name: "Battle Littany",
@@ -101,6 +121,16 @@ dps_app.dps_model = function ($scope) {
             criticalhitratebuff: 10,
             directhitratebuff: 0,
             dpsbuff: 0,
+            delayreduction: 0
+        },
+        dragonsight: {
+            job: "Dragoon",
+            name: "Dragon Sight",
+            duration: 20,
+            recast: 120,
+            criticalhitratebuff: 0,
+            directhitratebuff: 0,
+            dpsbuff: 5,
             delayreduction: 0
         },
         chainstratagem: {
@@ -122,6 +152,16 @@ dps_app.dps_model = function ($scope) {
             directhitratebuff: 0,
             dpsbuff: 0,
             delayreduction: 15
+        },
+        trickattack: {
+            job: "Ninja",
+            name: "Trick Attack",
+            duration: 15,
+            recast: 60,
+            criticalhitratebuff: 0,
+            directhitratebuff: 0,
+            dpsbuff: 5,
+            delayreduction: 0
         },
         shifu: {
             job: "Samurai",
@@ -452,6 +492,8 @@ dps_app.dps_model = function ($scope) {
         innerrelease: false,
 
         huton: false,
+        trickattack: false,
+
         shifu: false,
         jinpu: false,
 
@@ -467,7 +509,11 @@ dps_app.dps_model = function ($scope) {
         wanderersminuetPriority: 0,
         battlevoice: false,
 
+        disembowel: false,
+        lancecharge: false,
         battlelittany: false,
+        dragonsight: false,
+
         chainstratagem: false,
 
         //input stats

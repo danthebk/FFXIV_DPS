@@ -155,7 +155,7 @@
                             <div class="border col-3">
                                 <input id="chkStormsEye" type="checkbox" ng-model="stats_main.stormseye" ng-change="stats_change()" /> Storm's Eye <br />
                                 10% DPS <br />
-                                Uptime: 100%.
+                                Duration: 30 seconds; Recast: 30 seconds.
                             </div>
                             <div class="border col-3">
                                 <input id="chkInnerRelease" type="checkbox" ng-model="stats_main.innerrelease" ng-change="stats_change()" /> Inner Release <br />
@@ -175,9 +175,24 @@
                         </div>
                         <div class="row">
                             <div class="border col-3">
+                                <input id="chkDisembowel" type="checkbox" ng-model="stats_main.disembowel" ng-change="stats_change()" /> Disembowel <br />
+                                10% DPS<br />
+                                Duration: 30 seconds; Recast: 30 seconds.
+                            </div>
+                            <div class="border col-3">
+                                <input id="chkLanceCharge" type="checkbox" ng-model="stats_main.lancecharge" ng-change="stats_change()" /> Lance Charge <br />
+                                15% DPS<br />
+                                Duration: 20 seconds; Recast: 90 seconds.
+                            </div>
+                            <div class="border col-3">
                                 <input id="chkBattleLittany" type="checkbox" ng-model="stats_main.battlelittany" ng-change="stats_change()" /> Battle Littany <br />
                                 10% Critical Hit Rate<br />
                                 Duration: 20 seconds; Recast: 180 seconds.
+                            </div>
+                            <div class="border col-3">
+                                <input id="chkDragonSight" type="checkbox" ng-model="stats_main.dragonsight" ng-change="stats_change()" /> Dragon Sight <br />
+                                5% DPS<br />
+                                Duration: 20 seconds; Recast: 120 seconds.
                             </div>
                         </div>
                         <!-- --------------------------------------------------------------------- -->
@@ -194,7 +209,12 @@
                             <div class="border col-3">
                                 <input id="chkHuton" type="checkbox" ng-model="stats_main.huton" ng-change="stats_change()" /> Huton <br />
                                 15% Delay Reduction <br />
-                                Uptime: 100%.
+                                Duration: 70 seconds; Recast: 70 seconds.
+                            </div>
+                            <div class="border col-3">
+                                <input id="chkTrickAttack" type="checkbox" ng-model="stats_main.trickattack" ng-change="stats_change()" /> Trick Attack <br />
+                                5% DPS <br />
+                                Duration: 15 seconds; Recast: 60 seconds.
                             </div>
                         </div>
                         <!-- --------------------------------------------------------------------- -->
@@ -211,12 +231,12 @@
                             <div class="border col-3">
                                 <input id="chkShifu" type="checkbox" ng-model="stats_main.shifu" ng-change="stats_change()" /> Shifu <br />
                                 13% Delay Reduction <br />
-                                Uptime: 100%.
+                                Duration: 40 seconds; Recast: 40 seconds.
                             </div>
                             <div class="border col-3">
                                 <input id="chkShifu" type="checkbox" ng-model="stats_main.jinpu" ng-change="stats_change()" /> Jinpu <br />
                                 13% DPS <br />
-                                Uptime: 100%.
+                                Duration: 40 seconds; Recast: 40 seconds.
                             </div>
                         </div>
                         <!-- --------------------------------------------------------------------- -->

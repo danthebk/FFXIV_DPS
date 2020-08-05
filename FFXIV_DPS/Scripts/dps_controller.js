@@ -277,14 +277,26 @@ dps_app.dps_controller = function ($scope) {
     }
 
     function dragoonBuffs(stats, buffs) {
+        if (stats.disembowel) {
+            addBuffWindow(stats, buffs.disembowel);
+        }
+        if (stats.lancecharge) {
+            addBuffWindow(stats, buffs.lancecharge);
+        }
         if (stats.battlelittany) {
             addBuffWindow(stats, buffs.battlelittany);
+        }
+        if (stats.dragonsight) {
+            addBuffWindow(stats, buffs.dragonsight);
         }
     }
 
     function ninjaBuffs(stats, buffs) {
         if (stats.huton) {
             addBuffWindow(stats, buffs.huton);
+        }
+        if (stats.trickattack) {
+            addBuffWindow(stats, buffs.trickattack);
         }
     }
 
@@ -490,6 +502,8 @@ dps_app.dps_controller = function ($scope) {
             stormseye: $scope.stats_main.stormseye,
 
             huton: $scope.stats_main.huton,
+            trickattack: $scope.stats_main.trickattack,
+
             shifu: $scope.stats_main.shifu,
             jinpu: $scope.stats_main.jinpu,
 
@@ -504,7 +518,11 @@ dps_app.dps_controller = function ($scope) {
             wanderersminuetPriority: $scope.stats_main.wanderersminuetPriority,
             battlevoice: $scope.stats_main.battlevoice,
 
+            disembowel: $scope.stats_main.disembowel,
+            lancecharge: $scope.stats_main.lancecharge,
             battlelittany: $scope.stats_main.battlelittany,
+            dragonsight: $scope.stats_main.dragonsight,
+
             chainstratagem: $scope.stats_main.chainstratagem,
 
             determination: $scope.stats_main.determination,
@@ -563,6 +581,8 @@ dps_app.dps_controller = function ($scope) {
             stormseye: $scope.stats_archive.stormseye,
 
             huton: $scope.stats_archive.huton,
+            trickattack: $scope.stats_archive.trickattack,
+
             shifu: $scope.stats_archive.shifu,
             jinpu: $scope.stats_archive.jinpu,
 
@@ -577,7 +597,11 @@ dps_app.dps_controller = function ($scope) {
             wanderersminuetPriority: $scope.stats_archive.wanderersminuetPriority,
             battlevoice: $scope.stats_archive.battlevoice,
 
+            disembowel: $scope.stats_archive.disembowel,
+            lancecharge: $scope.stats_archive.lancecharge,
             battlelittany: $scope.stats_archive.battlelittany,
+            dragonsight: $scope.stats_archive.dragonsight,
+
             chainstratagem: $scope.stats_archive.chainstratagem,
 
             determination: $scope.stats_archive.determination,
