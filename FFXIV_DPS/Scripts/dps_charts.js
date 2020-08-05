@@ -63,8 +63,8 @@
         for (var i = 0; i < buff_windows.length; ++i) {
             dataTable.addRows([
                 [
-                    buff_windows[i].job,
-                    buff_windows[i].name,
+                    buff_windows[i].buff.job,
+                    buff_windows[i].buff.name,
                     getDateObject(buff_windows[i].start),
                     getDateObject(buff_windows[i].end)
                 ]

@@ -190,7 +190,7 @@ dps_app.dps_controller = function ($scope) {
             $scope.stats_main.determinationDPS += ($scope.stats_main.determinationDelta / $scope.base_stats.determinationRatio) * .1;
             $scope.stats_main.directhitDPS += directhitrate * ($scope.base_stats.directhitBaseDamage / 100);
             $scope.stats_main.tenacityDPS += ($scope.stats_main.tenacityDelta / $scope.base_stats.tenacityRatio) * .1;
-            $scope.stats_main.buffDPS += $scope.stats_main.buffDPS * (buffs.dpsBuff / 100);
+            $scope.stats_main.buffDPS += buffs.dpsBuff;
         }
 
         //adjust for iterations
@@ -222,12 +222,11 @@ dps_app.dps_controller = function ($scope) {
 
         //inner release
         for (var w = 0; w < stats.buff_windows.length; ++w) {
-            if (stats.buff_windows[w].id == $scope.buffs.innerrelease.id) {
                 if (i >= stats.buff_windows[w].start && i <= stats.buff_windows[w].end) {
-                    buffs.criticalhitrateBuff += $scope.buffs.innerrelease.buff1;
-                    buffs.directhitrateBuff += $scope.buffs.innerrelease.buff2;
+                    buffs.criticalhitrateBuff += stats.buff_windows[w].buff.criticalhitratebuff;
+                    buffs.directhitrateBuff += stats.buff_windows[w].buff.directhitratebuff;
+                    buffs.dpsBuff += stats.buff_windows[w].buff.dpsbuff;
                 }
-            }
         }
 
         return buffs;
@@ -265,9 +264,7 @@ dps_app.dps_controller = function ($scope) {
                 var end = maxDuration(i + duration, stats.fightduration);
 
                 stats.buff_windows.push({
-                    id: buffs.magesballad.id,
-                    job: buffs.magesballad.job,
-                    name: buffs.magesballad.name,
+                    buff: buffs.magesballad,
                     start: i,
                     end: end
                 });
@@ -283,9 +280,7 @@ dps_app.dps_controller = function ($scope) {
                 var end = maxDuration(i + duration, stats.fightduration);
 
                 stats.buff_windows.push({
-                    id: buffs.armyspaeon.id,
-                    job: buffs.armyspaeon.job,
-                    name: buffs.armyspaeon.name,
+                    buff: buffs.armyspaeon,
                     start: i,
                     end: end
                 });
@@ -301,9 +296,7 @@ dps_app.dps_controller = function ($scope) {
                 var end = maxDuration(i + duration, stats.fightduration);
 
                 stats.buff_windows.push({
-                    id: buffs.wanderersminuet.id,
-                    job: buffs.wanderersminuet.job,
-                    name: buffs.wanderersminuet.name,
+                    buff: buffs.wanderersminuet,
                     start: i,
                     end: end
                 });
@@ -322,9 +315,7 @@ dps_app.dps_controller = function ($scope) {
             var end = maxDuration(i + buff.duration, stats.fightduration);
 
             stats.buff_windows.push({
-                id: buff.id,
-                job: buff.job,
-                name: buff.name,
+                buff: buff,
                 start: i,
                 end: end
             });

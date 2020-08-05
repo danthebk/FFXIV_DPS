@@ -39,10 +39,9 @@ dps_app.dps_model = function ($scope) {
             name: "Inner Release",
             duration: 10,
             recast: 90,
-            stat1: $scope.stats_indexes.critical,
-            buff1: 100,
-            stat2: $scope.stats_indexes.directhit,
-            buff2: 100
+            criticalhitratebuff: 100,
+            directhitratebuff: 100,
+            dpsbuff: 0
         },
         battlevoice: {
             id: 1,
@@ -50,10 +49,9 @@ dps_app.dps_model = function ($scope) {
             name: "Battle Voice",
             duration: 20,
             recast: 180,
-            stat1: $scope.stats_indexes.directhit,
-            buff1: 20,
-            stat2: $scope.stats_indexes.none,
-            buff2: 0
+            criticalhitratebuff: 0,
+            directhitratebuff: 20,
+            dpsbuff: 0
         },
         magesballad: {
             id: 2,
@@ -61,10 +59,9 @@ dps_app.dps_model = function ($scope) {
             name: "Mage's Ballad",
             duration: 30,
             recast: 80,
-            stat1: $scope.stats_indexes.dps,
-            buff1: 1,
-            stat2: $scope.stats_indexes.none,
-            buff2: 0
+            criticalhitratebuff: 0,
+            directhitratebuff: 0,
+            dpsbuff: 1
         },
         armyspaeon: {
             id: 3,
@@ -72,10 +69,9 @@ dps_app.dps_model = function ($scope) {
             name: "Army's Paeon",
             duration: 30,
             recast: 80,
-            stat1: $scope.stats_indexes.directhit,
-            buff1: 3,
-            stat2: $scope.stats_indexes.none,
-            buff2: 0
+            criticalhitratebuff: 0,
+            directhitratebuff: 3,
+            dpsbuff: 0
         },
         wanderersminuet: {
             id: 4,
@@ -83,10 +79,9 @@ dps_app.dps_model = function ($scope) {
             name: "Wanderer's Minuet",
             duration: 30,
             recast: 80,
-            stat1: $scope.stats_indexes.critical,
-            buff1: 2,
-            stat2: $scope.stats_indexes.none,
-            buff2: 0
+            criticalhitratebuff: 2,
+            directhitratebuff: 0,
+            dpsbuff: 0
         }
     }
 
