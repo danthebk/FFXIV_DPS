@@ -292,6 +292,9 @@ dps_app.dps_controller = function ($scope) {
         if (stats.shifu) {
             addBuffWindow(stats, buffs.shifu);
         }
+        if (stats.jinpu) {
+            addBuffWindow(stats, buffs.jinpu);
+        }
     }
 
     function scholarBuffs(stats, buffs) {
@@ -488,6 +491,7 @@ dps_app.dps_controller = function ($scope) {
 
             huton: $scope.stats_main.huton,
             shifu: $scope.stats_main.shifu,
+            jinpu: $scope.stats_main.jinpu,
 
             magesballad: $scope.stats_main.magesballad,
             magesballadShort: $scope.stats_main.magesballadShort,
@@ -560,6 +564,7 @@ dps_app.dps_controller = function ($scope) {
 
             huton: $scope.stats_archive.huton,
             shifu: $scope.stats_archive.shifu,
+            jinpu: $scope.stats_archive.jinpu,
 
             magesballad: $scope.stats_archive.magesballad,
             magesballadShort: $scope.stats_archive.magesballadShort,

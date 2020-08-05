@@ -132,6 +132,16 @@ dps_app.dps_model = function ($scope) {
             directhitratebuff: 0,
             dpsbuff: 0,
             delayreduction: 13
+        },
+        jinpu: {
+            job: "Samurai",
+            name: "Jinpu",
+            duration: 40,
+            recast: 40,
+            criticalhitratebuff: 0,
+            directhitratebuff: 0,
+            dpsbuff: 13,
+            delayreduction: 0
         } 
     }
 
@@ -443,6 +453,7 @@ dps_app.dps_model = function ($scope) {
 
         huton: false,
         shifu: false,
+        jinpu: false,
 
         //raid buffs
         magesballad: false,
