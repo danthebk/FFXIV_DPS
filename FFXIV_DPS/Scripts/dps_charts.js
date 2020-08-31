@@ -33,8 +33,10 @@
 
         dataTable = skillspeed(dataTable, stats);
         dataTable = jobbuffs(dataTable, stats.buff_windows);
+        var cheight = determineChartHeight(stats);
 
         var options = {
+            height: cheight
             //colors: ['#cbb69d', '#603913', '#c69c6e'],
         };
 
@@ -71,5 +73,62 @@
             ]);
         }
         return dataTable;
+    }
+
+    function determineChartHeight(stats) {
+        var height = 130;
+        var newrow = 40;
+
+        //hard coding buffs
+        if (stats.stormseye) {
+            height = height + newrow;
+        }
+        if (stats.innerrelease) {
+            height = height + newrow;
+        }
+        if (stats.huton) {
+            height = height + newrow;
+        }
+        if (stats.trickattack) {
+            height = height + newrow;
+        }
+        if (stats.shifu) {
+            height = height + newrow;
+        }
+        if (stats.jinpu) {
+            height = height + newrow;
+        }
+        if (stats.battlevoice) {
+            height = height + newrow;
+        }
+        if (stats.disembowel) {
+            height = height + newrow;
+        }
+        if (stats.lancecharge) {
+            height = height + newrow;
+        }
+        if (stats.battlelittany) {
+            height = height + newrow;
+        }
+        if (stats.dragonsight) {
+            height = height + newrow;
+        }
+        if (stats.embolden) {
+            height = height + newrow;
+        }
+        if (stats.presenceofmind) {
+            height = height + newrow;
+        }
+        if (stats.chainstratagem) {
+            height = height + newrow;
+        }
+
+
+        //stacking buffs, these buffs share the same row so only one needs to be active to increase the height
+        if (stats.magesballad || stats.armyspaeon || stats.wanderersminuet) {
+            height = height + newrow;
+        }
+
+        return height;
     }
 }

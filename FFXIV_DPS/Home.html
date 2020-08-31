@@ -41,7 +41,38 @@
                 <div id="help_collapse" class="border collapse" role="tabpanel" aria-labelledby="help_heading">
                     <ul>
                         <li>
-                            Background Colors
+                            Notes
+                            <ul>
+                                <li>
+                                    Calculations are based on a character at level 80. All base values (indicated by an information value) are different for lower levels.
+                                </li>
+                                <li>
+                                    This tool is only useful for comparing the secondary stats on equipment assuming they have the same item level. Generally, an item with a higher item level will almost always result in more DPS.
+                                </li>
+                                <li class="font-weight-bold">
+                                    General priorities for secondary stats at level 80
+                                    <ul>
+                                        <li>
+                                            1. Critical Hit = Skill speed up to your next GCD.<br />
+                                            Three skill speed materia should always result in a .01 increase to your GCD.
+                                            Any situation where only one or two materia will result in a .01 increase
+                                            is almost exactly as valuable as a critical hit materia.
+                                        </li>
+                                        <li>
+                                            2. Direct hit - up to rougly 2000.<br />
+                                            After 2000, each point in direct hit is rougly equal to determination and experiences diminishing returns.<br />
+                                            From my experiements, an argument can be made for 2200 if a Bard is not present in the party.
+                                        </li>
+                                        <li>
+                                            3. Determination - up to rougly 2000.<br />
+                                            After 2000, each point in determination is roughly equal to direct hit and experiences diminishing returns.
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--<li>
+                            Table Background Colors
                             <ul>
                                 <li class="{{ui_color.info}}">
                                     An information value. These are values that do not change with gear and are constants at level 80.
@@ -56,18 +87,30 @@
                                     A lower value.
                                 </li>
                             </ul>
-                        </li>
+                        </li>-->
                         <li>
                             Stats
                             <ul>
                                 <li>
-                                    Delta - The difference between the gear stats and the character's base stats. At level 80, stats have a base value of 380 (340 for determination) which determines the dps floor. The base values do not have any affect on the calculations. A base 380 direct hit will result in a 0% direct hit rate and 380 skill/spell speed will result in a 2.5 second delay.
+                                    Textboxes - Input your secondary stat information as presented in your Character window.
+                                </li>
+                                <li>
+                                    Delta - The difference between the gear stats and the character's base stats. These are the values actually being used during damage calculations.<br />
+                                    At level 80, stats have a base value of 380 (340 for determination) which determines the dps floor. The base values do not have any affect on the calculations.<br />
+                                    A base 380 direct hit will result in a 0% direct hit rate; 380 critical hit will result in a 5% rate and 40% damage; and 380 skill/spell speed will result in a 2.5 second delay.
+                                </li>
+                                <li class="{{ui_color.info}}">
+                                    Information fields - These fields are static and unique to level 80 and determine damage calculations. These values are different at levels 50/60/70.
                                 </li>
                             </ul>
                         </li>
                         <li>
                             Materia
                             <ul>
+                                <li>
+                                    I added a quick materia functionality since accounting for materia changes was the most frequent usage for this application.<br />
+                                    I found it easier to just press a button than to recalculate my stats for each materia I want to adjust.
+                                </li>
                                 <li>
                                     <button id="btnAddMateriaHelp" class="btn btn-sm btn-primary btnMateria">
                                         +
@@ -80,44 +123,41 @@
                                     </button>
                                     - subtracts the value of the selected materia.
                                 </li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            Food
+                            <ul>
+                                <li>
+                                    Quick food option - select the food from the drop down list to automatically calcuate.<br />
+                                    I found it easier to select my food from a drop down than recalcuating my stats for each food I want to try.
+                                </li>
                             </ul>
                         </li>
                         <li>
                             Buttons
                             <ul>
                                 <li>
-                                    Archive - Stores the current stats for comparison.
+                                    Archive - Stores the current stats into an archived model to use for comparisons.
                                 </li>
                                 <li>
-                                    Revert - Sets the current stats to the values stored in the archive.
+                                    Revert - Retreives the archived model and sets the values to the current stats.
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            Notes
+                            Future update priorities
                             <ul>
                                 <li>
-                                    Calculations are based on a character at level 80. All base values (indicated by an information value) are different for lower levels.
+                                    Accounting for differences between both weapon damage and primary stats (strength, dexterity, intelligence, and mind).
                                 </li>
                                 <li>
-                                    This tool is only useful for comparing the secondary stats on equipment assuming they have the same item level. Generally, an item with a higher item level will almost always result in more DPS.
+                                    Accounting for oGCD abilities. Currently, jobs with more frequent oGCD usage will be underestimated
+                                    for critical hit, direct hit, and determination and overestimated for skill speed.
                                 </li>
                                 <li>
-                                    The current calculations do not account for character buffs. Certain stats have different levels of effectiveness when combined with abilities. This functionality can be added in a future update. Examples of how abilities affect calculations:
-                                    <ul>
-                                        <li>
-                                            Critical hit has increasing returns with higher values. It increases both the critical hit rate as well as critical hit damage. A Bard's Wanderer's Minuet or a Dragoon's Battle Litany increases the party's critical hit rate by 2% and 10% respectively. Critical hit is more valuable for the duration these buffs are active.
-                                        </li>
-                                        <li>
-                                            Determination and Tenacity have diminishing returns with higher values.
-                                        </li>
-                                        <li>
-                                            Direct hit has diminishing returns with higher values. Since direct hit only affects the rate, each additional percentage point has no effect on an ability that is already a direct hit. A Bard's Army's Paeon and Battle voice increases the party's direct hit rate by $ and
-                                        </li>
-                                        <li>
-                                            Skill speed has increasing returns with higher values. The closer a user's delay is equal to 0, attacks can happen exponentially more frequently. Abilities such as Ninja's Huton, Samurai's Shifu, and Monk's Greased Lightning would make skill speed more valuable.
-                                        </li>
-                                    </ul>
+                                    Allowing the user to adjust timings on buff windows. Currently, buffs are used immediately on cooldown.
                                 </li>
                             </ul>
                         </li>
@@ -141,9 +181,25 @@
                 </div>
                 <div id="buffs_collapse" class="border collapse" role="tabpanel" aria-labelledby="buffs_heading">
                     <div class="table">
+                        <br />
+                        <div class="row">
+                            <div class="col-3 border">
+                                Buffs with white borders are individual buffs and do not affect other jobs.
+                                These should only be selected if you are playing the job they belong to.
+                            </div>
+                            <div class="col-3 border table-success">
+                                Buffs with a green background are raid wide buffs and are useful as long as the job is in the party.
+                            </div>
+                            <div class="table-warning border col-3">
+                                Buffs with a yellow background only give a DPS buff.
+                                Since gear considerations are unaffected by DPS buffs,
+                                these buffs are functionally useless for the purpose of this calculator.
+                            </div>
+                        </div>
                         <!-- --------------------------------------------------------------------- -->
                         <!-- warrior -->
                         <!-- --------------------------------------------------------------------- -->
+                        <br />
                         <div class="row">
                             <div class="col-12">
                                 <span class="font-weight-bold">
@@ -153,19 +209,20 @@
                         </div>
                         <div class="row">
                             <div class="border col-3">
-                                <input id="chkStormsEye" type="checkbox" ng-model="stats_main.stormseye" ng-change="stats_change()" /> Storm's Eye <br />
-                                10% DPS <br />
-                                Duration: 30 seconds; Recast: 30 seconds.
-                            </div>
-                            <div class="border col-3">
                                 <input id="chkInnerRelease" type="checkbox" ng-model="stats_main.innerrelease" ng-change="stats_change()" /> Inner Release <br />
                                 100% Critical Hit Rate, 100% Direct Hit Rate <br />
                                 Duration: 10 seconds; Recast: 90 seconds.
+                            </div>
+                            <div class="table-warning border col-3">
+                                <input id="chkStormsEye" type="checkbox" ng-model="stats_main.stormseye" ng-change="stats_change()" /> Storm's Eye <br />
+                                10% DPS <br />
+                                Duration: 30 seconds; Recast: 30 seconds.
                             </div>
                         </div>
                         <!-- --------------------------------------------------------------------- -->
                         <!-- dragoon -->
                         <!-- --------------------------------------------------------------------- -->
+                        <br />
                         <div class="row">
                             <div class="col-12">
                                 <span class="font-weight-bold">
@@ -174,31 +231,32 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="border col-3">
-                                <input id="chkDisembowel" type="checkbox" ng-model="stats_main.disembowel" ng-change="stats_change()" /> Disembowel <br />
-                                10% DPS<br />
-                                Duration: 30 seconds; Recast: 30 seconds.
-                            </div>
-                            <div class="border col-3">
-                                <input id="chkLanceCharge" type="checkbox" ng-model="stats_main.lancecharge" ng-change="stats_change()" /> Lance Charge <br />
-                                15% DPS<br />
-                                Duration: 20 seconds; Recast: 90 seconds.
-                            </div>
-                            <div class="border col-3">
+                            <div class="border col-3 table-success">
                                 <input id="chkBattleLittany" type="checkbox" ng-model="stats_main.battlelittany" ng-change="stats_change()" /> Battle Littany <br />
                                 10% Critical Hit Rate<br />
                                 Duration: 20 seconds; Recast: 180 seconds.
                             </div>
-                            <div class="border col-3">
+                            <div class="table-warning border col-3">
+                                <input id="chkDisembowel" type="checkbox" ng-model="stats_main.disembowel" ng-change="stats_change()" /> Disembowel <br />
+                                10% DPS<br />
+                                Duration: 30 seconds; Recast: 30 seconds.
+                            </div>
+                            <div class="table-warning border col-3">
+                                <input id="chkLanceCharge" type="checkbox" ng-model="stats_main.lancecharge" ng-change="stats_change()" /> Lance Charge <br />
+                                15% DPS<br />
+                                Duration: 20 seconds; Recast: 90 seconds.
+                            </div>
+                            <div class="table-warning border col-3">
                                 <input id="chkDragonSight" type="checkbox" ng-model="stats_main.dragonsight" ng-change="stats_change()" /> Dragon Sight <br />
                                 5% DPS<br />
-                                Duration: 20 seconds; Recast: 120 seconds. <br/>
-                                NOT IMPLEMENTED CORRECTLY
+                                Duration: 20 seconds; Recast: 120 seconds. <br />
+                                <span class="table-danger">NOT IMPLEMENTED CORRECTLY</span>
                             </div>
                         </div>
                         <!-- --------------------------------------------------------------------- -->
                         <!-- ninja -->
                         <!-- --------------------------------------------------------------------- -->
+                        <br />
                         <div class="row">
                             <div class="col-12">
                                 <span class="font-weight-bold">
@@ -212,33 +270,16 @@
                                 15% Delay Reduction <br />
                                 Duration: 70 seconds; Recast: 70 seconds.
                             </div>
-                            <div class="border col-3">
+                            <div class="table-warning border col-3">
                                 <input id="chkTrickAttack" type="checkbox" ng-model="stats_main.trickattack" ng-change="stats_change()" /> Trick Attack <br />
                                 5% DPS <br />
                                 Duration: 15 seconds; Recast: 60 seconds.
                             </div>
                         </div>
                         <!-- --------------------------------------------------------------------- -->
-                        <!-- red mage -->
-                        <!-- --------------------------------------------------------------------- -->
-                        <div class="row">
-                            <div class="col-12">
-                                <span class="font-weight-bold">
-                                    Red Mage
-                                </span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="border col-3">
-                                <input id="chkEmbolden" type="checkbox" ng-model="stats_main.embolden" ng-change="stats_change()" /> Embolden <br />
-                                10% DPS <br />
-                                Duration: 20 seconds; Recast: 120 seconds. <br/>
-                                NOT IMPLEMENTED CORRECTLY
-                            </div>
-                        </div>
-                        <!-- --------------------------------------------------------------------- -->
                         <!-- samurai -->
                         <!-- --------------------------------------------------------------------- -->
+                        <br />
                         <div class="row">
                             <div class="col-12">
                                 <span class="font-weight-bold">
@@ -252,7 +293,7 @@
                                 13% Delay Reduction <br />
                                 Duration: 40 seconds; Recast: 40 seconds.
                             </div>
-                            <div class="border col-3">
+                            <div class="table-warning border col-3">
                                 <input id="chkShifu" type="checkbox" ng-model="stats_main.jinpu" ng-change="stats_change()" /> Jinpu <br />
                                 13% DPS <br />
                                 Duration: 40 seconds; Recast: 40 seconds.
@@ -261,6 +302,7 @@
                         <!-- --------------------------------------------------------------------- -->
                         <!-- bard -->
                         <!-- --------------------------------------------------------------------- -->
+                        <br />
                         <div class="row">
                             <div class="col-12">
                                 <span class="font-weight-bold">
@@ -269,36 +311,56 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="border col-3">
+                            <div class="border col-3 table-success">
                                 <input id="chkWanderersMinuet" type="checkbox" ng-model="stats_main.wanderersminuet" ng-change="stats_change()" /> Wanderer's Minuet<br />
                                 <input id="chkWanderersMinuetShort" type="checkbox" ng-model="stats_main.wanderersminuetShort" ng-change="stats_change()" /> 20 Second Duration <br />
                                 Priority <input id="chkWanderersMinuetnPriority" class="form-control-sm" type="number" ng-model="stats_main.wanderersminuetPriority" ng-change="stats_change()" /> <br />
                                 2% Critical Hit Rate <br />
                                 Duration: 30 seconds; Recast: 80 seconds.
                             </div>
-                            <div class="border col-3">
+                            <div class="border col-3 table-success">
                                 <input id="chkMagesBallad" type="checkbox" ng-model="stats_main.magesballad" ng-change="stats_change()" /> Mage's Ballad <br />
                                 <input id="chkMagesBalladShort" type="checkbox" ng-model="stats_main.magesballadShort" ng-change="stats_change()" /> 20 Second Duration <br />
                                 Priority <input id="chkMagesBalladPriority" class="form-control-sm" type="number" ng-model="stats_main.magesballadPriority" ng-change="stats_change()" /> <br />
-                                1% DPS <br />
+                                <span class="table-warning">1% DPS</span> <br />
                                 Duration: 30 seconds; Recast: 80 seconds.
                             </div>
-                            <div class="border col-3">
+                            <div class="border col-3 table-success">
                                 <input id="chkArmysPaeon" type="checkbox" ng-model="stats_main.armyspaeon" ng-change="stats_change()" /> Army's Paeon <br />
                                 <input id="chkArmysPaeonShort" type="checkbox" ng-model="stats_main.armyspaeonShort" ng-change="stats_change()" /> 20 Second Duration <br />
                                 Priority <input id="chkArmysPaeonPriority" class="form-control-sm" type="number" ng-model="stats_main.armyspaeonPriority" ng-change="stats_change()" /> <br />
                                 3% Direct Hit Rate <br />
                                 Duration: 30 seconds; Recast: 80 seconds.
                             </div>
-                            <div class="border col-3">
+                            <div class="border col-3 table-success">
                                 <input id="chkBattleVoice" type="checkbox" ng-model="stats_main.battlevoice" ng-change="stats_change()" /> Battle Voice <br />
                                 20% Direct Hit Rate <br />
                                 Duration: 20 seconds; Recast: 180 seconds.
                             </div>
                         </div>
                         <!-- --------------------------------------------------------------------- -->
+                        <!-- red mage -->
+                        <!-- --------------------------------------------------------------------- -->
+                        <br />
+                        <div class="row">
+                            <div class="col-12">
+                                <span class="font-weight-bold">
+                                    Red Mage
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="table-warning border col-3">
+                                <input id="chkEmbolden" type="checkbox" ng-model="stats_main.embolden" ng-change="stats_change()" /> Embolden <br />
+                                10% DPS <br />
+                                Duration: 20 seconds; Recast: 120 seconds. <br />
+                                <span class="table-danger">NOT IMPLEMENTED CORRECTLY</span>
+                            </div>
+                        </div>
+                        <!-- --------------------------------------------------------------------- -->
                         <!-- white mage -->
                         <!-- --------------------------------------------------------------------- -->
+                        <br />
                         <div class="row">
                             <div class="col-12">
                                 <span class="font-weight-bold">
@@ -316,6 +378,7 @@
                         <!-- --------------------------------------------------------------------- -->
                         <!-- scholar -->
                         <!-- --------------------------------------------------------------------- -->
+                        <br />
                         <div class="row">
                             <div class="col-12">
                                 <span class="font-weight-bold">
@@ -324,7 +387,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="border col-3">
+                            <div class="border col-3 table-success">
                                 <input id="chkChainStrategem" type="checkbox" ng-model="stats_main.chainstratagem" ng-change="stats_change()" /> Chain Strategem <br />
                                 10% Critical Hit Rate<br />
                                 Duration: 15 seconds; Recast: 120 seconds.
@@ -357,6 +420,8 @@
                     <br />
                     <br />
                 </div>
+            </div>
+            <div class="row">
                 <div class="border col-12" id="chart_mainBuffTimeline"></div>
             </div>
             <div class="row">
@@ -786,6 +851,8 @@
                     <br />
                     <br />
                 </div>
+            </div>
+            <div class="row">
                 <div class="border col-12" id="chart_archiveBuffTimeline"></div>
             </div>
             <div class="row">
