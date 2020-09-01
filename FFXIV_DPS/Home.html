@@ -436,6 +436,69 @@
                 <div class="border col-12" id="chart_mainBuffTimeline"></div>
             </div>
             <div class="row">
+                <div class="border col-2 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
+                        Weapon Damage
+                    </span>
+                    <br />
+                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="stats_main.weapondamage" id="txtWeaponDamage" />
+                </div>
+                <div class="border col-2 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
+                        Primary Stat
+                    </span>
+                    <br />
+                    <input type="number" class="form-control-sm" data-ng-change="stats_change()" data-ng-model="stats_main.primarystat" id="txtPrimaryStat" />
+                </div>
+                <div class="border col-2 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
+                        Primary Stat Delta
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_main.primarystatDelta}}
+                    </span>
+                </div>
+                <div class="border col-1 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
+                        f(WD)
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_main.fweapondamage}}
+                    </span>
+                </div>
+                <div class="border col-1 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
+                        Attack Damage
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_main.attackdamage}}
+                    </span>
+                </div>
+                <div class="border col-1 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
+                        Base Damage
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_main.baseDamage.toFixed(0)}}
+                    </span>
+                </div>
+                <div class="border col-1 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
+                        Base DPS
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_main.baseDPS.toFixed(0)}}
+                    </span>
+                </div>
+                <div class="col-2">
+                </div>
+            </div>
+            <div class="row">
                 <div class="border col-2">
                     <span class="font-weight-bold">
                         Critical Hit Materia
@@ -466,15 +529,6 @@
                         {{stats_main.criticalDelta}}
                     </span>
                 </div>
-                <div class="border col-2 {{ui_color.info}}">
-                    <span class="font-weight-bold">
-                        per .1% rate+dmg
-                    </span>
-                    <br />
-                    <span>
-                        {{base_stats.criticalRatio}}
-                    </span>
-                </div>
                 <div class="border col-1">
                     <span class="font-weight-bold">
                         Rate
@@ -492,6 +546,10 @@
                     <span class="{{ui.critical_main}}">
                         {{stats_main.criticalDamage.toFixed(2)}}%
                     </span>
+                </div>
+                <div class="col-1">
+                </div>
+                <div class="col-1">
                 </div>
                 <div class="border col-2 {{ui.critical_main}}">
                     <span class="font-weight-bold">
@@ -534,14 +592,9 @@
                         {{stats_main.determinationDelta}}
                     </span>
                 </div>
-                <div class="border col-2 {{ui_color.info}}">
-                    <span class="font-weight-bold">
-                        per .1% dps
-                    </span>
-                    <br />
-                    <span>
-                        {{base_stats.determinationRatio}}
-                    </span>
+                <div class="col-1">
+                </div>
+                <div class="col-1">
                 </div>
                 <div class="col-1">
                 </div>
@@ -588,15 +641,6 @@
                         {{stats_main.directhitDelta}}
                     </span>
                 </div>
-                <div class="border col-2 {{ui_color.info}}">
-                    <span class="font-weight-bold">
-                        per .1% rate
-                    </span>
-                    <br />
-                    <span>
-                        {{base_stats.directhitRatio}}
-                    </span>
-                </div>
                 <div class="border col-1 {{ui.directhit_main}}">
                     <span class="font-weight-bold">
                         Rate
@@ -614,6 +658,10 @@
                     <span>
                         {{base_stats.directhitBaseDamage}}%
                     </span>
+                </div>
+                <div class="col-1">
+                </div>
+                <div class="col-1">
                 </div>
                 <div class="border col-2 {{ui.directhit_main}}">
                     <span class="font-weight-bold">
@@ -656,15 +704,6 @@
                         {{stats_main.skillspeedDelta}}
                     </span>
                 </div>
-                <div class="border col-2 {{ui_color.info}}">
-                    <span class="font-weight-bold">
-                        Base Delay
-                    </span>
-                    <br />
-                    <span>
-                        {{base_stats.skillspeedBase}}
-                    </span>
-                </div>
                 <div class="border col-1 {{ui.skillspeed_main}}">
                     <span class="font-weight-bold">
                         Delay
@@ -682,6 +721,10 @@
                     <span>
                         {{stats_main.skillspeedHits}}
                     </span>
+                </div>
+                <div class="col-1">
+                </div>
+                <div class="col-1">
                 </div>
                 <div class="border col-2 {{ui.skillspeed_main}}">
                     <span class="font-weight-bold">
@@ -724,14 +767,9 @@
                         {{stats_main.tenacityDelta}}
                     </span>
                 </div>
-                <div class="border col-2 {{ui_color.info}}">
-                    <span class="font-weight-bold">
-                        per .1% dps
-                    </span>
-                    <br />
-                    <span>
-                        {{base_stats.tenacityRatio}}
-                    </span>
+                <div class="col-1">
+                </div>
+                <div class="col-1">
                 </div>
                 <div class="col-1">
                 </div>
@@ -777,24 +815,33 @@
                 </div>
                 <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
-                        Base Stats:
+                        Level Primary:
                     </span>
                     <span>
-                        {{base_stats.levelBase}}
+                        {{base_stats.levelPrimary}}
                     </span>
                     <br />
                     <span class="font-weight-bold">
-                        Determination:
+                        Level Secondary:
                     </span>
                     <span>
-                        340
+                        {{base_stats.levelSecondary}}
                     </span>
                 </div>
-                <div class="col-2">
-                </div>
                 <div class="col-1">
                 </div>
                 <div class="col-1">
+                </div>
+                <div class="col-1">
+                </div>
+                <div class="border col-1 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
+                        Total Base DPS
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_main.baseTotal.toFixed(2)}}
+                    </span>
                 </div>
                 <div class="border col-2 {{ui.total_main}}">
                     <span class="font-weight-bold">
@@ -859,6 +906,73 @@
                 <div class="border col-12" id="chart_archiveBuffTimeline"></div>
             </div>
             <div class="row">
+                <div class="border col-2 {{ui.primary_archive}}">
+                    <span class="font-weight-bold">
+                        Weapon Damage
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_archive.weapondamage}}
+                    </span>
+                </div>
+                <div class="border col-2 {{ui.primary_archive}}">
+                    <span class="font-weight-bold">
+                        Primary Stat
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_archive.primarystat}}
+                    </span>
+                </div>
+                <div class="border col-2 {{ui.primary_archive}}">
+                    <span class="font-weight-bold">
+                        Primary Stat Delta
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_archive.primarystatDelta}}
+                    </span>
+                </div>
+                <div class="border col-1 {{ui.primary_archive}}">
+                    <span class="font-weight-bold">
+                        f(WD)
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_archive.fweapondamage}}
+                    </span>
+                </div>
+                <div class="border col-1 {{ui.primary_archive}}">
+                    <span class="font-weight-bold">
+                        Attack Damage
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_archive.attackdamage}}
+                    </span>
+                </div>
+                <div class="border col-1 {{ui.primary_archive}}">
+                    <span class="font-weight-bold">
+                        Base Damage
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_archive.baseDamage.toFixed(0)}}
+                    </span>
+                </div>
+                <div class="border col-1 {{ui.primary_archive}}">
+                    <span class="font-weight-bold">
+                        Base DPS
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_archive.baseDPS.toFixed(0)}}
+                    </span>
+                </div>
+                <div class="col-2">
+                </div>
+            </div>
+            <div class="row">
                 <div class="border col-2 {{ui.critical_archive}}">
                     <span class="font-weight-bold">
                         Critical Hit Difference
@@ -886,15 +1000,6 @@
                         {{stats_archive.criticalDelta}}
                     </span>
                 </div>
-                <div class="border col-2 {{ui_color.info}}">
-                    <span class="font-weight-bold">
-                        per .1% rate+dmg
-                    </span>
-                    <br />
-                    <span>
-                        {{base_stats.criticalRatio}}
-                    </span>
-                </div>
                 <div class="border col-1">
                     <span class="font-weight-bold">
                         Rate
@@ -912,6 +1017,10 @@
                     <span class="{{ui.critical_archive}}">
                         {{stats_archive.criticalDamage.toFixed(2)}}%
                     </span>
+                </div>
+                <div class="col-1">
+                </div>
+                <div class="col-1">
                 </div>
                 <div class="border col-2 {{ui.critical_archive}}">
                     <span class="font-weight-bold">
@@ -951,14 +1060,9 @@
                         {{stats_archive.determinationDelta}}
                     </span>
                 </div>
-                <div class="border col-2 {{ui_color.info}}">
-                    <span class="font-weight-bold">
-                        per .1% dps
-                    </span>
-                    <br />
-                    <span>
-                        {{base_stats.determinationRatio}}
-                    </span>
+                <div class="col-1">
+                </div>
+                <div class="col-1">
                 </div>
                 <div class="col-1">
                 </div>
@@ -1002,15 +1106,6 @@
                         {{stats_archive.directhitDelta}}
                     </span>
                 </div>
-                <div class="border col-2 {{ui_color.info}}">
-                    <span class="font-weight-bold">
-                        per .1% rate
-                    </span>
-                    <br />
-                    <span>
-                        {{base_stats.directhitRatio}}
-                    </span>
-                </div>
                 <div class="border col-1 {{ui.directhit_archive}}">
                     <span class="font-weight-bold">
                         Rate
@@ -1028,6 +1123,10 @@
                     <span>
                         {{base_stats.directhitBaseDamage}}%
                     </span>
+                </div>
+                <div class="col-1">
+                </div>
+                <div class="col-1">
                 </div>
                 <div class="border col-2 {{ui.directhit_archive}}">
                     <span class="font-weight-bold">
@@ -1067,15 +1166,6 @@
                         {{stats_archive.skillspeedDelta}}
                     </span>
                 </div>
-                <div class="border col-2 {{ui_color.info}}">
-                    <span class="font-weight-bold">
-                        Base Delay
-                    </span>
-                    <br />
-                    <span>
-                        {{base_stats.skillspeedBase}}
-                    </span>
-                </div>
                 <div class="border col-1 {{ui.skillspeed_archive}}">
                     <span class="font-weight-bold">
                         Delay
@@ -1093,6 +1183,10 @@
                     <span>
                         {{stats_archive.skillspeedHits}}
                     </span>
+                </div>
+                <div class="col-1">
+                </div>
+                <div class="col-1">
                 </div>
                 <div class="border col-2 {{ui.skillspeed_archive}}">
                     <span class="font-weight-bold">
@@ -1132,14 +1226,9 @@
                         {{stats_archive.tenacityDelta}}
                     </span>
                 </div>
-                <div class="border col-2 {{ui_color.info}}">
-                    <span class="font-weight-bold">
-                        per .1% dps
-                    </span>
-                    <br />
-                    <span>
-                        {{base_stats.tenacityRatio}}
-                    </span>
+                <div class="col-1">
+                </div>
+                <div class="col-1">
                 </div>
                 <div class="col-1">
                 </div>
@@ -1184,24 +1273,33 @@
                 </div>
                 <div class="border col-2 {{ui_color.info}}">
                     <span class="font-weight-bold">
-                        Base Stats:
+                        Level Primary:
                     </span>
                     <span>
-                        {{base_stats.levelBase}}
+                        {{base_stats.levelPrimary}}
                     </span>
                     <br />
                     <span class="font-weight-bold">
-                        Determination:
+                        Level Secondary:
                     </span>
                     <span>
-                        340
+                        {{base_stats.levelSecondary}}
                     </span>
                 </div>
-                <div class="col-2">
-                </div>
                 <div class="col-1">
                 </div>
                 <div class="col-1">
+                </div>
+                <div class="col-1">
+                </div>
+                <div class="border col-1 {{ui.primary_archive}}">
+                    <span class="font-weight-bold">
+                        Total Base DPS
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_archive.baseTotal.toFixed(2)}}
+                    </span>
                 </div>
                 <div class="border col-2 {{ui.total_archive}}">
                     <span class="font-weight-bold">

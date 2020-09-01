@@ -456,7 +456,8 @@ dps_app.dps_model = function ($scope) {
         skillspeedBase: 2.5,
 
         levelMod: 3300,
-        levelBase: 380
+        levelSecondary: 380,
+        levelPrimary: 340
     }
 
     //-----------------------------------------------
@@ -465,6 +466,7 @@ dps_app.dps_model = function ($scope) {
 
     //default UI colors
     $scope.ui = {
+        primary_main: $scope.ui_color.neutral,
         critical_main: $scope.ui_color.neutral,
         determination_main: $scope.ui_color.neutral,
         directhit_main: $scope.ui_color.neutral,
@@ -472,6 +474,7 @@ dps_app.dps_model = function ($scope) {
         tenacity_main: $scope.ui_color.neutral,
         total_main: $scope.ui_color.neutral,
 
+        primary_archive: $scope.ui_color.neutral,
         critical_archive: $scope.ui_color.neutral,
         determination_archive: $scope.ui_color.neutral,
         directhit_archive: $scope.ui_color.neutral,
@@ -539,6 +542,8 @@ dps_app.dps_model = function ($scope) {
         chainstratagem: false,
 
         //input stats
+        weapondamage: 1,
+        primarystat: 340,
         determination: 340,
         directhit: 380,
         tenacity: 380,
@@ -549,6 +554,13 @@ dps_app.dps_model = function ($scope) {
         determinationDPS: 0,
         determinationDelta: 0,
         determinationMultiplier: 0,
+
+        fweapondamage: 0,
+        attackdamage: 0,
+        primarystatDelta: 0,
+        baseDamage: 0,
+        baseDPS: 0,
+        baseTotal: 0,
 
         tenacityDPS: 0,
         tenacityDelta: 0,

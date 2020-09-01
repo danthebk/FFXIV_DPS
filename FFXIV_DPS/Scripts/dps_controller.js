@@ -123,6 +123,7 @@ dps_app.dps_controller = function ($scope) {
     //having a couple UI and buff issues because some important information isn't being initialized
     $scope.stats_calculate_init = function () {
         //reinitialize
+        $scope.stats_main.primaryDPS = 0;
         $scope.stats_main.criticalDPS = 0;
         $scope.stats_main.determinationDPS = 0;
         $scope.stats_main.tenacityDPS = 0;
@@ -132,11 +133,17 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.totaldps = 0;
 
         //deltas
-        $scope.stats_main.criticalDelta = $scope.stats_main.critical - $scope.base_stats.levelBase + $scope.stats_main.food_selected.criticalhitValue;
-        $scope.stats_main.determinationDelta = $scope.stats_main.determination - ($scope.base_stats.levelBase - 40) + $scope.stats_main.food_selected.determinationValue; //determination inexplicably has 40 less base value
-        $scope.stats_main.directhitDelta = $scope.stats_main.directhit - $scope.base_stats.levelBase + $scope.stats_main.food_selected.directhitValue;
-        $scope.stats_main.skillspeedDelta = $scope.stats_main.skillspeed - $scope.base_stats.levelBase + $scope.stats_main.food_selected.skillspeedValue;
-        $scope.stats_main.tenacityDelta = $scope.stats_main.tenacity - $scope.base_stats.levelBase + $scope.stats_main.food_selected.tenacityValue;
+        $scope.stats_main.primarystatDelta = $scope.stats_main.primarystat - $scope.base_stats.levelPrimary
+        $scope.stats_main.criticalDelta = $scope.stats_main.critical - $scope.base_stats.levelSecondary + $scope.stats_main.food_selected.criticalhitValue;
+        $scope.stats_main.determinationDelta = $scope.stats_main.determination - $scope.base_stats.levelPrimary + $scope.stats_main.food_selected.determinationValue; //determination inexplicably has 40 less base value
+        $scope.stats_main.directhitDelta = $scope.stats_main.directhit - $scope.base_stats.levelSecondary + $scope.stats_main.food_selected.directhitValue;
+        $scope.stats_main.skillspeedDelta = $scope.stats_main.skillspeed - $scope.base_stats.levelSecondary + $scope.stats_main.food_selected.skillspeedValue;
+        $scope.stats_main.tenacityDelta = $scope.stats_main.tenacity - $scope.base_stats.levelSecondary + $scope.stats_main.food_selected.tenacityValue;
+
+        //primary stats
+        $scope.stats_main.fweapondamage = Math.floor($scope.base_stats.levelPrimary * $scope.stats_main.primarystat / 1000) + $scope.stats_main.weapondamage;
+        $scope.stats_main.attackdamage = Math.floor((140 * $scope.stats_main.primarystatDelta / $scope.base_stats.levelPrimary) + 100) / 1000;
+        $scope.stats_main.baseDamage = Math.floor($scope.stats_main.fweapondamage * $scope.stats_main.attackdamage);
 
         //rates
         $scope.stats_main.criticalRate = ((Math.floor(200 * $scope.stats_main.criticalDelta / $scope.base_stats.levelMod) + 50) / 1000) * 100;
@@ -213,6 +220,7 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.skillspeedDPSImprovement = ($scope.stats_main.skillspeedDPS - 1) * 100;
 
         //adjust for iterations
+        $scope.stats_main.baseDPS = $scope.stats_main.baseDamage * $scope.stats_main.skillspeedHits / $scope.stats_main.fightduration;
         $scope.stats_main.criticalDPS = $scope.stats_main.criticalDPS / $scope.stats_main.skillspeedHits;
         $scope.stats_main.determinationDPS = $scope.stats_main.determinationDPS / $scope.stats_main.skillspeedHits;
         $scope.stats_main.tenacityDPS = $scope.stats_main.tenacityDPS / $scope.stats_main.skillspeedHits;
@@ -227,6 +235,7 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.totaldps = $scope.stats_main.totaldps * (1 + ($scope.stats_main.directhitDPS / 100));
         $scope.stats_main.totaldps = $scope.stats_main.totaldps * $scope.stats_main.skillspeedDPS;
         $scope.stats_main.totaldps = $scope.stats_main.totaldps * (1 + ($scope.stats_main.buffDPS / 100));
+        $scope.stats_main.baseTotal = $scope.stats_main.baseDPS * ($scope.stats_main.totaldps / 100);
     }
 
     //init buffs creates a table for windows when buffs are active
@@ -424,6 +433,19 @@ dps_app.dps_controller = function ($scope) {
 
     //ui style adjustments
     $scope.stats_ui = function () {
+        //primary
+        if ($scope.stats_main.baseDamage == $scope.stats_archive.baseDamage) {
+            $scope.ui.primary_main = $scope.ui_color.neutral;
+            $scope.ui.primary_archive = $scope.ui_color.neutral;
+        }
+        else if ($scope.stats_main.baseDamage > $scope.stats_archive.baseDamage) {
+            $scope.ui.primary_main = $scope.ui_color.better;
+            $scope.ui.primary_archive = $scope.ui_color.worse;
+        } else {
+            $scope.ui.primary_main = $scope.ui_color.worse;
+            $scope.ui.primary_archive = $scope.ui_color.better;
+        }
+
         //critical
         if ($scope.stats_main.criticalDPS == $scope.stats_archive.criticalDPS) {
             $scope.ui.critical_main = $scope.ui_color.neutral;
@@ -567,11 +589,20 @@ dps_app.dps_controller = function ($scope) {
             presenceofmind: $scope.stats_main.presenceofmind,
             chainstratagem: $scope.stats_main.chainstratagem,
 
+            weapondamage: $scope.stats_main.weapondamage,
+            primarystat: $scope.stats_main.primarystat,
             determination: $scope.stats_main.determination,
             directhit: $scope.stats_main.directhit,
             tenacity: $scope.stats_main.tenacity,
             critical: $scope.stats_main.critical,
             skillspeed: $scope.stats_main.skillspeed,
+
+            fweapondamage: $scope.stats_main.fweapondamage,
+            attackdamage: $scope.stats_main.attackdamage,
+            primarystatDelta: $scope.stats_main.primarystatDelta,
+            baseDamage: $scope.stats_main.baseDamage,
+            baseDPS: $scope.stats_main.baseDPS,
+            baseTotal: $scope.stats_main.baseTotal,
 
             determinationDPS: $scope.stats_main.determinationDPS,
             determinationDelta: $scope.stats_main.determinationDelta,
@@ -650,11 +681,20 @@ dps_app.dps_controller = function ($scope) {
             presenceofmind: $scope.stats_archive.presenceofmind,
             chainstratagem: $scope.stats_archive.chainstratagem,
 
+            weapondamage: $scope.stats_archive.weapondamage,
+            primarystat: $scope.stats_archive.primarystat,
             determination: $scope.stats_archive.determination,
             directhit: $scope.stats_archive.directhit,
             tenacity: $scope.stats_archive.tenacity,
             critical: $scope.stats_archive.critical,
             skillspeed: $scope.stats_archive.skillspeed,
+
+            fweapondamage: $scope.stats_archive.fweapondamage,
+            attackdamage: $scope.stats_archive.attackdamage,
+            primarystatDelta: $scope.stats_archive.primarystatDelta,
+            baseDamage: $scope.stats_archive.baseDamage,
+            baseDPS: $scope.stats_archive.baseDPS,
+            baseTotal: $scope.stats_archive.baseTotal,
 
             determinationDPS: $scope.stats_archive.determinationDPS,
             determinationDelta: $scope.stats_archive.determinationDelta,
