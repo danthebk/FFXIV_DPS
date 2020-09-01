@@ -75,6 +75,8 @@
         return dataTable;
     }
 
+    //chart height apparently doesn't automatically adjust for the amount of data
+    //let's just estimate the ideal height based on the number of buffs selected
     function determineChartHeight(stats) {
         var height = 130;
         var newrow = 40;

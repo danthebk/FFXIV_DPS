@@ -453,9 +453,9 @@ dps_app.dps_model = function ($scope) {
         criticalBaseRate: 5,
         criticalBaseDamage: 40,
 
-        skillspeedLevelMod: 3300,
         skillspeedBase: 2.5,
 
+        levelMod: 3300,
         levelBase: 380
     }
 
@@ -497,7 +497,7 @@ dps_app.dps_model = function ($scope) {
     //also the player's calculated stats
     $scope.stats_main = {
         //buffs
-        fightduration: 360,
+        fightduration: 660,
         buff_windows: [],
 
         //food
@@ -548,9 +548,11 @@ dps_app.dps_model = function ($scope) {
         //calculated stats
         determinationDPS: 0,
         determinationDelta: 0,
+        determinationMultiplier: 0,
 
         tenacityDPS: 0,
         tenacityDelta: 0,
+        tenacityMultiplier: 0,
 
         directhitDPS: 0,
         directhitRate: 0,

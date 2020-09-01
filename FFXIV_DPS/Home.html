@@ -41,6 +41,17 @@
                 <div id="help_collapse" class="border collapse" role="tabpanel" aria-labelledby="help_heading">
                     <ul>
                         <li>
+                            Sources and tools
+                            <ul>
+                                <li>
+                                    <a href="http://allaganstudies.akhmorning.com/" target="_blank">http://allaganstudies.akhmorning.com/</a>
+                                </li>
+                                <li>
+                                    <a href="https://ffxiv.ariyala.com/" target="_blank">https://ffxiv.ariyala.com/</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
                             Notes
                             <ul>
                                 <li>
@@ -469,10 +480,6 @@
                         Rate
                     </span>
                     <br />
-                    <span class="{{ui_color.info}}">
-                        {{base_stats.criticalBaseRate}}%
-                    </span>
-                    +
                     <span class="{{ui.critical_main}}">
                         {{stats_main.criticalRate.toFixed(2)}}%
                     </span>
@@ -482,10 +489,6 @@
                         Damage
                     </span>
                     <br />
-                    <span class="{{ui_color.info}}">
-                        {{base_stats.criticalBaseDamage}}%
-                    </span>
-                    +
                     <span class="{{ui.critical_main}}">
                         {{stats_main.criticalDamage.toFixed(2)}}%
                     </span>
@@ -550,7 +553,7 @@
                     </span>
                     <br />
                     <span>
-                        {{stats_main.determinationDPS.toFixed(2)}}%
+                        {{((stats_main.determinationDPS - 1) * 100).toFixed(3)}}%
                     </span>
                 </div>
             </div>
@@ -740,7 +743,7 @@
                     </span>
                     <br />
                     <span>
-                        {{stats_main.tenacityDPS.toFixed(2)}}%
+                        {{((stats_main.tenacityDPS - 1) * 100).toFixed(3)}}%
                     </span>
                 </div>
             </div>
@@ -897,10 +900,6 @@
                         Rate
                     </span>
                     <br />
-                    <span class="{{ui_color.info}}">
-                        {{base_stats.criticalBaseRate}}%
-                    </span>
-                    +
                     <span class="{{ui.critical_archive}}">
                         {{stats_archive.criticalRate.toFixed(2)}}%
                     </span>
@@ -910,10 +909,6 @@
                         Damage
                     </span>
                     <br />
-                    <span class="{{ui_color.info}}">
-                        {{base_stats.criticalBaseDamage}}%
-                    </span>
-                    +
                     <span class="{{ui.critical_archive}}">
                         {{stats_archive.criticalDamage.toFixed(2)}}%
                     </span>
@@ -975,7 +970,7 @@
                     </span>
                     <br />
                     <span>
-                        {{stats_archive.determinationDPS.toFixed(2)}}%
+                        {{((stats_archive.determinationDPS - 1) * 100).toFixed(3)}}%
                     </span>
                 </div>
             </div>
@@ -1156,7 +1151,7 @@
                     </span>
                     <br />
                     <span>
-                        {{stats_archive.tenacityDPS.toFixed(2)}}%
+                        {{((stats_archive.tenacityDPS - 1) * 100).toFixed(3)}}%
                     </span>
                 </div>
             </div>
