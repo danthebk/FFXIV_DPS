@@ -543,7 +543,11 @@ dps_app.dps_model = function ($scope) {
 
         //input stats
         weapondamage: 1,
+        weapondelay: 0,
+        weaponattack: 1,
         primarystat: 340,
+        autoattackDPS: 0,
+
         determination: 340,
         directhit: 380,
         tenacity: 380,

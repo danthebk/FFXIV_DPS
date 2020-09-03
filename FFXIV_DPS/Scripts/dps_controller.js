@@ -142,8 +142,10 @@ dps_app.dps_controller = function ($scope) {
 
         //primary stats
         $scope.stats_main.fweapondamage = Math.floor($scope.base_stats.levelPrimary * $scope.stats_main.primarystat / 1000) + $scope.stats_main.weapondamage;
-        $scope.stats_main.attackdamage = Math.floor((140 * $scope.stats_main.primarystatDelta / $scope.base_stats.levelPrimary) + 100) / 1000;
+        //$scope.stats_main.attackdamage = Math.floor((140 * $scope.stats_main.primarystatDelta / $scope.base_stats.levelPrimary) + 100) / 1000;
+        $scope.stats_main.attackdamage = Math.floor(($scope.stats_main.weaponattack * $scope.stats_main.primarystatDelta / $scope.base_stats.levelPrimary) + 100) / 1000;
         $scope.stats_main.baseDamage = Math.floor($scope.stats_main.fweapondamage * $scope.stats_main.attackdamage);
+        $scope.stats_main.autoattackDPS = Math.floor($scope.stats_main.baseDamage / $scope.stats_main.weapondelay);
 
         //rates
         $scope.stats_main.criticalRate = ((Math.floor(200 * $scope.stats_main.criticalDelta / $scope.base_stats.levelMod) + 50) / 1000) * 100;
@@ -235,7 +237,13 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.totaldps = $scope.stats_main.totaldps * (1 + ($scope.stats_main.directhitDPS / 100));
         $scope.stats_main.totaldps = $scope.stats_main.totaldps * $scope.stats_main.skillspeedDPS;
         $scope.stats_main.totaldps = $scope.stats_main.totaldps * (1 + ($scope.stats_main.buffDPS / 100));
-        $scope.stats_main.baseTotal = $scope.stats_main.baseDPS * ($scope.stats_main.totaldps / 100);
+
+        $scope.stats_main.baseTotal = $scope.stats_main.baseDPS;
+        $scope.stats_main.baseTotal = $scope.stats_main.baseTotal * $scope.stats_main.determinationDPS;
+        $scope.stats_main.baseTotal = $scope.stats_main.baseTotal * $scope.stats_main.tenacityDPS;
+        $scope.stats_main.baseTotal = $scope.stats_main.baseTotal * (1 + ($scope.stats_main.criticalDPS / 100));
+        $scope.stats_main.baseTotal = $scope.stats_main.baseTotal * (1 + ($scope.stats_main.directhitDPS / 100));
+        $scope.stats_main.baseTotal = $scope.stats_main.baseTotal * (1 + ($scope.stats_main.buffDPS / 100));
     }
 
     //init buffs creates a table for windows when buffs are active
@@ -512,11 +520,11 @@ dps_app.dps_controller = function ($scope) {
         }
 
         //total
-        if ($scope.stats_main.totaldps == $scope.stats_archive.totaldps) {
+        if ($scope.stats_main.baseTotal == $scope.stats_archive.baseTotal) {
             $scope.ui.total_main = $scope.ui_color.neutral;
             $scope.ui.total_archive = $scope.ui_color.neutral;
         }
-        else if ($scope.stats_main.totaldps > $scope.stats_archive.totaldps) {
+        else if ($scope.stats_main.baseTotal > $scope.stats_archive.baseTotal) {
             $scope.ui.total_main = $scope.ui_color.better;
             $scope.ui.total_archive = $scope.ui_color.worse;
         } else {
@@ -590,6 +598,10 @@ dps_app.dps_controller = function ($scope) {
             chainstratagem: $scope.stats_main.chainstratagem,
 
             weapondamage: $scope.stats_main.weapondamage,
+            weapondelay: $scope.stats_main.weapondelay,
+            weaponattack: $scope.stats_main.weaponattack,
+            autoattackDPS: $scope.stats_main.autoattackDPS,
+
             primarystat: $scope.stats_main.primarystat,
             determination: $scope.stats_main.determination,
             directhit: $scope.stats_main.directhit,
@@ -682,7 +694,11 @@ dps_app.dps_controller = function ($scope) {
             chainstratagem: $scope.stats_archive.chainstratagem,
 
             weapondamage: $scope.stats_archive.weapondamage,
+            weapondelay: $scope.stats_archive.weapondelay,
+            weaponattack: $scope.stats_archive.weaponattack,
             primarystat: $scope.stats_archive.primarystat,
+            autoattackDPS: $scope.stats_archive.autoattackDPS,
+
             determination: $scope.stats_archive.determination,
             directhit: $scope.stats_archive.directhit,
             tenacity: $scope.stats_archive.tenacity,
