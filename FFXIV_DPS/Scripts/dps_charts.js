@@ -32,6 +32,7 @@
         ])
 
         dataTable = skillspeed(dataTable, stats);
+        datatable = autoattack(dataTable, stats);
         dataTable = jobbuffs(dataTable, stats.buff_windows);
         var cheight = determineChartHeight(stats);
 
@@ -46,6 +47,23 @@
     //-------------------------------------------------------------------------------------------------
     //global chart functions
     //-------------------------------------------------------------------------------------------------
+    function autoattack(dataTable, stats) {
+        if (stats.weapondelay > 0) {
+            for (var i = 0; i < stats.fightduration; i += stats.weapondelay) {
+                dataTable.addRows([
+                    [
+                        'All',
+                        'Auto Attack',
+                        getDateObject(i),
+                        getDateObject(i)
+                    ]
+                ])
+            }
+        }
+
+        return dataTable;
+    }
+
     function skillspeed(dataTable, stats) {
         for (var i = 0; i < stats.fightduration; i += stats.skillspeedDelay) {
             dataTable.addRows([

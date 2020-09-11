@@ -145,7 +145,6 @@ dps_app.dps_controller = function ($scope) {
         //$scope.stats_main.attackdamage = Math.floor((140 * $scope.stats_main.primarystatDelta / $scope.base_stats.levelPrimary) + 100) / 1000;
         $scope.stats_main.attackdamage = Math.floor(($scope.stats_main.weaponattack * $scope.stats_main.primarystatDelta / $scope.base_stats.levelPrimary) + 100) / 1000;
         $scope.stats_main.baseDamage = Math.floor($scope.stats_main.fweapondamage * $scope.stats_main.attackdamage);
-        $scope.stats_main.autoattackDPS = Math.floor($scope.stats_main.baseDamage / $scope.stats_main.weapondelay);
 
         //rates
         $scope.stats_main.criticalRate = ((Math.floor(200 * $scope.stats_main.criticalDelta / $scope.base_stats.levelMod) + 50) / 1000) * 100;
@@ -229,6 +228,18 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.directhitDPS = $scope.stats_main.directhitDPS / $scope.stats_main.skillspeedHits;
         $scope.stats_main.buffDPS = $scope.stats_main.buffDPS / $scope.stats_main.skillspeedHits;
 
+        //auto attack dps
+        if ($scope.stats_main.weapondelay > 0) {
+            $scope.stats_main.autoattackDPS = Math.floor($scope.stats_main.baseDamage / $scope.stats_main.weapondelay);
+            $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * $scope.stats_main.determinationDPS;
+            $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * $scope.stats_main.tenacityDPS;
+            $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * (1 + ($scope.stats_main.criticalDPS / 100));
+            $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * (1 + ($scope.stats_main.directhitDPS / 100));
+            $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * (1 + ($scope.stats_main.buffDPS / 100));
+
+            $scope.stats_main.baseDPS = $scope.stats_main.baseDPS + $scope.stats_main.autoattackDPS;
+        }
+
         //total
         $scope.stats_main.totaldps = 100;
         $scope.stats_main.totaldps = $scope.stats_main.totaldps * $scope.stats_main.determinationDPS;
@@ -238,6 +249,7 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.totaldps = $scope.stats_main.totaldps * $scope.stats_main.skillspeedDPS;
         $scope.stats_main.totaldps = $scope.stats_main.totaldps * (1 + ($scope.stats_main.buffDPS / 100));
 
+        //total base
         $scope.stats_main.baseTotal = $scope.stats_main.baseDPS;
         $scope.stats_main.baseTotal = $scope.stats_main.baseTotal * $scope.stats_main.determinationDPS;
         $scope.stats_main.baseTotal = $scope.stats_main.baseTotal * $scope.stats_main.tenacityDPS;
