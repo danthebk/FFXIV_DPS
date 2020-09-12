@@ -131,6 +131,8 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.skillspeedDPS = 0;
         $scope.stats_main.buffDPS = 0;
         $scope.stats_main.totaldps = 0;
+        $scope.stats_main.autoattack_timing = [];
+        $scope.stats_main.gcd_timing = [];
 
         //deltas
         $scope.stats_main.primarystatDelta = $scope.stats_main.primarystat - $scope.base_stats.levelPrimary
@@ -142,9 +144,15 @@ dps_app.dps_controller = function ($scope) {
 
         //primary stats
         $scope.stats_main.fweapondamage = Math.floor($scope.base_stats.levelPrimary * $scope.stats_main.primarystat / 1000) + $scope.stats_main.weapondamage;
-        //$scope.stats_main.attackdamage = Math.floor((140 * $scope.stats_main.primarystatDelta / $scope.base_stats.levelPrimary) + 100) / 1000;
         $scope.stats_main.attackdamage = Math.floor(($scope.stats_main.weaponattack * $scope.stats_main.primarystatDelta / $scope.base_stats.levelPrimary) + 100) / 1000;
         $scope.stats_main.baseDamage = Math.floor($scope.stats_main.fweapondamage * $scope.stats_main.attackdamage);
+
+        if ($scope.stats_main.weapondelay > 0) {
+            //auto attack timing
+            for (var i = 0; i < $scope.stats_main.fightduration; i += $scope.stats_main.weapondelay) {
+                $scope.stats_main.autoattack_timing.push(i);
+            }
+        }
 
         //rates
         $scope.stats_main.criticalRate = ((Math.floor(200 * $scope.stats_main.criticalDelta / $scope.base_stats.levelMod) + 50) / 1000) * 100;
@@ -165,7 +173,7 @@ dps_app.dps_controller = function ($scope) {
 
         //skillspeed cap
         if ($scope.stats_main.skillspeedDelay <= 0) {
-            $scope.stats_main.skillspeedDelay = .1;
+            $scope.stats_main.skillspeedDelay = .01;
         }
     }
 
@@ -177,9 +185,9 @@ dps_app.dps_controller = function ($scope) {
         //individual hit dps
         $scope.stats_main.skillspeedHits = 0
         for (var i = 0; i < $scope.stats_main.fightduration; i += j) {
-            //for (var i = 0; i < $scope.stats_main.skillspeedHits; ++i) {
+            $scope.stats_main.gcd_timing.push(i);
+
             buffs = determineActiveBuffs($scope.stats_main, i);
-            //buffs = determineActiveBuffs($scope.stats_main, i * $scope.stats_main.skillspeedDelay);
 
             //critical hit rate cap
             var criticalhitrate = $scope.stats_main.criticalRate + buffs.criticalhitrateBuff;
@@ -195,6 +203,9 @@ dps_app.dps_controller = function ($scope) {
 
             //account for delay buffs
             j = $scope.stats_main.skillspeedDelay * ((100 - buffs.delayReduction) / 100);
+            j = Math.floor(j * 100) / 100; //round down to the hundreths place
+
+            $scope.stats_main.buffDelay += j;
 
             //calculate individual hit dps
             $scope.stats_main.criticalDPS += (criticalhitrate / 100) * ($scope.stats_main.criticalDamage);
@@ -211,24 +222,27 @@ dps_app.dps_controller = function ($scope) {
 
         //skill speed hit count over the course of the fight duration
         var skillspeedbaseHits = Math.floor($scope.stats_main.fightduration / $scope.base_stats.skillspeedBase);
-        //$scope.stats_main.skillspeedHits = $scope.stats_main.fightduration / $scope.stats_main.skillspeedDelay;
-        //$scope.stats_main.skillspeedHits = Math.floor($scope.stats_main.skillspeedHits);
 
         //skill speed DPS
-        //$scope.stats_main.skillspeedDPS = $scope.base_stats.skillspeedBase / $scope.stats_main.skillspeedDelay;
         //adjusting the calculation to account for the number of hits across the fight rather than based on the delay difference
         $scope.stats_main.skillspeedDPS = $scope.stats_main.skillspeedHits / skillspeedbaseHits;
         $scope.stats_main.skillspeedDPSImprovement = ($scope.stats_main.skillspeedDPS - 1) * 100;
 
-        //adjust for iterations
+        //currently doesn't account for buffs if I'm not mistaken
         $scope.stats_main.baseDPS = $scope.stats_main.baseDamage * $scope.stats_main.skillspeedHits / $scope.stats_main.fightduration;
+
+        //adjust for iterations
         $scope.stats_main.criticalDPS = $scope.stats_main.criticalDPS / $scope.stats_main.skillspeedHits;
         $scope.stats_main.determinationDPS = $scope.stats_main.determinationDPS / $scope.stats_main.skillspeedHits;
         $scope.stats_main.tenacityDPS = $scope.stats_main.tenacityDPS / $scope.stats_main.skillspeedHits;
         $scope.stats_main.directhitDPS = $scope.stats_main.directhitDPS / $scope.stats_main.skillspeedHits;
+
+        $scope.stats_main.buffDelay = Math.floor(($scope.stats_main.buffDelay / $scope.stats_main.skillspeedHits) * 100) / 100;
         $scope.stats_main.buffDPS = $scope.stats_main.buffDPS / $scope.stats_main.skillspeedHits;
 
         //auto attack dps
+        //currently oversimplified, need to loop through the list to account for buffs
+        //similar to the GCD section
         if ($scope.stats_main.weapondelay > 0) {
             $scope.stats_main.autoattackDPS = Math.floor($scope.stats_main.baseDamage / $scope.stats_main.weapondelay);
             $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * $scope.stats_main.determinationDPS;
@@ -236,8 +250,6 @@ dps_app.dps_controller = function ($scope) {
             $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * (1 + ($scope.stats_main.criticalDPS / 100));
             $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * (1 + ($scope.stats_main.directhitDPS / 100));
             $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * (1 + ($scope.stats_main.buffDPS / 100));
-
-            $scope.stats_main.baseDPS = $scope.stats_main.baseDPS + $scope.stats_main.autoattackDPS;
         }
 
         //total
@@ -256,6 +268,7 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.baseTotal = $scope.stats_main.baseTotal * (1 + ($scope.stats_main.criticalDPS / 100));
         $scope.stats_main.baseTotal = $scope.stats_main.baseTotal * (1 + ($scope.stats_main.directhitDPS / 100));
         $scope.stats_main.baseTotal = $scope.stats_main.baseTotal * (1 + ($scope.stats_main.buffDPS / 100));
+        $scope.stats_main.baseTotal = $scope.stats_main.baseTotal + $scope.stats_main.autoattackDPS;
     }
 
     //init buffs creates a table for windows when buffs are active
@@ -301,7 +314,6 @@ dps_app.dps_controller = function ($scope) {
         scholarBuffs(stats, $scope.buffs);
     }
 
-    //warrior job buffs
     function warriorBuffs(stats, buffs) {
         //storm's eye
         if (stats.stormseye) {
@@ -365,7 +377,6 @@ dps_app.dps_controller = function ($scope) {
         }
     }
 
-    //bard job buffs
     function bardBuffs(stats, buffs) {
         //mage's ballad
         if (stats.magesballad) {
@@ -573,6 +584,8 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_archive = {
             fightduration: $scope.stats_main.fightduration,
             buff_windows: $scope.stats_main.buff_windows,
+            autoattack_timing: $scope.stats_main.autoattack_timing,
+            gcd_timing: $scope.stats_main.gcd_timing,
 
             food_selected: $scope.stats_main.food_selected,
             food_stat1: $scope.stats_main.food_stat1,
@@ -651,6 +664,7 @@ dps_app.dps_controller = function ($scope) {
             skillspeedDelta: $scope.stats_main.skillspeedDelta,
             skillspeedHits: $scope.stats_main.skillspeedHits,
 
+            buffDelay: $scope.stats_main.buffDelay,
             buffDPS: $scope.stats_main.buffDPS,
             totaldps: $scope.stats_main.totaldps
         }
@@ -669,6 +683,8 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main = {
             fightduration: $scope.stats_archive.fightduration,
             buff_windows: $scope.stats_archive.buff_windows,
+            autoattack_timing: $scope.stats_archive.autoattack_timing,
+            gcd_timing: $scope.stats_archive.gcd_timing,
 
             food_selected: $scope.stats_archive.food_selected,
             ood_stat1: $scope.stats_archive.food_stat1,
@@ -747,6 +763,7 @@ dps_app.dps_controller = function ($scope) {
             skillspeedDelta: $scope.stats_archive.skillspeedDelta,
             skillspeedHits: $scope.stats_archive.skillspeedHits,
 
+            buffDelay: $scope.stats_archive.buffDelay,
             buffDPS: $scope.stats_archive.buffDPS,
             totaldps: $scope.stats_archive.totaldps
         }

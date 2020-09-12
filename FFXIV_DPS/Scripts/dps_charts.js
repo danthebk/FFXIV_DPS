@@ -49,13 +49,13 @@
     //-------------------------------------------------------------------------------------------------
     function autoattack(dataTable, stats) {
         if (stats.weapondelay > 0) {
-            for (var i = 0; i < stats.fightduration; i += stats.weapondelay) {
+            for (var i = 0; i < stats.autoattack_timing.length; i += 1) {
                 dataTable.addRows([
                     [
                         'All',
                         'Auto Attack',
-                        getDateObject(i),
-                        getDateObject(i)
+                        getDateObject(stats.autoattack_timing[i]),
+                        getDateObject(stats.autoattack_timing[i])
                     ]
                 ])
             }
@@ -65,13 +65,13 @@
     }
 
     function skillspeed(dataTable, stats) {
-        for (var i = 0; i < stats.fightduration; i += stats.skillspeedDelay) {
+        for (var i = 0; i < stats.gcd_timing.length; i += 1) {
             dataTable.addRows([
                 [
                     'All',
                     'GCD',
-                    getDateObject(i),
-                    getDateObject(i)
+                    getDateObject(stats.gcd_timing[i]),
+                    getDateObject(stats.gcd_timing[i])
                 ]
             ])
         }

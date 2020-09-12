@@ -1,0 +1,48 @@
+war
+142 	~142
+1.916	1.85	x1.04
+
+pld
+92 - 92
+
+drk
+122 - 122
+
+gnb
+115 - 115
+
+mnk
+predicted	actual
+105 		~155
+1.393		2.012	x1.444
+
+drg
+predicted	actual
+115 		~170
+1.5		2.612	x1.74
+
+nin
+predicted	actual
+105 		~155
+1.379		1.957	x1.419
+
+sam
+predicted	actual
+109 		~155
+1.435		2.082	x1.45
+
+brd
+predicted	actual
+125 		~170
+1.619		2.1405	x1.32
+
+mch
+predicted	actual	
+109 		~145
+1.419		1.8265	x1.28
+31
+
+dnc
+predicted	actual	
+128 		~190
+1.647		2.411	x1.46

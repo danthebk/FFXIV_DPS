@@ -502,6 +502,8 @@ dps_app.dps_model = function ($scope) {
         //buffs
         fightduration: 660,
         buff_windows: [],
+        autoattack_timing: [],
+        gcd_timing: [],
 
         //food
         food_selected: $scope.food[0],
@@ -585,7 +587,8 @@ dps_app.dps_model = function ($scope) {
         skillspeedDelta: 0,
         skillspeedHits: 0,
 
-        buffDPS:0,
+        buffDelay: 0,
+        buffDPS: 0,
         totaldps: 0
     }
 

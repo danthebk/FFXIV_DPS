@@ -1,0 +1,6 @@
+base damage calcuations incorrect for DPS/Healers. Tanks appear to be correct.
+attack testing.txt contains some data points
+
+-finish adding buffs
+-add OGCDs
+-add level select DDL
