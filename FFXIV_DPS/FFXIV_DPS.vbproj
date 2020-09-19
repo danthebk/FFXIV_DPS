@@ -86,16 +86,16 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="boostrap\css\bootstrap-grid.css" />
-    <Content Include="boostrap\css\bootstrap-grid.min.css" />
-    <Content Include="boostrap\css\bootstrap-reboot.css" />
-    <Content Include="boostrap\css\bootstrap-reboot.min.css" />
-    <Content Include="boostrap\css\bootstrap.css" />
-    <Content Include="boostrap\css\bootstrap.min.css" />
-    <Content Include="boostrap\js\bootstrap.bundle.js" />
-    <Content Include="boostrap\js\bootstrap.bundle.min.js" />
-    <Content Include="boostrap\js\bootstrap.js" />
-    <Content Include="boostrap\js\bootstrap.min.js" />
+    <Content Include="bootstrap\css\bootstrap-grid.css" />
+    <Content Include="bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="bootstrap\css\bootstrap.css" />
+    <Content Include="bootstrap\css\bootstrap.min.css" />
+    <Content Include="bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="bootstrap\js\bootstrap.js" />
+    <Content Include="bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\main.css" />
     <Content Include="Home.html" />
     <Content Include="Scripts\angular.min.js" />
@@ -138,16 +138,16 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="boostrap\css\bootstrap-grid.css.map" />
-    <Content Include="boostrap\css\bootstrap-grid.min.css.map" />
-    <Content Include="boostrap\css\bootstrap-reboot.css.map" />
-    <Content Include="boostrap\css\bootstrap-reboot.min.css.map" />
-    <Content Include="boostrap\css\bootstrap.css.map" />
-    <Content Include="boostrap\css\bootstrap.min.css.map" />
-    <Content Include="boostrap\js\bootstrap.bundle.js.map" />
-    <Content Include="boostrap\js\bootstrap.bundle.min.js.map" />
-    <Content Include="boostrap\js\bootstrap.js.map" />
-    <Content Include="boostrap\js\bootstrap.min.js.map" />
+    <Content Include="bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="bootstrap\css\bootstrap.css.map" />
+    <Content Include="bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="bootstrap\js\bootstrap.js.map" />
+    <Content Include="bootstrap\js\bootstrap.min.js.map" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
