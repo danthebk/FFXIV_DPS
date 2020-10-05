@@ -146,6 +146,7 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.fweapondamage = Math.floor($scope.base_stats.levelPrimary * $scope.stats_main.primarystat / 1000) + $scope.stats_main.weapondamage;
         $scope.stats_main.attackdamage = Math.floor(($scope.stats_main.weaponattack * $scope.stats_main.primarystatDelta / $scope.base_stats.levelPrimary) + 100) / 1000;
         $scope.stats_main.baseDamage = Math.floor($scope.stats_main.fweapondamage * $scope.stats_main.attackdamage);
+        $scope.stats_main.baseAA = $scope.stats_main.fweapondamage * ($scope.stats_main.weapondelay / 3);
 
         if ($scope.stats_main.weapondelay > 0) {
             //auto attack timing
@@ -164,12 +165,17 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.tenacityMultiplier = (1000 + (Math.floor(100 * $scope.stats_main.tenacityDelta / $scope.base_stats.levelMod))) / 1000;
 
         //skill speed delay
-        $scope.stats_main.skillspeedDelay = Math.floor(130 * $scope.stats_main.skillspeedDelta / $scope.base_stats.levelMod);
-        $scope.stats_main.skillspeedDelay = 1000 - $scope.stats_main.skillspeedDelay;
-        $scope.stats_main.skillspeedDelay = Math.floor($scope.stats_main.skillspeedDelay * ($scope.base_stats.skillspeedBase * 1000) / 1000);
-        $scope.stats_main.skillspeedDelay = Math.floor(100 * 100 * $scope.stats_main.skillspeedDelay / 1000);
-        $scope.stats_main.skillspeedDelay = Math.floor($scope.stats_main.skillspeedDelay / 100)
-        $scope.stats_main.skillspeedDelay = $scope.stats_main.skillspeedDelay / 100;
+        $scope.stats_main.skillspeedFSS = Math.floor(130 * $scope.stats_main.skillspeedDelta / $scope.base_stats.levelMod + 1000) / 1000;
+        $scope.stats_main.skillspeedDelay = $scope.base_stats.skillspeedBase / $scope.stats_main.skillspeedFSS;
+        $scope.stats_main.skillspeedDelay = Math.floor($scope.stats_main.skillspeedDelay * 100) / 100;
+
+        //old skill speed stuff
+        //$scope.stats_main.skillspeedDelay = Math.floor(130 * $scope.stats_main.skillspeedDelta / $scope.base_stats.levelMod);
+        //$scope.stats_main.skillspeedDelay = 1000 - $scope.stats_main.skillspeedDelay;
+        //$scope.stats_main.skillspeedDelay = Math.floor($scope.stats_main.skillspeedDelay * ($scope.base_stats.skillspeedBase * 1000) / 1000);
+        //$scope.stats_main.skillspeedDelay = Math.floor(100 * 100 * $scope.stats_main.skillspeedDelay / 1000);
+        //$scope.stats_main.skillspeedDelay = Math.floor($scope.stats_main.skillspeedDelay / 100)
+        //$scope.stats_main.skillspeedDelay = $scope.stats_main.skillspeedDelay / 100;
 
         //skillspeed cap
         if ($scope.stats_main.skillspeedDelay <= 0) {
@@ -244,12 +250,16 @@ dps_app.dps_controller = function ($scope) {
         //currently oversimplified, need to loop through the list to account for buffs
         //similar to the GCD section
         if ($scope.stats_main.weapondelay > 0) {
-            $scope.stats_main.autoattackDPS = Math.floor($scope.stats_main.baseDamage / $scope.stats_main.weapondelay);
+            //autoattacks have a potency of 110
+            //for the sake of simplicity my baseDPS calculations assume an attack potency of 100 for all GCD hits
+            $scope.stats_main.autoattackDPS = $scope.stats_main.baseAA * $scope.stats_main.attackdamage * (110 / 100);
             $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * $scope.stats_main.determinationDPS;
             $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * $scope.stats_main.tenacityDPS;
+            $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * $scope.stats_main.skillspeedFSS;
             $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * (1 + ($scope.stats_main.criticalDPS / 100));
             $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * (1 + ($scope.stats_main.directhitDPS / 100));
             $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * (1 + ($scope.stats_main.buffDPS / 100));
+            $scope.stats_main.autoattackDPS = Math.floor($scope.stats_main.autoattackDPS / $scope.stats_main.weapondelay);
         }
 
         //total
