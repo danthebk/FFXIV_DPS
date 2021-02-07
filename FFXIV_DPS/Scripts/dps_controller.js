@@ -135,7 +135,7 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.gcd_timing = [];
 
         //deltas
-        $scope.stats_main.primarystatDelta = $scope.stats_main.primarystat - $scope.base_stats.levelPrimary
+        $scope.stats_main.primarystatDelta = $scope.stats_main.primarystat - $scope.base_stats.levelPrimary;
         $scope.stats_main.criticalDelta = $scope.stats_main.critical - $scope.base_stats.levelSecondary + $scope.stats_main.food_selected.criticalhitValue;
         $scope.stats_main.determinationDelta = $scope.stats_main.determination - $scope.base_stats.levelPrimary + $scope.stats_main.food_selected.determinationValue; //determination inexplicably has 40 less base value
         $scope.stats_main.directhitDelta = $scope.stats_main.directhit - $scope.base_stats.levelSecondary + $scope.stats_main.food_selected.directhitValue;
@@ -143,17 +143,11 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.tenacityDelta = $scope.stats_main.tenacity - $scope.base_stats.levelSecondary + $scope.stats_main.food_selected.tenacityValue;
 
         //primary stats
-        $scope.stats_main.fweapondamage = Math.floor($scope.base_stats.levelPrimary * $scope.stats_main.primarystat / 1000) + $scope.stats_main.weapondamage;
-        $scope.stats_main.attackdamage = Math.floor(($scope.stats_main.weaponattack * $scope.stats_main.primarystatDelta / $scope.base_stats.levelPrimary) + 100) / 1000;
+        $scope.stats_main.fweapondamage = $scope.fWD($scope.stats_main.weapondamage, $scope.stats_main.primarystatDelta);
+        $scope.stats_main.attackdamage = $scope.fAP($scope.stats_main.weaponattack, $scope.stats_main.primarystatDelta);
         $scope.stats_main.baseDamage = Math.floor($scope.stats_main.fweapondamage * $scope.stats_main.attackdamage);
-        $scope.stats_main.baseAA = $scope.stats_main.fweapondamage * ($scope.stats_main.weapondelay / 3);
-
-        if ($scope.stats_main.weapondelay > 0) {
-            //auto attack timing
-            for (var i = 0; i < $scope.stats_main.fightduration; i += $scope.stats_main.weapondelay) {
-                $scope.stats_main.autoattack_timing.push(i);
-            }
-        }
+        //it is supposed to be fPTC(110); however, I'm getting exact results not using the potency calculation
+        $scope.stats_main.baseAA = $scope.fPTC(110) * $scope.fAA($scope.stats_main.weapondamage, $scope.stats_main.weapondelay, $scope.stats_main.primarystatDelta) * $scope.stats_main.attackdamage;
 
         //rates
         $scope.stats_main.criticalRate = ((Math.floor(200 * $scope.stats_main.criticalDelta / $scope.base_stats.levelMod) + 50) / 1000) * 100;
@@ -169,14 +163,6 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.skillspeedDelay = $scope.base_stats.skillspeedBase / $scope.stats_main.skillspeedFSS;
         $scope.stats_main.skillspeedDelay = Math.floor($scope.stats_main.skillspeedDelay * 100) / 100;
 
-        //old skill speed stuff
-        //$scope.stats_main.skillspeedDelay = Math.floor(130 * $scope.stats_main.skillspeedDelta / $scope.base_stats.levelMod);
-        //$scope.stats_main.skillspeedDelay = 1000 - $scope.stats_main.skillspeedDelay;
-        //$scope.stats_main.skillspeedDelay = Math.floor($scope.stats_main.skillspeedDelay * ($scope.base_stats.skillspeedBase * 1000) / 1000);
-        //$scope.stats_main.skillspeedDelay = Math.floor(100 * 100 * $scope.stats_main.skillspeedDelay / 1000);
-        //$scope.stats_main.skillspeedDelay = Math.floor($scope.stats_main.skillspeedDelay / 100)
-        //$scope.stats_main.skillspeedDelay = $scope.stats_main.skillspeedDelay / 100;
-
         //skillspeed cap
         if ($scope.stats_main.skillspeedDelay <= 0) {
             $scope.stats_main.skillspeedDelay = .01;
@@ -188,11 +174,11 @@ dps_app.dps_controller = function ($scope) {
 
         //individual hit delay
         var j = $scope.stats_main.skillspeedDelay;
-        //individual hit dps
-        $scope.stats_main.skillspeedHits = 0
+        //base damage dps
+        $scope.stats_main.baseDamageTotal = 0;
+        $scope.stats_main.skillspeedHits = 0;
         for (var i = 0; i < $scope.stats_main.fightduration; i += j) {
             $scope.stats_main.gcd_timing.push(i);
-
             buffs = determineActiveBuffs($scope.stats_main, i);
 
             //critical hit rate cap
@@ -204,7 +190,7 @@ dps_app.dps_controller = function ($scope) {
             //direct hit rate cap
             var directhitrate = $scope.stats_main.directhitRate + buffs.directhitrateBuff;
             if (directhitrate > 100) {
-                directhitrate = 100
+                directhitrate = 100;
             }
 
             //account for delay buffs
@@ -212,6 +198,13 @@ dps_app.dps_controller = function ($scope) {
             j = Math.floor(j * 100) / 100; //round down to the hundreths place
 
             $scope.stats_main.buffDelay += j;
+
+            var baseDamage = $scope.stats_main.baseDamage;
+            baseDamage = Math.floor(baseDamage) * (1 + (((criticalhitrate / 100) * ($scope.stats_main.criticalDamage))) / 100);
+            baseDamage = Math.floor(baseDamage) * (1 + ($scope.stats_main.determinationMultiplier / 100));
+            baseDamage = Math.floor(baseDamage) * (1 + (((directhitrate / 100) * $scope.base_stats.directhitBaseDamage)) / 100);
+            baseDamage = Math.floor(baseDamage) * (1 + ($scope.stats_main.tenacityMultiplier / 100));
+            $scope.stats_main.baseDamageTotal += Math.floor(baseDamage);
 
             //calculate individual hit dps
             $scope.stats_main.criticalDPS += (criticalhitrate / 100) * ($scope.stats_main.criticalDamage);
@@ -226,6 +219,52 @@ dps_app.dps_controller = function ($scope) {
             $scope.stats_main.skillspeedHits += 1;
         }
 
+        //auto attack dps
+        //individual hit dps
+        $scope.stats_main.autoattackDamageTotal = 0;
+        $scope.stats_main.autoattackHits = 0;
+        if ($scope.stats_main.weapondelay > 0) {
+            for (var i = 0; i < $scope.stats_main.fightduration; i += $scope.stats_main.weapondelay) {
+                $scope.stats_main.autoattack_timing.push(i);
+                buffs = determineActiveBuffs($scope.stats_main, i);
+
+                //critical hit rate cap
+                var criticalhitrate = $scope.stats_main.criticalRate + buffs.criticalhitrateBuff;
+                if (criticalhitrate > 100) {
+                    criticalhitrate = 100;
+                }
+
+                //direct hit rate cap
+                var directhitrate = $scope.stats_main.directhitRate + buffs.directhitrateBuff;
+                if (directhitrate > 100) {
+                    directhitrate = 100;
+                }
+
+                var aa = $scope.stats_main.baseAA;
+                aa = Math.floor(aa) * (1 + (((criticalhitrate / 100) * ($scope.stats_main.criticalDamage))) / 100);
+                aa = Math.floor(aa) * (1 + ($scope.stats_main.determinationMultiplier / 100));
+                aa = Math.floor(aa) * (1 + (((directhitrate / 100) * $scope.base_stats.directhitBaseDamage)) / 100);
+                aa = Math.floor(aa) * (1 + ($scope.stats_main.tenacityMultiplier / 100));
+                $scope.stats_main.autoattackDamageTotal += Math.floor(aa);
+
+                //calculate individual hit dps
+                $scope.stats_main.criticalDPS += (criticalhitrate / 100) * ($scope.stats_main.criticalDamage);
+                $scope.stats_main.determinationDPS += $scope.stats_main.determinationMultiplier;
+                $scope.stats_main.directhitDPS += (directhitrate / 100) * $scope.base_stats.directhitBaseDamage;
+                $scope.stats_main.tenacityDPS += $scope.stats_main.tenacityMultiplier;
+
+                //account for dps buffs
+                $scope.stats_main.buffDPS += buffs.dpsBuff;
+
+                //increment actual hits
+                $scope.stats_main.autoattackHits += 1;
+            }
+        }
+
+        //dps calculations
+        $scope.stats_main.baseDPS = $scope.stats_main.baseDamageTotal / $scope.stats_main.fightduration;
+        $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDamageTotal / $scope.stats_main.fightduration;
+
         //skill speed hit count over the course of the fight duration
         var skillspeedbaseHits = Math.floor($scope.stats_main.fightduration / $scope.base_stats.skillspeedBase);
 
@@ -235,32 +274,16 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.skillspeedDPSImprovement = ($scope.stats_main.skillspeedDPS - 1) * 100;
 
         //currently doesn't account for buffs if I'm not mistaken
-        $scope.stats_main.baseDPS = $scope.stats_main.baseDamage * $scope.stats_main.skillspeedHits / $scope.stats_main.fightduration;
+        //$scope.stats_main.baseDPS = $scope.stats_main.baseDamage * ($scope.stats_main.skillspeedHits + $scope.stats_main.autoattackHits) / $scope.stats_main.fightduration;
 
         //adjust for iterations
-        $scope.stats_main.criticalDPS = $scope.stats_main.criticalDPS / $scope.stats_main.skillspeedHits;
-        $scope.stats_main.determinationDPS = $scope.stats_main.determinationDPS / $scope.stats_main.skillspeedHits;
-        $scope.stats_main.tenacityDPS = $scope.stats_main.tenacityDPS / $scope.stats_main.skillspeedHits;
-        $scope.stats_main.directhitDPS = $scope.stats_main.directhitDPS / $scope.stats_main.skillspeedHits;
+        $scope.stats_main.criticalDPS = $scope.stats_main.criticalDPS / ($scope.stats_main.skillspeedHits + $scope.stats_main.autoattackHits);
+        $scope.stats_main.determinationDPS = $scope.stats_main.determinationDPS / ($scope.stats_main.skillspeedHits + $scope.stats_main.autoattackHits);
+        $scope.stats_main.tenacityDPS = $scope.stats_main.tenacityDPS / ($scope.stats_main.skillspeedHits + $scope.stats_main.autoattackHits);
+        $scope.stats_main.directhitDPS = $scope.stats_main.directhitDPS / ($scope.stats_main.skillspeedHits + $scope.stats_main.autoattackHits);
 
         $scope.stats_main.buffDelay = Math.floor(($scope.stats_main.buffDelay / $scope.stats_main.skillspeedHits) * 100) / 100;
-        $scope.stats_main.buffDPS = $scope.stats_main.buffDPS / $scope.stats_main.skillspeedHits;
-
-        //auto attack dps
-        //currently oversimplified, need to loop through the list to account for buffs
-        //similar to the GCD section
-        if ($scope.stats_main.weapondelay > 0) {
-            //autoattacks have a potency of 110
-            //for the sake of simplicity my baseDPS calculations assume an attack potency of 100 for all GCD hits
-            $scope.stats_main.autoattackDPS = $scope.stats_main.baseAA * $scope.stats_main.attackdamage * (110 / 100);
-            $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * $scope.stats_main.determinationDPS;
-            $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * $scope.stats_main.tenacityDPS;
-            $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * $scope.stats_main.skillspeedFSS;
-            $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * (1 + ($scope.stats_main.criticalDPS / 100));
-            $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * (1 + ($scope.stats_main.directhitDPS / 100));
-            $scope.stats_main.autoattackDPS = $scope.stats_main.autoattackDPS * (1 + ($scope.stats_main.buffDPS / 100));
-            $scope.stats_main.autoattackDPS = Math.floor($scope.stats_main.autoattackDPS / $scope.stats_main.weapondelay);
-        }
+        $scope.stats_main.buffDPS = $scope.stats_main.buffDPS / ($scope.stats_main.skillspeedHits + $scope.stats_main.autoattackHits);
 
         //total
         $scope.stats_main.totaldps = 100;

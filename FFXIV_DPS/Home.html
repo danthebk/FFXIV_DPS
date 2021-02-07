@@ -17,6 +17,7 @@
     <!-- content -->
     <script src="Scripts/dps_helpers.js"></script>
     <script src="Scripts/dps_main.js"></script>
+    <script src="Scripts/dps_calculator.js"></script>
     <script src="Scripts/dps_controller.js"></script>
     <script src="Scripts/dps_model.js"></script>
     <script src="Scripts/dps_charts.js"></script>
@@ -497,11 +498,11 @@
                 </div>
                 <div class="border col-1 {{ui.primary_main}}">
                     <span class="font-weight-bold">
-                        Base Damage
+                        AA Damage
                     </span>
                     <br />
                     <span>
-                        {{stats_main.baseDamage.toFixed(0)}}
+                        {{stats_main.baseAA.toFixed(0)}}
                     </span>
                 </div>
                 <div class="col-1 {{ui.primary_main}}">
@@ -513,7 +514,16 @@
                         {{stats_main.autoattackDPS.toFixed(0)}}
                     </span>
                 </div>
-                <div class="border col-2 {{ui.primary_main}}">
+                <div class="border col-1 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
+                        Base Damage
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_main.baseDamage.toFixed(0)}}
+                    </span>
+                </div>
+                <div class="border col-1 {{ui.primary_main}}">
                     <span class="font-weight-bold">
                         Base DPS
                     </span>

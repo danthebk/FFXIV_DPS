@@ -457,7 +457,8 @@ dps_app.dps_model = function ($scope) {
 
         levelMod: 3300,
         levelSecondary: 380,
-        levelPrimary: 340
+        levelPrimary: 340,
+        levelDiv: 3300
     }
 
     //-----------------------------------------------
@@ -548,7 +549,6 @@ dps_app.dps_model = function ($scope) {
         weapondelay: 0,
         weaponattack: 1,
         primarystat: 340,
-        autoattackDPS: 0,
 
         determination: 340,
         directhit: 380,
@@ -565,7 +565,14 @@ dps_app.dps_model = function ($scope) {
         attackdamage: 0,
         primarystatDelta: 0,
         baseDamage: 0,
+        baseAA: 0,
+
+        autoattackHits: 0,
+        autoattackDamageTotal: 0,
+        autoattackDPS: 0,
+        
         baseDPS: 0,
+        baseDamageTotal: 0,
         baseTotal: 0,
 
         tenacityDPS: 0,
