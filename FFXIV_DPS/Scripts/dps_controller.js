@@ -145,7 +145,12 @@ dps_app.dps_controller = function ($scope) {
         //primary stats
         $scope.stats_main.fweapondamage = $scope.fWD($scope.stats_main.weapondamage, $scope.stats_main.primarystatDelta);
         $scope.stats_main.attackdamage = $scope.fAP($scope.stats_main.weaponattack, $scope.stats_main.primarystatDelta);
+
+        //my base damage calculation appears to be the top of the randomizer, I have never hit higher than the estimated base damage
+        //which would mean I need to cross multiply to find the midpoint of the randomizer
         $scope.stats_main.baseDamage = $scope.fPTC(100) * $scope.stats_main.fweapondamage * $scope.stats_main.attackdamage;
+        $scope.stats_main.baseDamage = $scope.stats_main.baseDamage * 100 / 105;
+
         $scope.stats_main.baseAA = $scope.fPTC(110) * $scope.fAA($scope.stats_main.weapondamage, $scope.stats_main.weapondelay, $scope.stats_main.primarystatDelta) * $scope.stats_main.attackdamage;
 
         //rates
