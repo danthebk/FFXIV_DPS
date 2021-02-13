@@ -12,11 +12,11 @@
     }
 
     $scope.fDET = function(determinationDelta) {
-        return Math.floor(100 * determinationDelta / $scope.base_stats.levelDiv + 1000) / 1000;
+        return Math.floor(130 * determinationDelta / $scope.base_stats.levelDiv + 1000) / 1000;
     }
 
     $scope.fTNC = function(tenacityDelta) {
-        return Math.floor(100 * tenacityDelta / $scope.base_stats.levelPrimary.levelDiv + 1000) / 1000;
+        return Math.floor(100 * tenacityDelta / $scope.base_stats.levelDiv + 1000) / 1000;
     }
 
     $scope.fSS = function(skillspeedDelta) {

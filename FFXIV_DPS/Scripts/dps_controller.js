@@ -145,8 +145,7 @@ dps_app.dps_controller = function ($scope) {
         //primary stats
         $scope.stats_main.fweapondamage = $scope.fWD($scope.stats_main.weapondamage, $scope.stats_main.primarystatDelta);
         $scope.stats_main.attackdamage = $scope.fAP($scope.stats_main.weaponattack, $scope.stats_main.primarystatDelta);
-        $scope.stats_main.baseDamage = Math.floor($scope.stats_main.fweapondamage * $scope.stats_main.attackdamage);
-        //it is supposed to be fPTC(110); however, I'm getting exact results not using the potency calculation
+        $scope.stats_main.baseDamage = $scope.fPTC(100) * $scope.stats_main.fweapondamage * $scope.stats_main.attackdamage;
         $scope.stats_main.baseAA = $scope.fPTC(110) * $scope.fAA($scope.stats_main.weapondamage, $scope.stats_main.weapondelay, $scope.stats_main.primarystatDelta) * $scope.stats_main.attackdamage;
 
         //rates
@@ -155,11 +154,11 @@ dps_app.dps_controller = function ($scope) {
 
         //damage multiplier
         $scope.stats_main.criticalDamage = ((Math.floor(200 * $scope.stats_main.criticalDelta / $scope.base_stats.levelMod) + 400) / 1000) * 100;
-        $scope.stats_main.determinationMultiplier = (1000 + (Math.floor(130 * $scope.stats_main.determinationDelta / $scope.base_stats.levelMod))) / 1000;
-        $scope.stats_main.tenacityMultiplier = (1000 + (Math.floor(100 * $scope.stats_main.tenacityDelta / $scope.base_stats.levelMod))) / 1000;
+        $scope.stats_main.determinationMultiplier = $scope.fDET($scope.stats_main.determinationDelta); //(1000 + (Math.floor(130 * $scope.stats_main.determinationDelta / $scope.base_stats.levelMod))) / 1000;
+        $scope.stats_main.tenacityMultiplier = $scope.fTNC($scope.stats_main.tenacityDelta); //(1000 + (Math.floor(100 * $scope.stats_main.tenacityDelta / $scope.base_stats.levelMod))) / 1000;
 
         //skill speed delay
-        $scope.stats_main.skillspeedFSS = Math.floor(130 * $scope.stats_main.skillspeedDelta / $scope.base_stats.levelMod + 1000) / 1000;
+        $scope.stats_main.skillspeedFSS = $scope.fSS($scope.stats_main.skillspeedDelta); //Math.floor(130 * $scope.stats_main.skillspeedDelta / $scope.base_stats.levelMod + 1000) / 1000;
         $scope.stats_main.skillspeedDelay = $scope.base_stats.skillspeedBase / $scope.stats_main.skillspeedFSS;
         $scope.stats_main.skillspeedDelay = Math.floor($scope.stats_main.skillspeedDelay * 100) / 100;
 
@@ -201,9 +200,9 @@ dps_app.dps_controller = function ($scope) {
 
             var baseDamage = $scope.stats_main.baseDamage;
             baseDamage = Math.floor(baseDamage) * (1 + (((criticalhitrate / 100) * ($scope.stats_main.criticalDamage))) / 100);
-            baseDamage = Math.floor(baseDamage) * (1 + ($scope.stats_main.determinationMultiplier / 100));
+            baseDamage = Math.floor(baseDamage) * (1 + ($scope.stats_main.determinationMultiplier / 100)); //($scope.stats_main.determinationMultiplier);
             baseDamage = Math.floor(baseDamage) * (1 + (((directhitrate / 100) * $scope.base_stats.directhitBaseDamage)) / 100);
-            baseDamage = Math.floor(baseDamage) * (1 + ($scope.stats_main.tenacityMultiplier / 100));
+            baseDamage = Math.floor(baseDamage) * (1 + ($scope.stats_main.tenacityMultiplier / 100)); //($scope.stats_main.tenacityMultiplier);
             $scope.stats_main.baseDamageTotal += Math.floor(baseDamage);
 
             //calculate individual hit dps
@@ -242,9 +241,9 @@ dps_app.dps_controller = function ($scope) {
 
                 var aa = $scope.stats_main.baseAA;
                 aa = Math.floor(aa) * (1 + (((criticalhitrate / 100) * ($scope.stats_main.criticalDamage))) / 100);
-                aa = Math.floor(aa) * (1 + ($scope.stats_main.determinationMultiplier / 100));
+                aa = Math.floor(aa) * (1 + ($scope.stats_main.determinationMultiplier / 100)); //($scope.stats_main.determinationMultiplier);
                 aa = Math.floor(aa) * (1 + (((directhitrate / 100) * $scope.base_stats.directhitBaseDamage)) / 100);
-                aa = Math.floor(aa) * (1 + ($scope.stats_main.tenacityMultiplier / 100));
+                aa = Math.floor(aa) * (1 + ($scope.stats_main.tenacityMultiplier / 100)); //($scope.stats_main.tenacityMultiplier);
                 $scope.stats_main.autoattackDamageTotal += Math.floor(aa);
 
                 //calculate individual hit dps
@@ -285,7 +284,7 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.buffDelay = Math.floor(($scope.stats_main.buffDelay / $scope.stats_main.skillspeedHits) * 100) / 100;
         $scope.stats_main.buffDPS = $scope.stats_main.buffDPS / ($scope.stats_main.skillspeedHits + $scope.stats_main.autoattackHits);
 
-        //total
+        //total dps improvement
         $scope.stats_main.totaldps = 100;
         $scope.stats_main.totaldps = $scope.stats_main.totaldps * $scope.stats_main.determinationDPS;
         $scope.stats_main.totaldps = $scope.stats_main.totaldps * $scope.stats_main.tenacityDPS;
@@ -294,7 +293,9 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.totaldps = $scope.stats_main.totaldps * $scope.stats_main.skillspeedDPS;
         $scope.stats_main.totaldps = $scope.stats_main.totaldps * (1 + ($scope.stats_main.buffDPS / 100));
 
-        //total base
+        //total base dps
+        $scope.stats_main.baseTotal = $scope.stats_main.baseDPS + $scope.stats_main.autoattackDPS;
+        /*
         $scope.stats_main.baseTotal = $scope.stats_main.baseDPS;
         $scope.stats_main.baseTotal = $scope.stats_main.baseTotal * $scope.stats_main.determinationDPS;
         $scope.stats_main.baseTotal = $scope.stats_main.baseTotal * $scope.stats_main.tenacityDPS;
@@ -302,6 +303,7 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.baseTotal = $scope.stats_main.baseTotal * (1 + ($scope.stats_main.directhitDPS / 100));
         $scope.stats_main.baseTotal = $scope.stats_main.baseTotal * (1 + ($scope.stats_main.buffDPS / 100));
         $scope.stats_main.baseTotal = $scope.stats_main.baseTotal + $scope.stats_main.autoattackDPS;
+        */
     }
 
     //init buffs creates a table for windows when buffs are active
