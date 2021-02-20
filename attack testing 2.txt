@@ -1,0 +1,19 @@
+bard
+approx: 1146
+actual: 1490
+
+mch
+approx: 1147
+actual: 1480
+
+sam
+approx: 1165
+actual: 1820
+
+drg
+approx: 1233
+actual: 1850
+
+war
+approx:
+actual: 
