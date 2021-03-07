@@ -6,6 +6,9 @@ mch
 approx: 1147
 actual: 1480
 
+mch aa x 1.33
+mch base x 1.75
+
 sam
 approx: 1165
 actual: 1820
