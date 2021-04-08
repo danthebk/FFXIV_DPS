@@ -3,12 +3,17 @@
         return (potency / 100);
     }
 
+    $scope.fD = function (potency, determinationDelta, atk, primaryStatDelta) {
+        return Math.floor(Math.floor(Math.floor(potency * $scope.fDET(determinationDelta) * $scope.fAP(atk, primaryStatDelta)) / 100) / 1000);
+    }
+
     $scope.fWD = function (weaponDamage, primaryStatDelta) {
         return Math.floor(($scope.base_stats.levelPrimary * primaryStatDelta / 1000) + weaponDamage);
     }
 
-    $scope.fAP = function(weaponAttack, primaryStatDelta) {
-        return Math.floor((125 * primaryStatDelta / $scope.base_stats.levelPrimary) + 100) / 1000;
+    //modifier = 115 for tanks, 165 other
+    $scope.fAP = function(atk, primaryStatDelta) {
+        return Math.floor((atk * primaryStatDelta / $scope.base_stats.levelPrimary) + 100) / 1000;
     }
 
     $scope.fDET = function(determinationDelta) {
@@ -19,7 +24,7 @@
         return Math.floor(100 * tenacityDelta / $scope.base_stats.levelDiv + 1000) / 1000;
     }
 
-    $scope.fSS = function(skillspeedDelta) {
+    $scope.fSPD = function(skillspeedDelta) {
         return Math.floor(130 * skillspeedDelta / $scope.base_stats.levelDiv + 1000) / 1000;
     }
 
@@ -35,8 +40,36 @@
         return Math.floor(30 * block / $scope.base_stats.levelDiv + 10) / 100;
     }
 
-    $scope.fAA = function(weaponDamage, weaponDelay, primaryStatDelta) {
+    $scope.fAUTO = function(weaponDamage, weaponDelay, primaryStatDelta) {
         return Math.floor($scope.fWD(weaponDamage, primaryStatDelta) * (weaponDelay / 3));
+    }
+
+    $scope.fAA = function (stats) {
+        var aa = Math.floor(stats.job.aaModifier * $scope.fAP(stats.job.apModifier, stats.primarystatDelta) * $scope.fDET(stats.determinationDelta));
+        //aa = Math.floor(aa / 100);
+        //aa = Math.floor(aa / 1000);
+
+        aa = Math.floor(aa * $scope.fTNC(stats.tenacityDelta));
+        //aa = Math.floor(aa / 1000);
+
+        aa = Math.floor(aa * $scope.fSPD(stats.skillspeedDelta));
+        aa = Math.floor(aa * $scope.fAUTO(stats.weapondamage, stats.weapondelay, stats.primarystatDelta));
+        aa = Math.floor(aa / 100);
+        aa = Math.floor(aa * 1); // no idea what trait is? probably job traits
+        
+        return aa;
+    }
+
+    $scope.fBD = function (stats) {
+        var bd = Math.floor(100 * $scope.fAP(stats.job.apModifier, stats.primarystatDelta) * $scope.fDET(stats.determinationDelta));
+
+        bd = Math.floor(bd * $scope.fTNC(stats.tenacityDelta));
+
+        bd = Math.floor(bd * $scope.fWD(stats.weapondamage, stats.primarystatDelta));
+        bd = Math.floor(bd / 100);
+        bd = Math.floor(bd * 1); // no idea what trait is? probably job traits
+
+        return bd;
     }
 
     $scope.fHMP = function(healingmagicpotency) {

@@ -440,6 +440,95 @@ dps_app.dps_model = function ($scope) {
         }
     ]
 
+    //initialize jobs
+    $scope.jobs = [
+        {
+            name: "Paladin",
+            apModifier: 115,
+            aaModifier: 110
+        },
+        {
+            name: "Warrior",
+            apModifier: 115,
+            aaModifier: 110
+        },
+        {
+            name: "Dark Knight",
+            apModifier: 115,
+            aaModifier: 110
+        },
+        {
+            name: "Gunbreaker",
+            apModifier: 115,
+            aaModifier: 110
+        },
+        {
+            name: "Monk",
+            apModifier: 165,
+            aaModifier: 110
+        },
+        {
+            name: "Dragoon",
+            apModifier: 165,
+            aaModifier: 110
+        },
+        {
+            name: "Ninja",
+            apModifier: 165,
+            aaModifier: 110
+        },
+        {
+            name: "Samurai",
+            apModifier: 165,
+            aaModifier: 110
+        },
+        {
+            name: "Bard",
+            apModifier: 165,
+            aaModifier: 100
+        },
+        {
+            name: "Machinist",
+            apModifier: 165,
+            aaModifier: 100
+        },
+        {
+            name: "Dancer",
+            apModifier: 165,
+            aaModifier: 110
+        },
+        {
+            name: "Black Mage",
+            apModifier: 165,
+            aaModifier: 110
+        },
+        {
+            name: "Summoner",
+            apModifier: 165,
+            aaModifier: 110
+        },
+        {
+            name: "Red Mage",
+            apModifier: 165,
+            aaModifier: 110
+        },
+        {
+            name: "White Mage",
+            apModifier: 165,
+            aaModifier: 110
+        },
+        {
+            name: "Scholar",
+            apModifier: 165,
+            aaModifier: 110
+        },
+        {
+            name: "Astrologian",
+            apModifier: 165,
+            aaModifier: 110
+        }
+    ]
+
     //these base stats/ratios are based on level 80
     //need to restructure to handle additional level ranges
     $scope.base_stats = {
@@ -505,6 +594,9 @@ dps_app.dps_model = function ($scope) {
         buff_windows: [],
         autoattack_timing: [],
         gcd_timing: [],
+
+        //job
+        job: $scope.jobs[0],
 
         //food
         food_selected: $scope.food[0],

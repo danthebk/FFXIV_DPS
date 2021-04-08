@@ -144,14 +144,16 @@ dps_app.dps_controller = function ($scope) {
 
         //primary stats
         $scope.stats_main.fweapondamage = $scope.fWD($scope.stats_main.weapondamage, $scope.stats_main.primarystatDelta);
-        $scope.stats_main.attackdamage = $scope.fAP($scope.stats_main.weaponattack, $scope.stats_main.primarystatDelta);
+        $scope.stats_main.attackdamage = $scope.fAP($scope.stats_main.job.apModifier, $scope.stats_main.primarystatDelta);
 
         //my base damage calculation appears to be the top of the randomizer, I have never hit higher than the estimated base damage
         //which would mean I need to cross multiply to find the midpoint of the randomizer
-        $scope.stats_main.baseDamage = $scope.fPTC(100) * $scope.stats_main.fweapondamage * $scope.stats_main.attackdamage;
-        $scope.stats_main.baseDamage = $scope.stats_main.baseDamage * 100 / 105;
+        //$scope.stats_main.baseDamage = $scope.fPTC(100) * $scope.stats_main.fweapondamage * $scope.stats_main.attackdamage;
+        //$scope.stats_main.baseDamage = $scope.stats_main.baseDamage * 100 / 105;
+        $scope.stats_main.baseDamage = $scope.fBD($scope.stats_main);
 
-        $scope.stats_main.baseAA = $scope.fPTC(110) * $scope.fAA($scope.stats_main.weapondamage, $scope.stats_main.weapondelay, $scope.stats_main.primarystatDelta) * $scope.stats_main.attackdamage;
+        //$scope.stats_main.baseAA = $scope.fPTC($scope.stats_main.job.aaModifier) * $scope.fAA($scope.stats_main.weapondamage, $scope.stats_main.weapondelay, $scope.stats_main.primarystatDelta) * $scope.stats_main.attackdamage;
+        $scope.stats_main.baseAA = $scope.fAA($scope.stats_main); //requires so much data might as well just pass the whole thing
 
         //rates
         $scope.stats_main.criticalRate = ((Math.floor(200 * $scope.stats_main.criticalDelta / $scope.base_stats.levelMod) + 50) / 1000) * 100;
@@ -163,7 +165,7 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.tenacityMultiplier = $scope.fTNC($scope.stats_main.tenacityDelta); //(1000 + (Math.floor(100 * $scope.stats_main.tenacityDelta / $scope.base_stats.levelMod))) / 1000;
 
         //skill speed delay
-        $scope.stats_main.skillspeedFSS = $scope.fSS($scope.stats_main.skillspeedDelta); //Math.floor(130 * $scope.stats_main.skillspeedDelta / $scope.base_stats.levelMod + 1000) / 1000;
+        $scope.stats_main.skillspeedFSS = $scope.fSPD($scope.stats_main.skillspeedDelta); //Math.floor(130 * $scope.stats_main.skillspeedDelta / $scope.base_stats.levelMod + 1000) / 1000;
         $scope.stats_main.skillspeedDelay = $scope.base_stats.skillspeedBase / $scope.stats_main.skillspeedFSS;
         $scope.stats_main.skillspeedDelay = Math.floor($scope.stats_main.skillspeedDelay * 100) / 100;
 
@@ -622,6 +624,7 @@ dps_app.dps_controller = function ($scope) {
     //save the main object to the archive
     $scope.archive_save = function () {
         $scope.stats_archive = {
+            job: $scope.stats_main.job,
             fightduration: $scope.stats_main.fightduration,
             buff_windows: $scope.stats_main.buff_windows,
             autoattack_timing: $scope.stats_main.autoattack_timing,
@@ -721,6 +724,7 @@ dps_app.dps_controller = function ($scope) {
     //load the main object with the archived data
     $scope.archive_revert = function () {
         $scope.stats_main = {
+            job: $scope.stats_archive.job,
             fightduration: $scope.stats_archive.fightduration,
             buff_windows: $scope.stats_archive.buff_windows,
             autoattack_timing: $scope.stats_archive.autoattack_timing,

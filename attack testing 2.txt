@@ -1,6 +1,10 @@
 bard
-approx: 1146
-actual: 1490
+aa approx: 1374
+aa actual: 1721
+base approx: 1439 (3597)
+base actual: 2464 (6161)
+aa diff: 25%
+base diff: 71%
 
 mch
 approx: 1147
@@ -14,8 +18,12 @@ approx: 1165
 actual: 1820
 
 drg
-approx: 1233
-actual: 1850
+aa approx: 1294
+aa actual: 1865
+base approx: 1393
+base actual: 2388
+aa diff: 44%
+base diff: 71%
 
 war
 approx:

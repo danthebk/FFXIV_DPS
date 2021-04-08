@@ -439,6 +439,44 @@
             <div class="row">
                 <div class="border col-1 {{ui.primary_main}}">
                     <span class="font-weight-bold">
+                        Job
+                    </span>
+                    <br />
+                    <select id="cmbJob" class="form-control-sm" ng-change="stats_change()" ng-model="stats_main.job" ng-options="x.name for x in jobs">
+                    </select>
+                    <br/>
+                </div>
+                <div class="border col-1 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
+                        Job
+                    </span>
+                    <br />
+                    <span>
+                        {{$stats_main.job.name}}
+                    </span>
+                </div>
+                <div class="border col-1 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
+                        AP Mod
+                    </span>
+                    <br />
+                    <span>
+                        {{$stats_main.job.apModifier}}
+                    </span>
+                </div>
+                <div class="border col-1 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
+                        AA Mod
+                    </span>
+                    <br />
+                    <span>
+                        {{$stats_main.job.aaModifier}}
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="border col-1 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
                         Weapon Dmg
                     </span>
                     <br />
