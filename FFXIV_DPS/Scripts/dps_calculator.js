@@ -17,7 +17,7 @@
     }
 
     $scope.fDET = function(determinationDelta) {
-        return Math.floor(130 * determinationDelta / $scope.base_stats.levelDiv + 1000) / 1000;
+        return Math.floor(140 * determinationDelta / $scope.base_stats.levelDiv + 1000) / 1000;
     }
 
     $scope.fTNC = function(tenacityDelta) {

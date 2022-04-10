@@ -532,22 +532,22 @@ dps_app.dps_model = function ($scope) {
     //these base stats/ratios are based on level 80
     //need to restructure to handle additional level ranges
     $scope.base_stats = {
-        determinationRatio: 25,
-        tenacityRatio: 33,
+        determinationRatio: 13.5714,
+        tenacityRatio: 19,
 
-        directhitRatio: 6,
+        directhitRatio: 3.4545,
         directhitBaseDamage: 25,
 
-        criticalRatio: 16,
+        criticalRatio: 9.5,
         criticalBaseRate: 5,
         criticalBaseDamage: 40,
 
         skillspeedBase: 2.5,
 
-        levelMod: 3300,
-        levelSecondary: 380,
-        levelPrimary: 340,
-        levelDiv: 3300
+        levelMod: 1400,
+        levelSecondary: 400,
+        levelPrimary: 390,
+        levelDiv: 1900
     }
 
     //-----------------------------------------------
