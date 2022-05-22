@@ -444,7 +444,7 @@
                     <br />
                     <select id="cmbJob" class="form-control-sm" ng-change="stats_change()" ng-model="stats_main.job" ng-options="x.name for x in jobs">
                     </select>
-                    <br/>
+                    <br />
                 </div>
                 <div class="border col-1 {{ui.primary_main}}">
                     <span class="font-weight-bold">
@@ -452,7 +452,7 @@
                     </span>
                     <br />
                     <span>
-                        {{$stats_main.job.name}}
+                        {{stats_main.job.name}}
                     </span>
                 </div>
                 <div class="border col-1 {{ui.primary_main}}">
@@ -461,7 +461,7 @@
                     </span>
                     <br />
                     <span>
-                        {{$stats_main.job.apModifier}}
+                        {{stats_main.job.apModifier}}
                     </span>
                 </div>
                 <div class="border col-1 {{ui.primary_main}}">
@@ -470,7 +470,7 @@
                     </span>
                     <br />
                     <span>
-                        {{$stats_main.job.aaModifier}}
+                        {{stats_main.job.aaModifier}}
                     </span>
                 </div>
             </div>
@@ -516,9 +516,12 @@
                         {{stats_main.primarystatDelta}}
                     </span>
                 </div>
+                <div class="col-1">
+                </div>
                 <div class="border col-1 {{ui.primary_main}}">
                     <span class="font-weight-bold">
-                        f(WD)
+                        f(WD)<br />
+                        Weapon Damage
                     </span>
                     <br />
                     <span>
@@ -527,6 +530,7 @@
                 </div>
                 <div class="border col-1 {{ui.primary_main}}">
                     <span class="font-weight-bold">
+                        f(AP)<br />
                         Attack Damage
                     </span>
                     <br />
@@ -534,27 +538,12 @@
                         {{stats_main.attackdamage}}
                     </span>
                 </div>
-                <div class="border col-1 {{ui.primary_main}}">
-                    <span class="font-weight-bold">
-                        AA Damage
-                    </span>
-                    <br />
-                    <span>
-                        {{stats_main.baseAA.toFixed(0)}}
-                    </span>
-                </div>
-                <div class="col-1 {{ui.primary_main}}">
-                    <span class="font-weight-bold">
-                        AA DPS
-                    </span>
-                    <br />
-                    <span>
-                        {{stats_main.autoattackDPS.toFixed(0)}}
-                    </span>
+                <div class="col-1">
                 </div>
                 <div class="border col-1 {{ui.primary_main}}">
                     <span class="font-weight-bold">
-                        Base Damage
+                        f(BD)<br />
+                        100Potency Damage
                     </span>
                     <br />
                     <span>
@@ -563,11 +552,12 @@
                 </div>
                 <div class="border col-1 {{ui.primary_main}}">
                     <span class="font-weight-bold">
-                        Base DPS
+                        f(AUTO)<br />
+                        Auto Damage
                     </span>
                     <br />
                     <span>
-                        {{stats_main.baseDPS.toFixed(0)}}
+                        {{stats_main.baseAA.toFixed(0)}}
                     </span>
                 </div>
             </div>
@@ -849,7 +839,14 @@
                 </div>
                 <div class="col-1">
                 </div>
-                <div class="col-1">
+                <div class="border col-1">
+                    <span class="font-weight-bold">
+                        Buff DPS
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_main.buffDPS}}
+                    </span>
                 </div>
                 <div class="col-1">
                 </div>
@@ -910,13 +907,27 @@
                 </div>
                 <div class="col-1">
                 </div>
-                <div class="col-1">
+                <div class="border col-1 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
+                        Auto DPS
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_main.autoattackDPS.toFixed(0)}}
+                    </span>
                 </div>
-                <div class="col-1">
+                <div class="border col-1 {{ui.primary_main}}">
+                    <span class="font-weight-bold">
+                        100Potency DPS
+                    </span>
+                    <br />
+                    <span>
+                        {{stats_main.baseDPS.toFixed(0)}}
+                    </span>
                 </div>
                 <div class="border col-1 {{ui.total_main}}">
                     <span class="font-weight-bold">
-                        Total DPS
+                        DPS Increase
                     </span>
                     <br />
                     <span>
@@ -925,7 +936,7 @@
                 </div>
                 <div class="border col-2 {{ui.total_main}}">
                     <span class="font-weight-bold">
-                        Total Base DPS
+                        Total DPS (Auto+100Potency)
                     </span>
                     <br />
                     <span>

@@ -444,101 +444,101 @@ dps_app.dps_model = function ($scope) {
     $scope.jobs = [
         {
             name: "Paladin",
-            apModifier: 115,
+            apModifier: 165,
             aaModifier: 110
         },
         {
             name: "Warrior",
-            apModifier: 115,
+            apModifier: 165,
             aaModifier: 110
         },
         {
             name: "Dark Knight",
-            apModifier: 115,
+            apModifier: 165,
             aaModifier: 110
         },
         {
             name: "Gunbreaker",
-            apModifier: 115,
+            apModifier: 165,
             aaModifier: 110
         },
         {
             name: "Monk",
-            apModifier: 165,
+            apModifier: 225,
             aaModifier: 110
         },
         {
             name: "Dragoon",
-            apModifier: 165,
+            apModifier: 225,
             aaModifier: 110
         },
         {
             name: "Ninja",
-            apModifier: 165,
+            apModifier: 225,
             aaModifier: 110
         },
         {
             name: "Samurai",
-            apModifier: 165,
+            apModifier: 225,
             aaModifier: 110
         },
         {
             name: "Bard",
-            apModifier: 165,
-            aaModifier: 100
+            apModifier: 225,
+            aaModifier: 110
         },
         {
             name: "Machinist",
-            apModifier: 165,
-            aaModifier: 100
+            apModifier: 225,
+            aaModifier: 110
         },
         {
             name: "Dancer",
-            apModifier: 165,
+            apModifier: 225,
             aaModifier: 110
         },
         {
             name: "Black Mage",
-            apModifier: 165,
+            apModifier: 225,
             aaModifier: 110
         },
         {
             name: "Summoner",
-            apModifier: 165,
+            apModifier: 225,
             aaModifier: 110
         },
         {
             name: "Red Mage",
-            apModifier: 165,
+            apModifier: 225,
             aaModifier: 110
         },
         {
             name: "White Mage",
-            apModifier: 165,
+            apModifier: 225,
             aaModifier: 110
         },
         {
             name: "Scholar",
-            apModifier: 165,
+            apModifier: 225,
             aaModifier: 110
         },
         {
             name: "Astrologian",
-            apModifier: 165,
+            apModifier: 225,
             aaModifier: 110
         }
     ]
 
-    //these base stats/ratios are based on level 80
+    //these base stats/ratios are based on level 90
     //need to restructure to handle additional level ranges
     $scope.base_stats = {
-        determinationRatio: 13.5714,
+        determinationRatio: 13.5714, //levelDiv / 140.
         tenacityRatio: 19,
 
-        directhitRatio: 3.4545,
+        directhitRatio: 3.4545, //levelDiv / 550. apparently 550 coefficient since creation.
         directhitBaseDamage: 25,
 
-        criticalRatio: 9.5,
+        criticalRatio: 9.5, //levelDiv / 200
         criticalBaseRate: 5,
         criticalBaseDamage: 40,
 
@@ -640,13 +640,13 @@ dps_app.dps_model = function ($scope) {
         weapondamage: 1,
         weapondelay: 0,
         weaponattack: 1,
-        primarystat: 340,
+        primarystat: 390,
 
-        determination: 340,
-        directhit: 380,
-        tenacity: 380,
-        critical: 380,
-        skillspeed: 380,
+        determination: 390,
+        directhit: 400,
+        tenacity: 400,
+        critical: 400,
+        skillspeed: 400,
 
         //calculated stats
         determinationDPS: 0,

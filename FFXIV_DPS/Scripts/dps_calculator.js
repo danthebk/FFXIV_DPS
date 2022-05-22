@@ -29,7 +29,11 @@
     }
 
     $scope.fCHR = function(criticalhitrateDelta) {
-        return Math.floor(200 * criticalhitrateDelta / $scope.base_stats.levelDiv + 1400) / 1000;
+        return Math.floor((200 * criticalhitrateDelta / $scope.base_stats.levelDiv) + 50) / 1000;
+    }
+
+    $scope.fCSTR = function (criticalhitrateDelta) {
+        return Math.floor((200 * criticalhitrateDelta / $scope.base_stats.levelDiv) + 1400) / 1000;
     }
 
     $scope.fDEF = function(defense) {
@@ -45,13 +49,14 @@
     }
 
     $scope.fAA = function (stats) {
-        var aa = Math.floor(stats.job.aaModifier * $scope.fAP(stats.job.apModifier, stats.primarystatDelta) * $scope.fDET(stats.determinationDelta));
+        //var aa = Math.floor(stats.job.aaModifier * $scope.fAP(stats.job.apModifier, stats.primarystatDelta) * $scope.fDET(stats.determinationDelta));
         //aa = Math.floor(aa / 100);
         //aa = Math.floor(aa / 1000);
 
-        aa = Math.floor(aa * $scope.fTNC(stats.tenacityDelta));
+        //aa = Math.floor(aa * $scope.fTNC(stats.tenacityDelta));
         //aa = Math.floor(aa / 1000);
 
+        var aa = Math.floor(stats.job.aaModifier * $scope.fAP(stats.job.apModifier, stats.primarystatDelta));
         aa = Math.floor(aa * $scope.fSPD(stats.skillspeedDelta));
         aa = Math.floor(aa * $scope.fAUTO(stats.weapondamage, stats.weapondelay, stats.primarystatDelta));
         aa = Math.floor(aa / 100);
@@ -61,9 +66,10 @@
     }
 
     $scope.fBD = function (stats) {
-        var bd = Math.floor(100 * $scope.fAP(stats.job.apModifier, stats.primarystatDelta) * $scope.fDET(stats.determinationDelta));
+        //var bd = Math.floor(100 * $scope.fAP(stats.job.apModifier, stats.primarystatDelta) * $scope.fDET(stats.determinationDelta));
+        //bd = Math.floor(bd * $scope.fTNC(stats.tenacityDelta));
 
-        bd = Math.floor(bd * $scope.fTNC(stats.tenacityDelta));
+        var bd = Math.floor(100 * $scope.fAP(stats.job.apModifier, stats.primarystatDelta));
 
         bd = Math.floor(bd * $scope.fWD(stats.weapondamage, stats.primarystatDelta));
         bd = Math.floor(bd / 100);
