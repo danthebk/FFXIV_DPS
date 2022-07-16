@@ -166,12 +166,11 @@ dps_app.dps_controller = function ($scope) {
 
         //skill speed delay
         $scope.stats_main.skillspeedFSS = $scope.fSPD($scope.stats_main.skillspeedDelta); //Math.floor(130 * $scope.stats_main.skillspeedDelta / $scope.base_stats.levelMod + 1000) / 1000;
-        $scope.stats_main.skillspeedDelay = $scope.base_stats.skillspeedBase / $scope.stats_main.skillspeedFSS;
-        $scope.stats_main.skillspeedDelay = Math.floor($scope.stats_main.skillspeedDelay * 100) / 100;
-
+        $scope.stats_main.skillspeedDelay = Math.floor(($scope.base_stats.skillspeedBase * 1000) * $scope.stats_main.skillspeedFSS); //skillspeed base needs to be in the format of milliseconds, but I'm displaying it as seconds
+        $scope.stats_main.skillspeedDelay = Math.floor($scope.stats_main.skillspeedDelay / 10) / 100; //doing some weird division to get the proper rounding for both calculations and displays
         //skillspeed cap
-        if ($scope.stats_main.skillspeedDelay <= 0) {
-            $scope.stats_main.skillspeedDelay = .01;
+        if ($scope.stats_main.skillspeedDelay <= 1.5) {
+            $scope.stats_main.skillspeedDelay = 1.5; //upping the cap to something that I don't think it can be so that it doesn't send too much data when charting
         }
     }
 
@@ -340,7 +339,6 @@ dps_app.dps_controller = function ($scope) {
     //-------------------------------------------------------------------------------------------------
     //job specific buffs
     //-------------------------------------------------------------------------------------------------
-
     function initBuffs(stats) {
         //reinitialize
         stats.buff_windows = [];
@@ -585,11 +583,11 @@ dps_app.dps_controller = function ($scope) {
         }
 
         //total
-        if ($scope.stats_main.baseTotal == $scope.stats_archive.baseTotal) {
+        if ($scope.stats_main.totaldps == $scope.stats_archive.totaldps) {
             $scope.ui.total_main = $scope.ui_color.neutral;
             $scope.ui.total_archive = $scope.ui_color.neutral;
         }
-        else if ($scope.stats_main.baseTotal > $scope.stats_archive.baseTotal) {
+        else if ($scope.stats_main.totaldps > $scope.stats_archive.totaldps) {
             $scope.ui.total_main = $scope.ui_color.better;
             $scope.ui.total_archive = $scope.ui_color.worse;
         } else {
@@ -620,7 +618,6 @@ dps_app.dps_controller = function ($scope) {
     //-----------------------------------------------
     //archive handling
     //-----------------------------------------------
-
     //save the main object to the archive
     $scope.archive_save = function () {
         $scope.stats_archive = {

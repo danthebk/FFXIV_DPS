@@ -31,12 +31,12 @@ function bardSongStart(priority, stats, buffs) {
     return start;
 }
 
-//one of the bard buffs should be cut off at 20 seconds
+//one of the bard buffs should be cut off at 30 seconds
 function bardSongDuration(duration, shortBool) {
     var d = duration;
 
     if (shortBool) {
-        d = d - 10;
+        d = d - 15;
     }
 
     return d;

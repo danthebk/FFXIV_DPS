@@ -24,8 +24,12 @@
         return Math.floor(100 * tenacityDelta / $scope.base_stats.levelDiv + 1000) / 1000;
     }
 
-    $scope.fSPD = function(skillspeedDelta) {
-        return Math.floor(130 * skillspeedDelta / $scope.base_stats.levelDiv + 1000) / 1000;
+    $scope.fSPD = function(skillspeedDelta) { //converting the formula to use the delta rather than the base stat
+        return (1000 + Math.ceil(130 * ($scope.base_stats.levelSecondary - (skillspeedDelta + $scope.base_stats.levelSecondary)) / $scope.base_stats.levelDiv)) / 1000;
+    }
+
+    $scope.fSPDot = function (skillspeedDelta) {
+        return (1000 + Math.floor(130 * skillspeedDelta / $scope.base_stats.levelDiv)) / 1000;
     }
 
     $scope.fCHR = function(criticalhitrateDelta) {
@@ -57,7 +61,7 @@
         //aa = Math.floor(aa / 1000);
 
         var aa = Math.floor(stats.job.aaModifier * $scope.fAP(stats.job.apModifier, stats.primarystatDelta));
-        aa = Math.floor(aa * $scope.fSPD(stats.skillspeedDelta));
+        aa = Math.floor(aa * $scope.fSPDot(stats.skillspeedDelta));
         aa = Math.floor(aa * $scope.fAUTO(stats.weapondamage, stats.weapondelay, stats.primarystatDelta));
         aa = Math.floor(aa / 100);
         aa = Math.floor(aa * 1); // no idea what trait is? probably job traits
