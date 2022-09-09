@@ -156,11 +156,11 @@ dps_app.dps_controller = function ($scope) {
         $scope.stats_main.baseAA = $scope.fAA($scope.stats_main); //requires so much data might as well just pass the whole thing
 
         //rates
-        $scope.stats_main.criticalRate = ((Math.floor(200 * $scope.stats_main.criticalDelta / $scope.base_stats.levelMod) + 50) / 1000) * 100;
-        $scope.stats_main.directhitRate = ((Math.floor(550 * $scope.stats_main.directhitDelta / $scope.base_stats.levelMod)) / 1000) * 100;
+        $scope.stats_main.criticalRate = $scope.fCHR($scope.stats_main.criticalDelta); //((Math.floor(200 * $scope.stats_main.criticalDelta / $scope.base_stats.levelMod) + 50) / 1000) * 100;
+        $scope.stats_main.directhitRate = $scope.fDHR($scope.stats_main.directhitDelta); //((Math.floor(550 * $scope.stats_main.directhitDelta / $scope.base_stats.levelMod)) / 1000) * 100;
 
         //damage multiplier
-        $scope.stats_main.criticalDamage = ((Math.floor(200 * $scope.stats_main.criticalDelta / $scope.base_stats.levelMod) + 1400) / 1000) * 100;
+        $scope.stats_main.criticalDamage = $scope.fCSTR($scope.stats_main.criticalDelta); //((Math.floor(200 * $scope.stats_main.criticalDelta / $scope.base_stats.levelMod) + 1400) / 1000) * 100;
         $scope.stats_main.determinationMultiplier = $scope.fDET($scope.stats_main.determinationDelta); //(1000 + (Math.floor(130 * $scope.stats_main.determinationDelta / $scope.base_stats.levelMod))) / 1000;
         $scope.stats_main.tenacityMultiplier = $scope.fTNC($scope.stats_main.tenacityDelta); //(1000 + (Math.floor(100 * $scope.stats_main.tenacityDelta / $scope.base_stats.levelMod))) / 1000;
 

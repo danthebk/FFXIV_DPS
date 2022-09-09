@@ -21,7 +21,7 @@
     }
 
     $scope.fTNC = function(tenacityDelta) {
-        return Math.floor(100 * tenacityDelta / $scope.base_stats.levelDiv + 1000) / 1000;
+        return (Math.floor(100 * tenacityDelta / $scope.base_stats.levelDiv) + 1000) / 1000;
     }
 
     $scope.fSPD = function(skillspeedDelta) { //converting the formula to use the delta rather than the base stat
@@ -32,12 +32,16 @@
         return (1000 + Math.floor(130 * skillspeedDelta / $scope.base_stats.levelDiv)) / 1000;
     }
 
-    $scope.fCHR = function(criticalhitrateDelta) {
-        return Math.floor((200 * criticalhitrateDelta / $scope.base_stats.levelDiv) + 50) / 1000;
+    $scope.fDHR = function (directhitDelta) {
+        return Math.floor(550 * directhitDelta / $scope.base_stats.levelDiv) / 10;
     }
 
-    $scope.fCSTR = function (criticalhitrateDelta) {
-        return Math.floor((200 * criticalhitrateDelta / $scope.base_stats.levelDiv) + 1400) / 1000;
+    $scope.fCHR = function(criticalhitDelta) {
+        return Math.floor((200 * criticalhitDelta / $scope.base_stats.levelDiv) + 50) / 10;
+    }
+
+    $scope.fCSTR = function (criticalhitDelta) {
+        return Math.floor((200 * criticalhitDelta / $scope.base_stats.levelDiv) + 1400) / 10;
     }
 
     $scope.fDEF = function(defense) {

@@ -36,7 +36,7 @@ dps_app.dps_model = function ($scope) {
         innerrelease: {
             job: "Warrior",
             name: "Inner Release",
-            duration: 10, //technically four hits
+            duration: 8, //technically four hits
             recast: 60,
             criticalhitratebuff: 100,
             directhitratebuff: 100,
@@ -130,7 +130,7 @@ dps_app.dps_model = function ($scope) {
             recast: 120,
             criticalhitratebuff: 0,
             directhitratebuff: 0,
-            dpsbuff: 5,
+            dpsbuff: 10,
             delayreduction: 0
         },
         chainstratagem: {
@@ -672,16 +672,16 @@ dps_app.dps_model = function ($scope) {
         critical: 400,
         skillspeed: 400,*/
 
-        weapondamage: 117,
-        weapondelay: 3.36,
-        weaponattack: 131.04,
-        primarystat: 2496,
+        weapondamage: 121,
+        weapondelay: 2.80,
+        weaponattack: 112.93,
+        primarystat: 2696,
 
-        determination: 1788,
-        directhit: 436,
-        tenacity: 654,
-        critical: 2218,
-        skillspeed: 895,
+        determination: 1657,
+        directhit: 1299,
+        tenacity: 400,
+        critical: 1936,
+        skillspeed: 621,
 
         //calculated stats
         determinationDPS: 0,
